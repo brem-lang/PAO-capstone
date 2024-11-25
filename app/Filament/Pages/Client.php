@@ -13,10 +13,12 @@ use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
 class Client extends Page implements HasForms, HasTable
@@ -31,6 +33,11 @@ class Client extends Page implements HasForms, HasTable
     protected static ?int $navigationSort = 2;
 
     public array $data = [];
+
+    public static function canAccess(): bool
+    {
+        return ! auth()->user()->isClient();
+    }
 
     public function form(Form $form): Form
     {
@@ -285,22 +292,27 @@ class Client extends Page implements HasForms, HasTable
             ->query(User::where('role', 'client')->latest())
             ->columns([
                 TextColumn::make('name')
+                    ->toggleable()
                     ->searchable(),
                 TextColumn::make('gender')
+                    ->toggleable()
                     ->searchable(),
                 TextColumn::make('number')
+                    ->toggleable()
                     ->searchable(),
                 TextColumn::make('email')
+                    ->toggleable()
                     ->searchable(),
             ])
             ->filters([
-                // ...
+                TrashedFilter::make(),
             ])
             ->actions([
                 ViewAction::make()
                     ->form(fn (Form $form) => $this->form($form)),
                 EditAction::make()
                     ->form(fn (Form $form) => $this->form($form)),
+                RestoreAction::make(),
                 DeleteAction::make(),
             ])
             ->bulkActions([

@@ -32,6 +32,11 @@ class CaseFiles extends Page implements HasForms, HasTable
 
     protected static ?int $navigationSort = 4;
 
+    public static function canAccess(): bool
+    {
+        return ! auth()->user()->isClient();
+    }
+
     public function form(Form $form): Form
     {
         return $form

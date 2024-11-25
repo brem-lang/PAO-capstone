@@ -28,6 +28,8 @@ class InterviewSheet extends Page implements HasForms
 
     protected static string $view = 'filament.pages.interview-sheet';
 
+    protected static ?int $navigationSort = 2;
+
     protected static ?string $title = '';
 
     protected static ?string $navigationLabel = 'InterView Sheet';

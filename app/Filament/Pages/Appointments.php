@@ -13,53 +13,74 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Notifications\Actions\Action as ActionsAction;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\DB;
 
-class MyRequest extends Page implements HasForms, HasTable
+class Appointments extends Page implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
 
-    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
+    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
 
-    protected static string $view = 'filament.pages.my-request';
+    protected static string $view = 'filament.pages.appointments';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 6;
 
     public static function canAccess(): bool
     {
-        return auth()->user()->isClient();
+        return auth()->user()->isStaff();
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(InterViewSheet::query()->where('user_id', auth()->user()->id)->latest())
+            ->query(InterViewSheet::latest())
             ->columns([
-                TextColumn::make('doc_type')
-                    ->searchable()
-                    ->label('Purpose')
-                    ->formatStateUsing(fn (string $state): string => ucfirst($state))
-                    ->weight(FontWeight::Bold),
-                TextColumn::make('created_at')->label('Date Transact')->date('F d, Y h:i A')->timezone('Asia/Manila')
+                TextColumn::make('user.name')
+                    ->label('Client')
+                    ->toggleable()
                     ->searchable(),
-                TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {
-                    'approved' => 'success',
-                    'pending' => 'gray',
-                })
+                TextColumn::make('doc_type')
+                    ->formatStateUsing(fn ($state) => ucfirst($state))
+                    ->label('Purpose')
+                    ->weight(FontWeight::Bold)
+                    ->toggleable()
+                    ->searchable(),
+                TextColumn::make('region')
+                    ->toggleable()
+                    ->searchable(),
+                TextColumn::make('district_office')
+                    ->toggleable()
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->date('F d, Y h:i A')->timezone('Asia/Manila')
+                    ->toggleable()
+                    ->searchable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'approved' => 'success',
+                        'pending' => 'gray',
+                    })
                     ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
-                    ->searchable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->searchable(),
             ])
             ->filters([
-                // ...
+                TrashedFilter::make(),
             ])
             ->actions([
                 ViewAction::make()
@@ -70,6 +91,42 @@ class MyRequest extends Page implements HasForms, HasTable
                             return $this->previewNotarizeForm($form);
                         }
                     }),
+                Action::make('update')
+                    ->icon('heroicon-o-arrow-path')
+                    ->form([
+                        Select::make('status')
+                            ->options([
+                                'pending' => 'Pending',
+                                'approved' => 'Approved',
+                            ])
+                            ->required()
+                            ->label('Status'),
+                    ])
+                    ->modalWidth('sm')
+                    ->action(function ($record, $data) {
+                        $record->update([
+                            'status' => $data['status'],
+                        ]);
+
+                        Notification::make()
+                            ->title('Updated')
+                            ->success()
+                            ->send();
+
+                        Notification::make()
+                            ->title('Your appointment has been '.$data['status'])
+                            ->success()
+                            ->actions([
+                                ActionsAction::make('read')
+                                    ->label('Mark as read')
+                                    ->button()
+                                    ->markAsRead(),
+                            ])
+                            ->sendToDatabase($record->user);
+                    }),
+                RestoreAction::make(),
+                DeleteAction::make()
+                    ->modalHeading('Delete Appointment'),
             ])
             ->bulkActions([
                 // ...

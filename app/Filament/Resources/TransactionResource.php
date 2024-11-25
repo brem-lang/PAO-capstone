@@ -12,7 +12,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteAction as ActionsDeleteAction;
+use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +39,11 @@ class TransactionResource extends Resource
     public static function canDelete(Model $record): bool
     {
         return auth()->user()->isStaff();
+    }
+
+    public static function canAccess(): bool
+    {
+        return ! auth()->user()->isClient();
     }
 
     public static function form(Form $form): Form
@@ -224,20 +231,26 @@ class TransactionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('item_no')
                     ->label('Item No')
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('control_no')
                     ->label('Control No')
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title_of_case')
                     ->label('Title of Case')
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('case_no')
                     ->label('Case No')
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('court_body')
                     ->label('Court/Body')
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->toggleable()
                     ->badge()->color(fn (string $state): string => match ($state) {
                         'pending' => 'gray',
                         'resolved' => 'success',
@@ -250,11 +263,12 @@ class TransactionResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                RestoreAction::make(),
                 ActionsDeleteAction::make(),
             ])
             ->bulkActions([
