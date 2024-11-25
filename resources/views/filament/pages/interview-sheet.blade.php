@@ -1,9 +1,9 @@
 <x-filament-panels::page>
     <div x-data="{ showButtons: true, showAdviceForm: false, showNotarizeForm: false }" class="w-full flex flex-col items-center gap-4">
         <template x-if="showButtons">
-            <div class="w-full flex flex-col items-center gap-4">
+            <div class="w-full flex flex-col items-center gap-4 bg-white p-6 rounded-xl border">
                 <span class="font-bold text-3xl">Purpose</span>
-                <div class="w-full flex justify-center space-x-4 gap-3">
+                <div class="w-full flex justify-center space-x-4 gap-3" style="margin-bottom: 16px">
                     <x-filament::button icon="heroicon-o-arrow-right-start-on-rectangle" style="width: 300px"
                         @click="showButtons = false; showAdviceForm = true">
                         Advice
@@ -32,13 +32,26 @@
         </template>
     </div>
 
-    <x-filament::modal id="edit-comment" width="5xl">
+    <x-filament::modal id="preview-advice" width="5xl">
         <x-slot name="heading">
             Preview Informations
         </x-slot>
         {{ $this->previewAdviceForm }}
         <x-slot name="footer">
-            <x-filament::button wire:click.prevent="saveInterviewSheet">
+            <x-filament::button wire:click.prevent="saveAdviceForm">
+                Save
+            </x-filament::button>
+            <button> </button>
+        </x-slot>
+    </x-filament::modal>
+
+    <x-filament::modal id="preview-notarize" width="5xl">
+        <x-slot name="heading">
+            Preview Informations
+        </x-slot>
+        {{ $this->previewNotarizeForm }}
+        <x-slot name="footer">
+            <x-filament::button wire:click.prevent="saveNotarizeForm">
                 Save
             </x-filament::button>
             <button> </button>
