@@ -1,7 +1,8 @@
 <x-filament-panels::page>
     <div x-data="{ showButtons: true, showAdviceForm: false, showNotarizeForm: false }" class="w-full flex flex-col items-center gap-4">
         <template x-if="showButtons">
-            <div class="w-full flex flex-col items-center gap-4 bg-white p-6 rounded-xl border">
+            <div
+                class="w-full flex flex-col items-center gap-4 fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
                 <span class="font-bold text-3xl">Purpose</span>
                 <div class="w-full flex justify-center space-x-4 gap-3" style="margin-bottom: 16px">
                     <x-filament::button icon="heroicon-o-arrow-right-start-on-rectangle" style="width: 300px"

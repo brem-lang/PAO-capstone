@@ -16,7 +16,8 @@
             <div>
                 <h2 class="text-2xl font-semibold">Monthly Advice/Notarize</h2>
 
-                <div class="p-4 bg-white rounded-xl shadow">
+                <div
+                    class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
                     <div>
                         <canvas id="pieChart"></canvas>
                     </div>
@@ -32,7 +33,8 @@
             <!-- Bar Chart -->
             <div>
                 <h2 class="text-2xl font-semibold">Monthly Case</h2>
-                <div class="p-4 bg-white rounded-xl shadow">
+                <div
+                    class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
                     <div style="height: 300px;">
                         <canvas id="barChart"></canvas>
                     </div>
@@ -49,7 +51,8 @@
 
         <div style="margin-top:-10px;">
             <h2 class="text-2xl font-semibold">Yearly Case</h2>
-            <div class="p-4 bg-white rounded-xl shadow">
+            <div
+                class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
                 <div style="height: 300px;">
                     <canvas id="lineChart"></canvas>
                 </div>

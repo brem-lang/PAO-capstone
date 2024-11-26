@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center gap-2 mb-2">
             <div></div>
             <div>
-                <x-filament::modal width="2xl">
+                <x-filament::modal width="4xl">
                     <x-slot name="trigger">
                         <x-filament::button>
                             New Event

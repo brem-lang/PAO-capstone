@@ -47,6 +47,13 @@ class InterviewSheet extends Page implements HasForms
         return auth()->user()->isClient();
     }
 
+    public function mount()
+    {
+        $this->notarizeForm->fill([
+            'date' => now()->format('Y-m-d'),
+        ]);
+    }
+
     protected function getForms(): array
     {
         return [
@@ -128,8 +135,7 @@ class InterviewSheet extends Page implements HasForms
                                 ])
                                 ->columnSpan(1),
                             TextInput::make('mananayam')
-                                ->label('Mananayam')
-                                ->required(),
+                                ->label('Mananayam'),
                             Fieldset::make('')
                                 ->schema([
                                     Checkbox::make('isOthersCheck')
@@ -540,15 +546,13 @@ class InterviewSheet extends Page implements HasForms
                             TextInput::make('email')
                                 ->required(),
                             TextInput::make('asawa')
-                                ->label('Asawa')
-                                ->required(),
+                                ->label('Asawa'),
                             TextInput::make('income')
                                 ->numeric()
                                 ->label('Individual Monthly Income')
                                 ->required(),
                             TextInput::make('asawaAddress')
-                                ->label('Tirahan ng asawa')
-                                ->required(),
+                                ->label('Tirahan ng asawa'),
                             Radio::make('nakakulong')
                                 ->required()
                                 ->live()
@@ -561,13 +565,12 @@ class InterviewSheet extends Page implements HasForms
                                 ->inline(),
                             TextInput::make('contactNumberAsawa')
                                 ->label('Contact Number ng asawa')
-                                ->tel()->telRegex('/^(0|63)\d{10}$/')
-                                ->required(),
+                                ->tel()->telRegex('/^(0|63)\d{10}$/'),
                             DatePicker::make('dateofKulong')
+                                ->label('Petsa ng pagakakulong')
                                 ->disabled(function (Get $get) {
                                     return $get('nakakulong') === false;
-                                })
-                                ->required(),
+                                }),
                             Select::make('dPlace')
                                 ->label('Lugar ng Detention')
                                 ->options([
@@ -582,7 +585,7 @@ class InterviewSheet extends Page implements HasForms
                         ])->columns(2),
                     Wizard\Step::make('Select optional sections to fill up')
                         ->schema([
-                            FieldSet::make('')
+                            FieldSet::make('Select Option')
                                 ->schema([
                                     Checkbox::make('card1')
                                         ->dehydrated(false)
@@ -843,8 +846,7 @@ class InterviewSheet extends Page implements HasForms
                             ])
                             ->columnSpan(1),
                         TextInput::make('mananayam')
-                            ->label('Mananayam')
-                            ->required(),
+                            ->label('Mananayam'),
                         Fieldset::make('')
                             ->schema([
                                 Checkbox::make('isOthersCheck')
@@ -1257,15 +1259,13 @@ class InterviewSheet extends Page implements HasForms
                         TextInput::make('email')
                             ->required(),
                         TextInput::make('asawa')
-                            ->label('Asawa')
-                            ->required(),
+                            ->label('Asawa'),
                         TextInput::make('income')
                             ->numeric()
                             ->label('Individual Monthly Income')
                             ->required(),
                         TextInput::make('asawaAddress')
-                            ->label('Tirahan ng asawa')
-                            ->required(),
+                            ->label('Tirahan ng asawa'),
                         Radio::make('nakakulong')
                             ->required()
                             ->live()
@@ -1278,13 +1278,12 @@ class InterviewSheet extends Page implements HasForms
                             ->inline(),
                         TextInput::make('contactNumberAsawa')
                             ->label('Contact Number ng asawa')
-                            ->tel()->telRegex('/^(0|63)\d{10}$/')
-                            ->required(),
+                            ->tel()->telRegex('/^(0|63)\d{10}$/'),
                         DatePicker::make('dateofKulong')
+                            ->label('Petsa ng pagakakulong')
                             ->disabled(function (Get $get) {
                                 return $get('nakakulong') === false;
-                            })
-                            ->required(),
+                            }),
                         Select::make('dPlace')
                             ->label('Lugar ng Detention')
                             ->options([
@@ -1298,7 +1297,7 @@ class InterviewSheet extends Page implements HasForms
                             ->required(),
                     ])
                     ->columns(2),
-                FieldSet::make('')
+                FieldSet::make('Select Option')
                     ->schema([
                         Checkbox::make('card1')
                             ->dehydrated(false)
@@ -1526,8 +1525,7 @@ class InterviewSheet extends Page implements HasForms
                                 ->placeholder('Pumili ng Rehiyon')
                                 ->required(),
                             TextInput::make('referredBy')
-                                ->label('Ini-refer ni/Inindorso ng')
-                                ->required(),
+                                ->label('Ini-refer ni/Inindorso ng'),
                             TextInput::make('district_office')
                                 ->label('District Office')
                                 ->required(),
@@ -1545,8 +1543,7 @@ class InterviewSheet extends Page implements HasForms
                                 ->label('Petsa')
                                 ->required(),
                             TextInput::make('assignTo')
-                                ->label('Ini-atas kay')
-                                ->required(),
+                                ->label('Ini-atas kay'),
                             TextInput::make('control_no')
                                 ->label('Control No.')
                                 ->disabled()
@@ -1566,8 +1563,7 @@ class InterviewSheet extends Page implements HasForms
                                 ])
                                 ->columnSpan(1),
                             TextInput::make('mananayam')
-                                ->label('Mananayam')
-                                ->required(),
+                                ->label('Mananayam'),
                             Fieldset::make('')
                                 ->schema([
                                     Checkbox::make('isOthersCheck')
@@ -1978,15 +1974,13 @@ class InterviewSheet extends Page implements HasForms
                             TextInput::make('email')
                                 ->required(),
                             TextInput::make('asawa')
-                                ->label('Asawa')
-                                ->required(),
+                                ->label('Asawa'),
                             TextInput::make('income')
                                 ->numeric()
                                 ->label('Individual Monthly Income')
                                 ->required(),
                             TextInput::make('asawaAddress')
-                                ->label('Tirahan ng asawa')
-                                ->required(),
+                                ->label('Tirahan ng asawa'),
                             Radio::make('nakakulong')
                                 ->required()
                                 ->live()
@@ -1999,9 +1993,9 @@ class InterviewSheet extends Page implements HasForms
                                 ->inline(),
                             TextInput::make('contactNumberAsawa')
                                 ->label('Contact Number ng asawa')
-                                ->tel()->telRegex('/^(0|63)\d{10}$/')
-                                ->required(),
+                                ->tel()->telRegex('/^(0|63)\d{10}$/'),
                             DatePicker::make('dateofKulong')
+                                ->label('Petsa ng pagakakulong')
                                 ->disabled(function (Get $get) {
                                     return $get('nakakulong') === false;
                                 })
@@ -2200,11 +2194,9 @@ class InterviewSheet extends Page implements HasForms
                             ->placeholder('Pumili ng Rehiyon')
                             ->required(),
                         TextInput::make('referredBy')
-                            ->label('Ini-refer ni/Inindorso ng')
-                            ->required(),
+                            ->label('Ini-refer ni/Inindorso ng'),
                         TextInput::make('district_office')
-                            ->label('District Office')
-                            ->required(),
+                            ->label('District Office'),
                         Fieldset::make('Ginawang Aksyon')
                             ->schema([
                                 Checkbox::make('merit')
@@ -2219,8 +2211,7 @@ class InterviewSheet extends Page implements HasForms
                             ->label('Petsa')
                             ->required(),
                         TextInput::make('assignTo')
-                            ->label('Ini-atas kay')
-                            ->required(),
+                            ->label('Ini-atas kay'),
                         TextInput::make('control_no')
                             ->label('Control No.')
                             ->disabled()
@@ -2240,8 +2231,7 @@ class InterviewSheet extends Page implements HasForms
                             ])
                             ->columnSpan(1),
                         TextInput::make('mananayam')
-                            ->label('Mananayam')
-                            ->required(),
+                            ->label('Mananayam'),
                         Fieldset::make('')
                             ->schema([
                                 Checkbox::make('isOthersCheck')
@@ -2654,15 +2644,13 @@ class InterviewSheet extends Page implements HasForms
                         TextInput::make('email')
                             ->required(),
                         TextInput::make('asawa')
-                            ->label('Asawa')
-                            ->required(),
+                            ->label('Asawa'),
                         TextInput::make('income')
                             ->numeric()
                             ->label('Individual Monthly Income')
                             ->required(),
                         TextInput::make('asawaAddress')
-                            ->label('Tirahan ng asawa')
-                            ->required(),
+                            ->label('Tirahan ng asawa'),
                         Radio::make('nakakulong')
                             ->required()
                             ->live()
@@ -2675,13 +2663,12 @@ class InterviewSheet extends Page implements HasForms
                             ->inline(),
                         TextInput::make('contactNumberAsawa')
                             ->label('Contact Number ng asawa')
-                            ->tel()->telRegex('/^(0|63)\d{10}$/')
-                            ->required(),
+                            ->tel()->telRegex('/^(0|63)\d{10}$/'),
                         DatePicker::make('dateofKulong')
+                            ->label('Petsa ng pagakakulong')
                             ->disabled(function (Get $get) {
                                 return $get('nakakulong') === false;
-                            })
-                            ->required(),
+                            }),
                         Select::make('dPlace')
                             ->label('Lugar ng Detention')
                             ->options([
