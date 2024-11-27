@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\CalendarEvents;
 use App\Models\InterViewSheet;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -22,6 +23,8 @@ class Dashboard extends Page
 
     public $years = [];
 
+    public $calendarData = [];
+
     public $values = [];
 
     public function mount()
@@ -30,6 +33,20 @@ class Dashboard extends Page
             $this->getPieData('advice');
             $this->getBarDataCase('pending');
             $this->lineChart();
+        } else {
+            $events = CalendarEvents::where('user_id', auth()->user()->id)->get();
+
+            $mappedEvents = $events->map(function ($event) {
+                return [
+                    'id' => $event->id,
+                    'name' => $event->user['name'],
+                    'title' => $event->title,
+                    'start' => $event->startDate,
+                    'description' => $event->description,
+                ];
+            });
+
+            $this->calendarData = $mappedEvents;
         }
     }
 

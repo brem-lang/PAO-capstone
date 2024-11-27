@@ -34,12 +34,12 @@ class Calendar extends Page implements HasForms
 
     public static function canAccess(): bool
     {
-        return true;
+        return ! auth()->user()->isClient();
     }
 
     public function mount()
     {
-        $events = ! auth()->user()->isClient() ? CalendarEvents::get() : CalendarEvents::where('user_id', auth()->user()->id)->get();
+        $events = CalendarEvents::get();
 
         $mappedEvents = $events->map(function ($event) {
             return [
