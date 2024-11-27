@@ -28,6 +28,7 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->login()
+            ->favicon(asset('images/logo.png'))
             ->registration(Register::class)
             ->brandLogo(fn () => view('filament.logo'))
             ->colors([
