@@ -7,10 +7,11 @@
             <p id="time"></p>
         </div>
     </div>
-
-    <div id="calendar"
-        class="fi-ta-ctn divide-y divide-gray-200 p-4 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
-    </div>
+    @if (auth()->user()->isClient())
+        <div id="calendar"
+            class="fi-ta-ctn divide-y divide-gray-200 p-4 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
+        </div>
+    @endif
     @if (!auth()->user()->isClient())
         <div>
             @livewire(\App\Livewire\StatsOverview::class)
