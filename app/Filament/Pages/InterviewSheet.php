@@ -51,6 +51,11 @@ class InterviewSheet extends Page implements HasForms
     {
         $this->notarizeForm->fill([
             'date' => now()->format('Y-m-d'),
+            'region' => 'Region XI',
+        ]);
+
+        $this->adviceForm->fill([
+            'region' => 'Region XI',
         ]);
     }
 
@@ -1998,8 +2003,7 @@ class InterviewSheet extends Page implements HasForms
                                 ->label('Petsa ng pagakakulong')
                                 ->disabled(function (Get $get) {
                                     return $get('nakakulong') === false;
-                                })
-                                ->required(),
+                                }),
                             Select::make('dPlace')
                                 ->label('Lugar ng Detention')
                                 ->options([
@@ -2009,8 +2013,7 @@ class InterviewSheet extends Page implements HasForms
                                     'PNP, Carmen' => 'PNP, Carmen',
                                     'BJMP Peñaplata' => 'BJMP Peñaplata',
                                     'Igacos' => 'Igacos',
-                                ])
-                                ->required(),
+                                ]),
                         ])
                         ->columns(2),
                     Wizard\Step::make('IV. SEKTOR NA KABILANG ANG APLIKANTE')
@@ -2678,8 +2681,7 @@ class InterviewSheet extends Page implements HasForms
                                 'PNP, Carmen' => 'PNP, Carmen',
                                 'BJMP Peñaplata' => 'BJMP Peñaplata',
                                 'Igacos' => 'Igacos',
-                            ])
-                            ->required(),
+                            ]),
                     ])
                     ->columns(2),
                 Fieldset::make('IV. SEKTOR NA KABILANG ANG APLIKANTE')
@@ -2904,6 +2906,7 @@ class InterviewSheet extends Page implements HasForms
 
         Notification::make()
             ->title('Advice Saved')
+            ->body('View your request to my request tab and wait for the staff to approved your request , it will show to your notification bell once approved ')
             ->success()
             ->send();
 
@@ -2926,6 +2929,7 @@ class InterviewSheet extends Page implements HasForms
 
         Notification::make()
             ->title('Notarize Saved')
+            ->body('View your request to my request tab and wait for the staff to approved your request , it will show to your notification bell once approved ')
             ->success()
             ->send();
 

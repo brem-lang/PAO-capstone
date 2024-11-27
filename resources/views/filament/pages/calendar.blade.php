@@ -2,31 +2,28 @@
     <div>
         <div class="flex justify-between items-center gap-2 mb-2">
             <div></div>
-            <div>
-                <x-filament::modal width="4xl">
-                    <x-slot name="trigger">
-                        <x-filament::button>
-                            New Event
-                        </x-filament::button>
-                    </x-slot>
-                    {{ $this->form }}
+            @if (!auth()->user()->isClient())
+                <div>
+                    <x-filament::modal width="4xl">
+                        <x-slot name="trigger">
+                            <x-filament::button>
+                                New Event
+                            </x-filament::button>
+                        </x-slot>
+                        {{ $this->form }}
 
-                    <x-slot name="footerActions">
-                        <x-filament::button wire:click.prevent="addEvent" wire:loading.attr="disabled">
-                            Submit
-                        </x-filament::button>
-                    </x-slot>
-                </x-filament::modal>
-            </div>
+                        <x-slot name="footerActions">
+                            <x-filament::button wire:click.prevent="addEvent" wire:loading.attr="disabled">
+                                Submit
+                            </x-filament::button>
+                        </x-slot>
+                    </x-filament::modal>
+                </div>
+            @endif
         </div>
 
         <div id="calendar"
             class="fi-ta-ctn divide-y divide-gray-200 p-4 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
-        </div>
-
-
-        <div style="margin-top: 20px;">
-            {{ $this->table }}
         </div>
     </div>
 </x-filament-panels::page>

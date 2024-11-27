@@ -17,15 +17,10 @@ use Filament\Forms\Form;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Table;
 
-class Calendar extends Page implements HasForms, HasTable
+class Calendar extends Page implements HasForms
 {
     use InteractsWithForms;
-    use InteractsWithTable;
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
 
@@ -39,12 +34,12 @@ class Calendar extends Page implements HasForms, HasTable
 
     public static function canAccess(): bool
     {
-        return ! auth()->user()->isClient();
+        return true;
     }
 
     public function mount()
     {
-        $events = CalendarEvents::all();
+        $events = ! auth()->user()->isClient() ? CalendarEvents::get() : CalendarEvents::where('user_id', auth()->user()->id)->get();
 
         $mappedEvents = $events->map(function ($event) {
             return [
@@ -111,22 +106,5 @@ class Calendar extends Page implements HasForms, HasTable
         (new EmailSender)->handle($user, $data);
 
         return redirect('/app/calendar');
-    }
-
-    public function table(Table $table): Table
-    {
-        return $table
-            ->query(CalendarEvents::latest())
-            ->columns([
-                TextColumn::make('user.name')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('title')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('desciption')
-                    ->searchable()
-                    ->sortable(),
-            ]);
     }
 }
