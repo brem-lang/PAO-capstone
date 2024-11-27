@@ -349,16 +349,23 @@
                 style="margin: auto;">
                 <tr>
                     <td valign="middle" class="hero bg_white" style="padding: 20px">
-                        <h2 style="margin: 0">
+                        {{-- <h2 style="margin: 0">
                             Dear {{ $user->name }},
-                        </h2>
+                        </h2> --}}
+
+                        <p>
+                            Dear <strong>{{ $user->name }}</strong>,
+                            This is a quick reminder about your upcoming hearing scheduled on
+                            <strong>{{ \Carbon\Carbon::parse($data['startDate'])->format('F j Y g:i A') }}</strong>.
+                            Please
+                            ensure you are present.
+                        </p>
 
                         <p><b>Title:</b> {{ $data['title'] }} </p>
                         <p><b>Description:</b> {{ $data['description'] }} </p>
-                        <p><b>Date:</b> {{ \Carbon\Carbon::parse($data['startDate'])->format('F j Y g:i A') }} </p>
 
-                        <p style="margin-bottom: 0"><b>Regards:</b></p>
-                        <p style="margin: 0">Public Attorney's Office</p><br>
+                        <p style="margin-bottom: 0"><b>Thank you!</b></p>
+                        <p style="margin: 0">The PAO Team.</p><br>
 
                         <hr style="border-top: 1px solid rgb(207, 207, 207)">
 

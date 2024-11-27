@@ -21,6 +21,8 @@ class Profile extends Page implements HasForms
 
     protected static ?string $navigationGroup = 'Settings';
 
+    protected static ?int $navigationSort = 14;
+
     public ?array $data = [];
 
     public $user;

@@ -17,6 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Rmsramos\Activitylog\ActivitylogPlugin;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -57,6 +58,14 @@ class AppPanelProvider extends PanelProvider
             ->renderHook(
                 'panels::auth.login.form.after',
                 fn () => view('auth.socialite.google')
-            );
+            )
+            ->plugins([
+                ActivitylogPlugin::make()
+                    ->navigationGroup('Settings')
+                    ->navigationSort(1)
+                    ->authorize(
+                        fn () => ! auth()->user()->isClient()
+                    ),
+            ]);
     }
 }

@@ -17,10 +17,15 @@ use Filament\Forms\Form;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 
-class Calendar extends Page implements HasForms
+class Calendar extends Page implements HasForms, HasTable
 {
     use InteractsWithForms;
+    use InteractsWithTable;
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
 
@@ -106,5 +111,22 @@ class Calendar extends Page implements HasForms
         (new EmailSender)->handle($user, $data);
 
         return redirect('/app/calendar');
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->query(CalendarEvents::latest())
+            ->columns([
+                TextColumn::make('user.name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('desciption')
+                    ->searchable()
+                    ->sortable(),
+            ]);
     }
 }
