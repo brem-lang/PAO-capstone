@@ -143,20 +143,20 @@ class Reports extends Page implements HasForms
             }
             //old
             if ($value->created_at->year == Carbon::now()->subYear()->year && $value->status === 'terminated') {
-                $totalTerminatedB++;
+                $totalTerminatedA++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedA++;
                 } elseif ($value->case_type == 'Civil') {
                     $totalCivilTerminatedA++;
                 } elseif ($value->case_type == 'Administrative') {
-                    $totalAdministrativeTerminatedA++;
+                    $totalAdministrativeTerminatedB++;
                 } elseif ($value->case_type == 'Labor') {
-                    $totalTerminatedA++;
+                    $totalLaborTerminatedA++;
                 }
             }
             //new
             if ($value->created_at->year == Carbon::now()->year && $value->status === 'terminated') {
-                $totalCriminalTerminatedB++;
+                $totalTerminatedB++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedB++;
                 } elseif ($value->case_type == 'Civil') {
@@ -164,7 +164,7 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Administrative') {
                     $totalAdministrativeTerminatedB++;
                 } elseif ($value->case_type == 'Labor') {
-                    $totalTerminatedB++;
+                    $totalLaborTerminatedB++;
                 }
             }
         }
