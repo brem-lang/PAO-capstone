@@ -143,7 +143,7 @@ class Reports extends Page implements HasForms
             }
             //old
             if ($value->created_at->year == Carbon::now()->subYear()->year && $value->status === 'terminated') {
-                $totalCriminalTerminatedA++;
+                $totalTerminatedB++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedA++;
                 } elseif ($value->case_type == 'Civil') {
