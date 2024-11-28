@@ -26,7 +26,9 @@ class Calendar extends Page implements HasForms
 
     protected static string $view = 'filament.pages.calendar';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationGroup = 'Calendar';
 
     public ?array $data = [];
 

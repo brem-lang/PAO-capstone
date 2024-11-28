@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use App\Livewire\Login as LivewireLogin;
 use App\Livewire\Register;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -27,7 +28,7 @@ class AppPanelProvider extends PanelProvider
             ->default()
             ->id('app')
             ->path('app')
-            ->login()
+            ->login(LivewireLogin::class)
             ->favicon(asset('images/logo.png'))
             ->registration(Register::class)
             ->brandLogo(fn () => view('filament.logo'))

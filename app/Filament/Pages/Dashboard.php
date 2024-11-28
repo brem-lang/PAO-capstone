@@ -19,6 +19,8 @@ class Dashboard extends Page
 
     public $pieData = [];
 
+    public $pieLabel = [];
+
     public $barData = [];
 
     public $years = [];
@@ -53,25 +55,31 @@ class Dashboard extends Page
     public function getPieData($type)
     {
         // $this->pieData = InterViewSheet::where('doc_type', 'advice')->where('doc_type', 'notarize')->count();
-        $this->pieData = DB::table(DB::raw('(SELECT 1 AS month UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12) AS months'))
-            ->leftJoin(
-                DB::raw('(
-            SELECT
-                MONTH(created_at) as month,
-                COUNT(*) as total
-            FROM inter_view_sheets
-            WHERE YEAR(created_at) = YEAR(CURRENT_DATE)
-            AND doc_type = "'.$type.'"
-            GROUP BY month
-        ) AS consumption'),
-                'months.month',
-                '=',
-                'consumption.month'
-            )
-            ->select('months.month', DB::raw('COALESCE(consumption.total, 0) as total'))
-            ->orderBy('months.month')
-            ->get()
-            ->map(fn ($item) => $item->total);
+        // $this->pieData = DB::table(DB::raw('(SELECT 1 AS month UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12) AS months'))
+        //     ->leftJoin(
+        //         DB::raw('(
+        //     SELECT
+        //         MONTH(created_at) as month,
+        //         COUNT(*) as total
+        //     FROM inter_view_sheets
+        //     WHERE YEAR(created_at) = YEAR(CURRENT_DATE)
+        //     AND doc_type = "'.$type.'"
+        //     GROUP BY month
+        // ) AS consumption'),
+        //         'months.month',
+        //         '=',
+        //         'consumption.month'
+        //     )
+        //     ->select('months.month', DB::raw('COALESCE(consumption.total, 0) as total'))
+        //     ->orderBy('months.month')
+        //     ->get()
+        //     ->map(fn ($item) => $item->total);
+
+        $this->pieLabel = now()->format('F');
+
+        $this->pieData = InterViewSheet::whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
     }
 
     public function getBarDataCase($type)

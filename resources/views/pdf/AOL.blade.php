@@ -113,16 +113,18 @@
         <!-- Content -->
         <div class="content">
             <p>
-                I, <span class="underline">{{ $name }}</span>, Student /of legal age,
-                single/married/widow/er, Filipino, and a resident of
+                I, <span class="underline">{{ $name }}</span>, <span
+                    class="underline">{{ ucfirst($stuDEmp) }}</span>
+                of <span class="underline">{{ $age }}</span> yrs old,
+                <span class="underline">{{ $civilStatus }}</span>, Filipino, and a resident of
                 <span class="underline">{{ $address }}</span>, after being duly sworn to law do hereby depose and
                 say:
             </p>
             <ol class="statement">
                 <li>
                     That I am a holder of
-                    <span>__________________________________________________________</span>
-                    ISSUED BY : <span>______________________________________________</span>;
+                    <span class="underline">{{ $documentTypeAOL }}</span> issued by
+                    <span class="underline">{{ $issuedByAOL }}</span>;
                 </li>
                 <li>
                     That the aforementioned <span>__________________________________</span> was

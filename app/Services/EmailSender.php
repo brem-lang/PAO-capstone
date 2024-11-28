@@ -7,8 +7,12 @@ use Illuminate\Support\Facades\Mail;
 
 class EmailSender
 {
-    public function handle(User $user, array $data)
+    public function handle(User $user, array $data, $type = null)
     {
-        Mail::to($user->email)->send(new \App\Mail\MailSender($user, $data));
+        if ($type == 'reschedule') {
+            Mail::to($user->email)->send(new \App\Mail\RescheduleEmail($user, $data));
+        } else {
+            Mail::to($user->email)->send(new \App\Mail\MailSender($user, $data));
+        }
     }
 }

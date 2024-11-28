@@ -355,13 +355,12 @@
 
                         <p>
                             Dear <strong>{{ $user->name }}</strong>,
-                            This is a quick reminder about your upcoming hearing scheduled on
+                            We apologize for the inconvenience, but your hearing has been rescheduled on
                             <strong>{{ \Carbon\Carbon::parse($data['startDate'])->format('F j Y g:i A') }}</strong>.
-                            Please
-                            ensure you are present.
+                            Please ensure you are present.
                         </p>
 
-                        <p style="margin-bottom: 0"><b>Thank you!</b></p>
+                        <p style="margin-bottom: 0"><b>Thank you for your understanding,</b></p>
                         <p style="margin: 0">The PAO Team.</p><br>
 
                         <hr style="border-top: 1px solid rgb(207, 207, 207)">

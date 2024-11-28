@@ -121,7 +121,7 @@
             <ol class="statement">
                 <li>
                     That I am a holder of QUICK RESPONSE (QR) CODE issued by
-                    <span>____________________________________________</span>;
+                    <span class="underline">{{ $issuedByAOL }}</span>;
                 </li>
                 <li>
                     That the aforementioned QUICK RESPONSE CODE was lost and/or misplaced and despite diligent effort to

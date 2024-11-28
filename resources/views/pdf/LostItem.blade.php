@@ -133,10 +133,12 @@
         <!-- Content -->
         <div class="content">
             <p>
-                I, <span class="underline">{{ $name }}</span>, Student /of legal age,
-                single/married/widow/er, Filipino, and a resident of
+                I, <span class="underline">{{ $name }}</span>, <span
+                    class="underline">{{ ucfirst($stuDEmp) }}</span>
+                of <span class="underline">{{ $age }}</span> yrs old,
+                <span class="underline">{{ $civilStatus }}</span>, Filipino, and a resident of
                 <span class="underline">{{ $address }}</span>, after being duly sworn to law do hereby depose and
-                say:
+                state, THAT:
             </p>
             <ol class="statement">
                 <li>
@@ -157,7 +159,7 @@
                         <span class="text-below">(lost document)
                         </span>
                     </span>
-                    issued by _________________________________________________
+                    Issued by: <span class="underline">{{ $issuedByAOL }}</span>;
                 </li>
                 <li>
                     That the aforementioned QUICK RESPONSE CODE was lost and/or misplaced and despite diligent effort to

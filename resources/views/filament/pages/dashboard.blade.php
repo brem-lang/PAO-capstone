@@ -99,37 +99,15 @@
 <script type="module">
     //pie chart
     const dataPie = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: [@json($pieLabel)],
         datasets: [{
             label: 'Data',
-            data: @json($pieData), // Dummy data
+            data: [@json($pieData)],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)',
-                'rgba(201, 203, 207, 0.5)',
-                'rgba(232, 67, 147, 0.5)',
-                'rgba(45, 225, 120, 0.5)',
-                'rgba(90, 90, 220, 0.5)',
-                'rgba(255, 223, 186, 0.5)',
-                'rgba(85, 239, 196, 0.5)',
+                'green',
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(201, 203, 207, 1)',
-                'rgba(232, 67, 147, 1)',
-                'rgba(45, 225, 120, 1)',
-                'rgba(90, 90, 220, 1)',
-                'rgba(255, 223, 186, 1)',
-                'rgba(85, 239, 196, 1)',
+                'black',
             ],
             borderWidth: 1
         }]
@@ -157,61 +135,6 @@
         configPie
     );
 
-    // Event listener to update the piechart 
-    // document.getElementById('pieChartFilter').addEventListener('change', function(e) {
-    //     e.preventDefault();
-
-    //     $.ajax({
-    //         url: '/pie-chart-filter/',
-    //         method: 'GET',
-    //         data: {
-    //             "type": e.target.value,
-    //         },
-    //         success: function(response) {
-    //             myPieChart.data.datasets = [];
-
-    //             myPieChart.data.datasets.push({
-    //                 data: response,
-    //                 fill: true,
-    //                 backgroundColor: [
-    //                     'rgba(255, 99, 132, 0.5)',
-    //                     'rgba(54, 162, 235, 0.5)',
-    //                     'rgba(255, 206, 86, 0.5)',
-    //                     'rgba(75, 192, 192, 0.5)',
-    //                     'rgba(153, 102, 255, 0.5)',
-    //                     'rgba(255, 159, 64, 0.5)',
-    //                     'rgba(201, 203, 207, 0.5)',
-    //                     'rgba(232, 67, 147, 0.5)',
-    //                     'rgba(45, 225, 120, 0.5)',
-    //                     'rgba(90, 90, 220, 0.5)',
-    //                     'rgba(255, 223, 186, 0.5)',
-    //                     'rgba(85, 239, 196, 0.5)',
-    //                 ],
-    //                 borderWidth: 1,
-    //                 borderColor: [
-    //                     'rgba(255, 99, 132, 1)',
-    //                     'rgba(54, 162, 235, 1)',
-    //                     'rgba(255, 206, 86, 1)',
-    //                     'rgba(75, 192, 192, 1)',
-    //                     'rgba(153, 102, 255, 1)',
-    //                     'rgba(255, 159, 64, 1)',
-    //                     'rgba(201, 203, 207, 1)',
-    //                     'rgba(232, 67, 147, 1)',
-    //                     'rgba(45, 225, 120, 1)',
-    //                     'rgba(90, 90, 220, 1)',
-    //                     'rgba(255, 223, 186, 1)',
-    //                     'rgba(85, 239, 196, 1)',
-    //                 ]
-    //             });
-
-    //             myPieChart.update();
-    //         },
-    //         error: function(error) {
-    //             console.log(error);
-    //         }
-    //     });
-    // });
-
     //barchart
     const barData = {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -219,7 +142,7 @@
             label: 'Case',
             data: @json($barData), // Dummy data
             backgroundColor: 'green', // Bar color
-            borderColor: 'rgba(54, 162, 235, 1)', // Bar border color
+            borderColor: 'black', // Bar border color
             borderWidth: 1
         }]
     };
@@ -256,35 +179,6 @@
         barConfig
     );
 
-    // Event listener to update the barChart 
-    // document.getElementById('barChartFilter').addEventListener('change', function(e) {
-    //     e.preventDefault();
-
-    //     $.ajax({
-    //         url: '/bar-chart-filter/',
-    //         method: 'GET',
-    //         data: {
-    //             "type": e.target.value,
-    //         },
-    //         success: function(response) {
-    //             myBarChart.data.datasets = [];
-
-    //             myBarChart.data.datasets.push({
-    //                 data: response,
-    //                 fill: true,
-    //                 backgroundColor: 'green',
-    //                 borderColor: 'rgba(54, 162, 235, 1)',
-    //                 borderWidth: 1,
-    //             });
-
-    //             myBarChart.update();
-    //         },
-    //         error: function(error) {
-    //             console.log(error);
-    //         }
-    //     });
-    // });
-
 
     //line chart
     const lineData = {
@@ -293,7 +187,7 @@
             label: 'Case',
             data: @json($values), // Dummy data
             backgroundColor: 'green', // Bar color
-            borderColor: 'rgba(54, 162, 235, 1)', // Bar border color
+            borderColor: 'black', // Bar border color
             borderWidth: 1
         }]
     };

@@ -1,85 +1,54 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\Resources;
 
+use App\Filament\Resources\UserResource\Pages;
+use App\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
-use Filament\Pages\Page;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
-class Profile extends Page implements HasForms
+class UserResource extends Resource
 {
-    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static ?string $model = User::class;
 
-    protected static string $view = 'filament.pages.profile';
+    protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
 
     protected static ?string $navigationGroup = 'Settings';
 
-    protected static ?int $navigationSort = 20;
-
-    public ?array $data = [];
-
-    public $user;
-
-    public function mount()
+    public static function canAccess(): bool
     {
-
-        $this->user = auth()->user();
-
-        $auth = auth()->user();
-
-        $this->form->fill([
-            'email' => $auth->email,
-            'number' => $auth->number,
-            'birthday' => $auth->birthday,
-            'age' => $auth->age,
-            'religion' => $auth->religion,
-            'citizenship' => $auth->citizenship,
-            'civil_status' => $auth->civil_status,
-            'address' => $auth->address,
-            'region' => $auth->region,
-        ]);
+        return auth()->user()->isAttorney();
     }
 
-    public function form(Form $form): Form
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make()
                     ->schema([
-                        TextInput::make('email')
-                            ->required(),
-                        TextInput::make('password')
-                            ->rules([
-                                Password::min(8) // Minimum length of 8 characters
-                                    ->mixedCase(), // Requires uppercase and lowercase letters
-                                'regex:/^(?=(.*\d){4,}).*$/', // Custom rule: At least 4 numeric characters
-                                'regex:/[!@#$%^&*(),.?":{}|<>]/', // Custom rule: At least one special character
-                            ])
-                            ->validationMessages([
-                                'regex' => 'The password must include at least 4 numeric characters and one special character.',
-                            ])
-                            ->minLength(8)
-                            ->maxLength(255)
-                            ->password()->dehydrated(fn ($state) => filled($state))
-                            ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
-                            ->revealable(),
-                        TextInput::make('number')
-                            ->required()
-                            ->tel()->telRegex('/^(0|63)\d{10}$/')
-                            ->label('Contact Number'),
-
-                        //
-                        DatePicker::make('birthday')->required(),
-                        TextInput::make('age')->required(),
+                        TextInput::make('name'),
+                        TextInput::make('email'),
+                        Select::make('gender')
+                            ->options([
+                                'Male' => 'Male',
+                                'Female' => 'Female',
+                            ]),
+                        TextInput::make('number')->tel()->telRegex('/^(0|63)\d{10}$/'),
+                        DatePicker::make('birthday'),
+                        TextInput::make('age'),
                         Select::make('religion')
-                            ->required()
                             ->options([
                                 'rc' => 'Roman Catholic',
                                 'islam' => 'Islam',
@@ -90,7 +59,6 @@ class Profile extends Page implements HasForms
                                 'others' => 'Others',
                             ]),
                         Select::make('citizenship')
-                            ->required()
                             ->searchable()
                             ->options([
                                 'afghan' => 'Afghan',
@@ -276,7 +244,6 @@ class Profile extends Page implements HasForms
                                 'zimbabwean' => 'Zimbabwean',
                             ]),
                         Select::make('civil_status')
-                            ->required()
                             ->label('Civil Status')
                             ->options([
                                 'Single' => 'Single',
@@ -285,9 +252,8 @@ class Profile extends Page implements HasForms
                                 'Divorced' => 'Divorced',
                                 'Separated' => 'Separated',
                             ]),
-                        TextInput::make('address')->required(),
+                        TextInput::make('address'),
                         Select::make('region')
-                            ->required()
                             ->options([
                                 'Region I' => 'Region I',
                                 'Region II' => 'Region II',
@@ -307,24 +273,69 @@ class Profile extends Page implements HasForms
                                 'CAR' => 'CAR',
                                 'BRMM' => 'BRMM',
                             ]),
-                    ])->columns(2),
-            ])
-            ->statePath('data');
+                    ])
+                    ->columns(2),
+            ]);
     }
 
-    public function submit()
+    public static function table(Table $table): Table
     {
-        $data = $this->form->getState();
+        return $table
+            ->columns([
+                TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('email')
+                    ->searchable(),
+                TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {
+                    'inactive' => 'danger',
+                    'active' => 'success',
+                })
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
+                    ->searchable(),
+            ])
+            ->filters([
+                TrashedFilter::make(),
+            ])
+            ->actions([
+                Action::make('update')
+                    ->icon('heroicon-o-arrow-path')
+                    ->form([
+                        Select::make('status')->options([
+                            'inactive' => 'Inactive',
+                            'active' => 'Active',
+                        ]),
+                    ])->action(function ($data, $record) {
+                        $record->update($data);
 
-        $this->user->update($data);
+                        Notification::make('')
+                            ->title('Status Updated')
+                            ->success()
+                            ->send();
+                    }),
+                Tables\Actions\EditAction::make(),
+                DeleteAction::make(),
+            ])
+            ->bulkActions([
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
+            ])
+            ->modifyQueryUsing(fn (Builder $query) => $query->where('role', 'staff')->latest());
+    }
 
-        session()->put([
-            'password_hash_'.auth()->getDefaultDriver() => $this->user->getAuthPassword(),
-        ]);
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
 
-        Notification::make()
-            ->title('Updated')
-            ->success()
-            ->send();
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
+        ];
     }
 }

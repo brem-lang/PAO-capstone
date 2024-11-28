@@ -10,6 +10,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -2148,6 +2149,7 @@ class InterviewSheet extends Page implements HasForms
                             Select::make('aol_type')
                                 ->dehydrated()
                                 ->label('Affidavit of Loss')
+                                ->live()
                                 ->options([
                                     'affidavit_loss' => 'Affidavit of Loss',
                                     'qr_code' => 'QR Code',
@@ -2159,6 +2161,33 @@ class InterviewSheet extends Page implements HasForms
                                     'lost_items_documents' => 'Lost Item/s Document/s',
                                 ]),
                             TextInput::make('id_number'),
+                            Select::make('stuDEmp')
+                                ->label('Student/Employee')
+                                ->options([
+                                    'student' => 'Student',
+                                    'employee' => 'Employee',
+                                ])
+                                ->visible(function (Get $get) {
+                                    return in_array($get('aol_type'), ['affidavit_loss', 'id', 'documents']);
+                                }),
+                            TextInput::make('documentTypeAOL')
+                                ->visible(function (Get $get) {
+                                    if (in_array($get('aol_type'), ['prof_nonprof_drivers_license', 'atm_passbook', 'id_philippine'])) {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                })
+                                ->label('Document Type'),
+                            Textarea::make('issuedByAOL')
+                                ->visible(function (Get $get) {
+                                    if (in_array($get('aol_type'), ['prof_nonprof_drivers_license', 'atm_passbook', 'id_philippine'])) {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                })
+                                ->label('Issued By'),
                         ])->columns(2),
                 ])
                     ->submitAction(view('filament.forms.notarizeFormButton')),
@@ -2853,6 +2882,13 @@ class InterviewSheet extends Page implements HasForms
             $formattedDate = $date->format('jS').' day of '.$date->format('F Y');
 
             $pdf = \PDF::loadView('pdf.'.$view, [
+                'age' => $this->notarizeData['age'],
+                'civilStatus' => $this->notarizeData['civilStatus'],
+                'stuDEmp' => $this->notarizeData['stuDEmp'],
+                'documentTypeAOL' => $this->notarizeData['documentTypeAOL'],
+                'issuedByAOL' => $this->notarizeData['issuedByAOL'],
+
+                //
                 'name' => $this->notarizeData['name'],
                 'idType' => $this->handleIDType($this->notarizeData['id_type']),
                 'id_number' => $this->notarizeData['id_number'],
