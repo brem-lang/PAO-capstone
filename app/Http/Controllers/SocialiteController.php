@@ -23,11 +23,11 @@ class SocialiteController extends Controller
 
         $user = User::firstWhere(['email' => $response->getEmail()]);
 
-        if ($user->status == 'inactive') {
-            auth()->guard()->logout();
-        }
-
         if ($user) {
+            if ($user->status == 'inactive') {
+                auth()->guard()->logout();
+            }
+
             $user->update([$provider.'_id' => $response->getId()]);
         } else {
             $user = User::create([
