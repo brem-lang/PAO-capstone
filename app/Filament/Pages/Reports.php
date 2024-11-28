@@ -141,8 +141,8 @@ class Reports extends Page implements HasForms
                     $totalLaborTerminated++;
                 }
             }
-
-            if ($value->created_at->year == Carbon::now()->year && $value->status === 'terminated') {
+            //old
+            if ($value->created_at->year == Carbon::now()->subYear()->year && $value->status === 'terminated') {
                 $totalCriminalTerminatedA++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedA++;
@@ -154,8 +154,8 @@ class Reports extends Page implements HasForms
                     $totalTerminatedA++;
                 }
             }
-
-            if ($value->created_at->year == Carbon::now()->subYear()->year && $value->status === 'terminated') {
+            //new
+            if ($value->created_at->year == Carbon::now()->year && $value->status === 'terminated') {
                 $totalCriminalTerminatedB++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedB++;
