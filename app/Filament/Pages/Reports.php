@@ -140,31 +140,31 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborTerminated++;
                 }
+            }
 
-                if ($value->created_at->between(Carbon::now()->startOfYear(), Carbon::now()->endOfYear())) {
+            if ($value->created_at->between(Carbon::now()->startOfYear(), Carbon::now()->endOfYear()) && $value->status === 'terminated') {
+                $totalCriminalTerminatedA++;
+                if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedA++;
-                    if ($value->case_type == 'Criminal') {
-                        $totalCriminalTerminatedA++;
-                    } elseif ($value->case_type == 'Civil') {
-                        $totalCivilTerminatedA++;
-                    } elseif ($value->case_type == 'Administrative') {
-                        $totalAdministrativeTerminatedA++;
-                    } elseif ($value->case_type == 'Labor') {
-                        $totalTerminatedA++;
-                    }
+                } elseif ($value->case_type == 'Civil') {
+                    $totalCivilTerminatedA++;
+                } elseif ($value->case_type == 'Administrative') {
+                    $totalAdministrativeTerminatedA++;
+                } elseif ($value->case_type == 'Labor') {
+                    $totalTerminatedA++;
                 }
+            }
 
-                if ($value->created_at->year == Carbon::now()->subYear()->year) {
+            if ($value->created_at->year == Carbon::now()->subYear()->year && $value->status === 'terminated') {
+                $totalCriminalTerminatedB++;
+                if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedB++;
-                    if ($value->case_type == 'Criminal') {
-                        $totalCriminalTerminatedB++;
-                    } elseif ($value->case_type == 'Civil') {
-                        $totalCivilTerminatedB++;
-                    } elseif ($value->case_type == 'Administrative') {
-                        $totalAdministrativeTerminatedB++;
-                    } elseif ($value->case_type == 'Labor') {
-                        $totalTerminatedB++;
-                    }
+                } elseif ($value->case_type == 'Civil') {
+                    $totalCivilTerminatedB++;
+                } elseif ($value->case_type == 'Administrative') {
+                    $totalAdministrativeTerminatedB++;
+                } elseif ($value->case_type == 'Labor') {
+                    $totalTerminatedB++;
                 }
             }
         }
@@ -258,7 +258,7 @@ class Reports extends Page implements HasForms
 
     public function search()
     {
-        $this->getTableData();
+        dd(true);
     }
 
     public function print()
