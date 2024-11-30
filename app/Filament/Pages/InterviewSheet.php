@@ -59,7 +59,17 @@ class InterviewSheet extends Page implements HasForms
     public function initializeForms()
     {
         if ($this->isAutoFill) {
-            $interviewSheet = ModelsInterViewSheet::where('user_id', auth()->user()->id)->latest()->first()->toArray();
+
+            $interviewSheet = ModelsInterViewSheet::where('user_id', auth()->user()->id)
+                ->latest()
+                ->first();
+
+            if ($interviewSheet) {
+                $interviewSheet = $interviewSheet->toArray();
+            } else {
+                // Handle the case where there is no data, for example, return an empty array
+                $interviewSheet = [];
+            }
 
             $this->notarizeForm->fill($interviewSheet);
 
