@@ -9,6 +9,7 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -33,7 +34,7 @@ class InterviewSheet extends Page implements HasForms
 
     protected static ?string $title = '';
 
-    protected static ?string $navigationLabel = 'InterView Sheet';
+    protected static ?string $navigationLabel = 'Interview Sheet';
 
     public ?array $adviceData = [];
 
@@ -43,6 +44,8 @@ class InterviewSheet extends Page implements HasForms
 
     public ?array $dummyNotarizeData = [];
 
+    public $isAutoFill = false;
+
     public static function canAccess(): bool
     {
         return auth()->user()->isClient();
@@ -50,14 +53,38 @@ class InterviewSheet extends Page implements HasForms
 
     public function mount()
     {
-        $this->notarizeForm->fill([
-            'date' => now()->format('Y-m-d'),
-            'region' => 'Region XI',
-        ]);
+        $this->initializeForms();
+    }
 
-        $this->adviceForm->fill([
-            'region' => 'Region XI',
-        ]);
+    public function initializeForms()
+    {
+        if ($this->isAutoFill) {
+            $interviewSheet = ModelsInterViewSheet::where('user_id', auth()->user()->id)->latest()->first()->toArray();
+
+            $this->notarizeForm->fill($interviewSheet);
+
+            $this->adviceForm->fill($interviewSheet);
+        } else {
+            $this->notarizeForm->fill([
+                'date' => now()->format('Y-m-d'),
+                'region' => 'Region XI',
+                'regions' => '11',
+                'province' => '1102300000',
+            ]);
+
+            $this->adviceForm->fill([
+                'region' => 'Region XI',
+                'regions' => '11',
+                'province' => '1102300000',
+                'newAOL_type' => 'Affidavit',
+            ]);
+        }
+    }
+
+    public function autoFill()
+    {
+        $this->isAutoFill = true;
+        $this->initializeForms();
     }
 
     protected function getForms(): array
@@ -516,14 +543,11 @@ class InterviewSheet extends Page implements HasForms
                             FieldSet::make('')
                                 ->schema([
                                     Select::make('regions')->required()
-                                        ->preload()
                                         ->required()
                                         ->options(function () {
                                             return DB::table('regions')->pluck('name', 'region_id');
-                                        })
-                                        ->live(),
+                                        }),
                                     Select::make('province')->required()
-                                        ->preload()
                                         ->required()
                                         ->options(function () {
                                             return DB::table('provinces')->pluck('name', 'code');
@@ -2159,6 +2183,7 @@ class InterviewSheet extends Page implements HasForms
                                     'documents' => 'Document/s',
                                     'prof_nonprof_drivers_license' => 'Prof/Non-Prof Driver\'s License',
                                     'lost_items_documents' => 'Lost Item/s Document/s',
+                                    'new_type' => 'New Type',
                                 ]),
                             TextInput::make('id_number'),
                             Select::make('stuDEmp')
@@ -2188,6 +2213,24 @@ class InterviewSheet extends Page implements HasForms
                                     }
                                 })
                                 ->label('Issued By'),
+                            TextInput::make('newAOL_type')
+                                ->label('Affidavit Name')
+                                ->columnSpanFull()
+                                ->visible(function (Get $get) {
+                                    return $get('aol_type') == 'new_type';
+                                }),
+                            Repeater::make('statements')
+                                ->reorderable(true)
+                                ->addActionLabel('Add Statement')
+                                ->label('Statements')
+                                ->simple(
+                                    Textarea::make('statement')->required(),
+                                )
+                                ->columns(1)
+                                ->columnSpanFull()
+                                ->visible(function (Get $get) {
+                                    return $get('aol_type') == 'new_type';
+                                }),
                         ])->columns(2),
                 ])
                     ->submitAction(view('filament.forms.notarizeFormButton')),
@@ -2835,7 +2878,7 @@ class InterviewSheet extends Page implements HasForms
 
     public function downloadAol()
     {
-        if ($this->notarizeData['id_type'] === null || $this->notarizeData['aol_type'] === null || $this->notarizeData['id_number'] === null) {
+        if ($this->notarizeData['id_type'] === null || $this->notarizeData['aol_type'] === null || $this->notarizeData['id_number'] === null || $this->notarizeData['newAOL_type'] === null) {
             Notification::make()
                 ->title('Please Select fill up to Download AOL')
                 ->warning()
@@ -2875,6 +2918,10 @@ class InterviewSheet extends Page implements HasForms
                 case 'lost_items_documents':
                     $view = 'LostItem';
                     break;
+
+                case 'new_type':
+                    $view = 'newAOL';
+                    break;
             }
 
             $date = Carbon::now(); // Or any date, e.g., Carbon::parse('2024-11-23')
@@ -2887,7 +2934,8 @@ class InterviewSheet extends Page implements HasForms
                 'stuDEmp' => $this->notarizeData['stuDEmp'],
                 'documentTypeAOL' => $this->notarizeData['documentTypeAOL'],
                 'issuedByAOL' => $this->notarizeData['issuedByAOL'],
-
+                'newAOL_type' => $this->notarizeData['newAOL_type'] ?? null,
+                'statements' => array_column($this->notarizeData['statements'], 'statement') ?? null,
                 //
                 'name' => $this->notarizeData['name'],
                 'idType' => $this->handleIDType($this->notarizeData['id_type']),
@@ -2958,6 +3006,11 @@ class InterviewSheet extends Page implements HasForms
             'id_type' => $this->notarizeData['id_type'],
             'aol_type' => $this->notarizeData['aol_type'],
             'id_number' => $this->notarizeData['id_number'],
+            'stuDEmp' => $this->notarizeData['stuDEmp'],
+            'documentTypeAOL' => $this->notarizeData['documentTypeAOL'],
+            'issuedByAOL' => $this->notarizeData['issuedByAOL'],
+            'statements' => array_column($this->notarizeData['statements'], 'statement'),
+            'newAOL_type' => $this->notarizeData['newAOL_type'],
         ];
         $data = array_merge($this->previewNotarizeForm->getState(), $user);
 

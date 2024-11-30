@@ -150,7 +150,7 @@
             </div>
         </div>
         <div class="date">
-            <span style="font-size: 10px;">Date: test = test </span><br>
+            <span style="font-size: 10px;">Date: {{ $from }} - {{ $to }}</span><br>
             <span style="font-size: 10px;">Exported Date: {{ now()->timezone('Asia/Manila')->format('F j, Y') }}</span>
         </div>
         <div
@@ -182,92 +182,115 @@
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;">1. Cases pending, beginning</td>
-                        <td>{{ $casePending[0]['totalPending'] }}</td>
-                        <td>{{ $casePending[0]['crPending'] }}</td>
-                        <td>{{ $casePending[0]['cvPending'] }}</td>
-                        <td>{{ $casePending[0]['adPending'] }}</td>
-                        <td></td>
-                        <td>{{ $casePending[0]['adm3Pending'] }}</td>
+                        <td>{{ $casePending['totalPending'] }}</td>
+                        <td>{{ $casePending['crPending'] }}</td>
+                        <td>{{ $casePending['cvPending'] }}</td>
+                        <td>{{ $casePending['adPending'] }}</td>
+                        <td>0</td>
+                        <td>{{ $casePending['adm3Pending'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;"> 2. New Cases Received</td>
-                        <td>{{ $caseReceived[0]['totalNewReceived'] }}</td>
-                        <td>{{ $caseReceived[0]['totalCriminalReceived'] }}</td>
-                        <td>{{ $caseReceived[0]['totalCivilReceived'] }}</td>
-                        <td>{{ $caseReceived[0]['totalAdministrativeReceived'] }}</td>
-                        <td></td>
-                        <td>{{ $caseReceived[0]['totalLaborReceived'] }}</td>
+                        <td>{{ $caseReceived['totalNewReceived'] }}</td>
+                        <td>{{ $caseReceived['totalCriminalReceived'] }}</td>
+                        <td>{{ $caseReceived['totalCivilReceived'] }}</td>
+                        <td>{{ $caseReceived['totalAdministrativeReceived'] }}</td>
+                        <td>0</td>
+                        <td>{{ $caseReceived['totalLaborReceived'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 20px;">2.1. No. of clients involved</td>
-                        <td>{{ $caseReceived2One[0]['totalNewReceived2One'] }}</td>
-                        <td>{{ $caseReceived2One[0]['totalCriminalReceived2One'] }}</td>
-                        <td>{{ $caseReceived2One[0]['totalCivilReceived2One'] }}</td>
-                        <td>{{ $caseReceived2One[0]['totalAdministrativeReceived2One'] }}</td>
-                        <td></td>
-                        <td>{{ $caseReceived2One[0]['totalLaborReceived2One'] }}</td>
+                        <td x-text="items.caseReceived2One.totalNewReceived2One">
+                            {{ $caseReceived2One['totalNewReceived2One'] }}</td>
+                        <td x-text="items.caseReceived2One.totalCriminalReceived2One">
+                            {{ $caseReceived2One['totalCriminalReceived2One'] }}</td>
+                        <td x-text="items.caseReceived2One.totalCivilReceived2One">
+                            {{ $caseReceived2One['totalCivilReceived2One'] }}</td>
+                        <td x-text="items.caseReceived2One.totalAdministrativeReceived2One">
+                            {{ $caseReceived2One['totalAdministrativeReceived2One'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.caseReceived2One.totalLaborReceived2One">
+                            {{ $caseReceived2One['totalLaborReceived2One'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;"> 3. Cases received from another PAO lawyer</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;"> 4. Cases transferred to another PAO lawyer</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;"> 5. Total Cases Handled (Item 1+2+3-4)</td>
-                        <td>{{ $CaseHandled[0]['totalCaseHandled'] }}</td>
-                        <td>{{ $CaseHandled[0]['totalCriminalCaseHandled'] }}</td>
-                        <td>{{ $CaseHandled[0]['totalCivilCaseHandled'] }}</td>
-                        <td>{{ $CaseHandled[0]['totalAdministrativeCaseHandled'] }}</td>
-                        <td></td>
-                        <td>{{ $CaseHandled[0]['totalLaborCaseHandled'] }}</td>
+                        <td x-text="items.CaseHandled.totalCaseHandled">{{ $CaseHandled['totalCaseHandled'] }}</td>
+                        <td x-text="items.CaseHandled.totalCriminalCaseHandled">
+                            {{ $CaseHandled['totalCriminalCaseHandled'] }}</td>
+                        <td x-text="items.CaseHandled.totalCivilCaseHandled">
+                            {{ $CaseHandled['totalCivilCaseHandled'] }}</td>
+                        <td x-text="items.CaseHandled.totalAdministrativeCaseHandled">
+                            {{ $CaseHandled['totalAdministrativeCaseHandled'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.CaseHandled.totalLaborCaseHandled">
+                            {{ $CaseHandled['totalLaborCaseHandled'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;"> 6. Total Terminated Cases/Disposition (Old + New)</td>
-                        <td>{{ $terminated[0]['totalTerminated'] }}</td>
-                        <td>{{ $terminated[0]['totalCriminalTerminated'] }}</td>
-                        <td>{{ $terminated[0]['totalCivilTerminated'] }}</td>
-                        <td>{{ $terminated[0]['totalAdministrativeTerminated'] }}</td>
-                        <td></td>
-                        <td>{{ $terminated[0]['totalLaborTerminated'] }}</td>
+                        <td x-text="items.terminated.totalTerminated">{{ $terminated['totalTerminated'] }}</td>
+                        <td x-text="items.terminated.totalCriminalTerminated">
+                            {{ $terminated['totalCriminalTerminated'] }}</td>
+                        <td x-text="items.terminated.totalCivilTerminated">{{ $terminated['totalCivilTerminated'] }}
+                        </td>
+                        <td x-text="items.terminated.totalAdministrativeTerminated">
+                            {{ $terminated['totalAdministrativeTerminated'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.terminated.totalLaborTerminated">{{ $terminated['totalLaborTerminated'] }}
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 20px;"> a. Old Cases</td>
-                        <td>{{ $terminatedA[0]['totalTerminatedA'] }}</td>
-                        <td>{{ $terminatedA[0]['totalCriminalTerminatedA'] }}</td>
-                        <td>{{ $terminatedA[0]['totalCivilTerminatedA'] }}</td>
-                        <td>{{ $terminatedA[0]['totalAdministrativeTerminatedA'] }}</td>
-                        <td></td>
-                        <td>{{ $terminatedA[0]['totalLaborTerminatedA'] }}</td>
+                        <td x-text="items.terminatedA.totalTerminatedA">{{ $terminatedA['totalTerminatedA'] }}</td>
+                        <td x-text="items.terminatedA.totalCriminalTerminatedA">
+                            {{ $terminatedA['totalCriminalTerminatedA'] }}</td>
+                        <td x-text="items.terminatedA.totalCivilTerminatedA">
+                            {{ $terminatedA['totalCivilTerminatedA'] }}</td>
+                        <td x-text="items.terminatedA.totalAdministrativeTerminatedA">
+                            {{ $terminatedA['totalAdministrativeTerminatedA'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.terminatedA.totalLaborTerminatedA">
+                            {{ $terminatedA['totalLaborTerminatedA'] }}
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 20px;"> b. New Cases</td>
-                        <td>{{ $terminatedB[0]['totalTerminatedB'] }}</td>
-                        <td>{{ $terminatedB[0]['totalCriminalTerminatedB'] }}</td>
-                        <td>{{ $terminatedB[0]['totalCivilTerminatedB'] }}</td>
-                        <td>{{ $terminatedB[0]['totalAdministrativeTerminatedB'] }}</td>
-                        <td></td>
-                        <td>{{ $terminatedB[0]['totalLaborTerminatedB'] }}</td>
+                        <td x-text="items.terminatedB.totalTerminatedB">{{ $terminatedB['totalTerminatedB'] }}</td>
+                        <td x-text="items.terminatedB.totalCriminalTerminatedB">
+                            {{ $terminatedB['totalCriminalTerminatedB'] }}</td>
+                        <td x-text="items.terminatedB.totalCivilTerminatedB">
+                            {{ $terminatedB['totalCivilTerminatedB'] }}</td>
+                        <td x-text="items.terminatedB.totalAdministrativeTerminatedB">
+                            {{ $terminatedB['totalAdministrativeTerminatedB'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.terminatedB.totalLaborTerminatedB">
+                            {{ $terminatedB['totalLaborTerminatedB'] }}
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
@@ -282,194 +305,235 @@
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;"> I. Favorable Dispositions to Clients </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> a. Acquitted </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.acquited.totalAcquited">{{ $acquited['totalAcquited'] }}</td>
+                        <td x-text="items.acquited.totalCriminalAcquited">
+                            {{ $acquited['totalCriminalAcquited'] }}</td>
+                        <td x-text="items.acquited.totalCivilAcquited">
+                            {{ $acquited['totalCivilAcquited'] }}</td>
+                        <td x-text="items.acquited.totalAdministrativeAcquited">
+                            {{ $acquited['totalAdministrativeAcquited'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.acquited.totalLaborAcquited">{{ $acquited['totalLaborAcquited'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> a.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> b. Dismissed with prejudice</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.dismissedwithPrejudice.totalDismissedWithPrejudice">
+                            {{ $dismissedwithPrejudice['totalDismissedWithPrejudice'] }}</td>
+                        <td x-text="items.dismissedwithPrejudice.totalCriminalDismissedWithPrejudice">
+                            {{ $dismissedwithPrejudice['totalCriminalDismissedWithPrejudice'] }}</td>
+                        <td x-text="items.dismissedwithPrejudice.totalCivilDismissedWithPrejudice">
+                            {{ $dismissedwithPrejudice['totalCivilDismissedWithPrejudice'] }}</td>
+                        <td x-text="items.dismissedwithPrejudice.totalAdministrativeDismissedWithPrejudice">
+                            {{ $dismissedwithPrejudice['totalAdministrativeDismissedWithPrejudice'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.dismissedwithPrejudice.totalLaborDismissedWithPrejudice">
+                            {{ $dismissedwithPrejudice['totalLaborDismissedWithPrejudice'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> b.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> c. Motion to quash granted</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.motionToQuashGranted.totalMotionToQuashGranted">
+                            {{ $motionToQuashGranted['totalMotionToQuashGranted'] }}</td>
+                        <td x-text="items.motionToQuashGranted.totalCriminalMotionToQuashGranted">
+                            {{ $motionToQuashGranted['totalCriminalMotionToQuashGranted'] }}</td>
+                        <td x-text="items.motionToQuashGranted.totalCivilMotionToQuashGranted">
+                            {{ $motionToQuashGranted['totalCivilMotionToQuashGranted'] }}</td>
+                        <td x-text="items.motionToQuashGranted.totalAdministrativeMotionToQuashGranted">
+                            {{ $motionToQuashGranted['totalAdministrativeMotionToQuashGranted'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.motionToQuashGranted.totalLaborMotionToQuashGranted">
+                            {{ $motionToQuashGranted['totalLaborMotionToQuashGranted'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> c.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> d. Demurrer to evidence granted</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.demurrerToEvidenceGranted.totalDemurrerToEvidenceGranted">
+                            {{ $demurrerToEvidenceGranted['totalDemurrerToEvidenceGranted'] }}</td>
+                        <td x-text="items.demurrerToEvidenceGranted.totalCriminalDemurrerToEvidenceGranted">
+                            {{ $demurrerToEvidenceGranted['totalCriminalDemurrerToEvidenceGranted'] }}</td>
+                        <td x-text="items.demurrerToEvidenceGranted.totalCivilDemurrerToEvidenceGranted">
+                            {{ $demurrerToEvidenceGranted['totalCivilDemurrerToEvidenceGranted'] }}</td>
+                        <td x-text="items.demurrerToEvidenceGranted.totalAdministrativeDemurrerToEvidenceGranted">
+                            {{ $demurrerToEvidenceGranted['totalAdministrativeDemurrerToEvidenceGranted'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.demurrerToEvidenceGranted.totalLaborDemurrerToEvidenceGranted">
+                            {{ $demurrerToEvidenceGranted['totalLaborDemurrerToEvidenceGranted'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> d.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> e. Provisionally dismissed</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.provisionallyDismissed.totalProvisionallyDismissed">
+                            {{ $provisionallyDismissed['totalProvisionallyDismissed'] }}</td>
+                        <td x-text="items.provisionallyDismissed.totalCriminalProvisionallyDismissed">
+                            {{ $provisionallyDismissed['totalCriminalProvisionallyDismissed'] }}</td>
+                        <td x-text="items.provisionallyDismissed.totalCivilProvisionallyDismissed">
+                            {{ $provisionallyDismissed['totalCivilProvisionallyDismissed'] }}</td>
+                        <td x-text="items.provisionallyDismissed.totalAdministrativeProvisionallyDismissed">
+                            {{ $provisionallyDismissed['totalAdministrativeProvisionallyDismissed'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.provisionallyDismissed.totalLaborProvisionallyDismissed">
+                            {{ $provisionallyDismissed['totalLaborProvisionallyDismissed'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> e.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> f. Convicted to lesser offense</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.convictedToLesserOffense.totalConvictedToLesserOffense">
+                            {{ $convictedToLesserOffense['totalConvictedToLesserOffense'] }}</td>
+                        <td x-text="items.convictedToLesserOffense.totalCriminalConvictedToLesserOffense">
+                            {{ $convictedToLesserOffense['totalCriminalConvictedToLesserOffense'] }}</td>
+                        <td x-text="items.convictedToLesserOffense.totalCivilConvictedToLesserOffense">
+                            {{ $convictedToLesserOffense['totalCivilConvictedToLesserOffense'] }}</td>
+                        <td x-text="items.convictedToLesserOffense.totalAdministrativeConvictedToLesserOffense">
+                            {{ $convictedToLesserOffense['totalAdministrativeConvictedToLesserOffense'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.convictedToLesserOffense.totalLaborConvictedToLesserOffense">
+                            {{ $convictedToLesserOffense['totalLaborConvictedToLesserOffense'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> f.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> g. Probation granted</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.probationGranted.totalProbationGranted">
+                            {{ $probationGranted['totalProbationGranted'] }}</td>
+                        <td x-text="items.probationGranted.totalCriminalProbationGranted">
+                            {{ $probationGranted['totalCriminalProbationGranted'] }}</td>
+                        <td x-text="items.probationGranted.totalCivilProbationGranted">
+                            {{ $probationGranted['totalCivilProbationGranted'] }}</td>
+                        <td x-text="items.probationGranted.totalAdministrativeProbationGranted">
+                            {{ $probationGranted['totalAdministrativeProbationGranted'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.probationGranted.totalLaborProbationGranted">
+                            {{ $probationGranted['totalLaborProbationGranted'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> g.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td style="font-weight: bold;text-indent: 20px;"> h. Won (civil, labor, and administrative)</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style="font-weight: bold;text-indent: 20px;"> h. Won (civil, labor, and administrative)
+                        </td>
+                        <td x-text="items.wonCivil.totalWonCivil">{{ $wonCivil['totalWonCivil'] }}</td>
+                        <td x-text="items.wonCivil.totalCriminalWonCivil">{{ $wonCivil['totalCriminalWonCivil'] }}
+                        </td>
+                        <td x-text="items.wonCivil.totalCivilWonCivil">{{ $wonCivil['totalCivilWonCivil'] }}</td>
+                        <td x-text="items.wonCivil.totalAdministrativeWonCivil">
+                            {{ $wonCivil['totalAdministrativeWonCivil'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.wonCivil.totalLaborWonCivil">{{ $wonCivil['totalLaborWonCivil'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> h.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td style="font-weight: bold;text-indent: 20px;"> i. Granted lesser award (civil, administrative
-                            &
+                        <td style="font-weight: bold;text-indent: 20px;"> i. Granted lesser award (civil,
+                            administrative &
                             labor)</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.grantedAwarded.totalGrantedAwarded">
+                            {{ $grantedAwarded['totalGrantedAwarded'] }}</td>
+                        <td x-text="items.grantedAwarded.totalCriminalGrantedAwarded">
+                            {{ $grantedAwarded['totalCriminalGrantedAwarded'] }}</td>
+                        <td x-text="items.grantedAwarded.totalCivilGrantedAwarded">
+                            {{ $grantedAwarded['totalCivilGrantedAwarded'] }}</td>
+                        <td x-text="items.grantedAwarded.totalAdministrativeGrantedAwarded">
+                            {{ $grantedAwarded['totalAdministrativeGrantedAwarded'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.grantedAwarded.totalLaborGrantedAwarded">
+                            {{ $grantedAwarded['totalLaborGrantedAwarded'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> i.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -477,307 +541,340 @@
                             agreement
                             (civil & labor)
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.dismissedCompromise.totalDismissedCompromise">
+                            {{ $dismissedCompromise['totalDismissedCompromise'] }}</td>
+                        <td x-text="items.dismissedCompromise.totalCriminalDismissedCompromise">
+                            {{ $dismissedCompromise['totalCriminalDismissedCompromise'] }}</td>
+                        <td x-text="items.dismissedCompromise.totalCivilDismissedCompromise">
+                            {{ $dismissedCompromise['totalCivilDismissedCompromise'] }}</td>
+                        <td x-text="items.dismissedCompromise.totalAdministrativeDismissedCompromise">
+                            {{ $dismissedCompromise['totalAdministrativeDismissedCompromise'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.dismissedCompromise.totalLaborDismissedCompromise">
+                            {{ $dismissedCompromise['totalLaborDismissedCompromise'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;"> j.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td style="font-weight: bold;text-indent: 20px;">k. Criminal cases for preliminary investigation
+                        <td style="font-weight: bold;text-indent: 20px;">k. Criminal cases for preliminary
+                            investigation
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.casesForPreliminaryInvestigation.totalCasePreliminaryInvestigation">
+                            {{ $casesForPreliminaryInvestigation['totalCasePreliminaryInvestigation'] }}</td>
+                        <td
+                            x-text="items.casesForPreliminaryInvestigation.totalCriminalCasesForPreliminaryInvestigation">
+                            {{ $casesForPreliminaryInvestigation['totalCriminalCasesForPreliminaryInvestigation'] }}
+                        </td>
+                        <td x-text="items.casesForPreliminaryInvestigation.totalCivilCasesForPreliminaryInvestigation">
+                            {{ $casesForPreliminaryInvestigation['totalCivilCasesForPreliminaryInvestigation'] }}</td>
+                        <td
+                            x-text="items.casesForPreliminaryInvestigation.totalAdministrativeCasesForPreliminaryInvestigation">
+                            {{ $casesForPreliminaryInvestigation['totalAdministrativeCasesForPreliminaryInvestigation'] }}
+                        </td>
+                        <td>0</td>
+                        <td x-text="items.casesForPreliminaryInvestigation.totalLaborCasesForPreliminaryInvestigation">
+                            {{ $casesForPreliminaryInvestigation['totalLaborCasesForPreliminaryInvestigation'] }}
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;"> k.1. Case filed in court (complainant) </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;">k.1.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;">k.2. Dismissed (respondent)</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;">k.2.1. No. of clients involved </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;">l. Pre-trial releases and other dispositions
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;">l.1. Bail (Non-bailable offense)</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;">l.1.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;">l.2. Recognizance</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;">l.2.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;">l.3. Diversion proceedings / Intervention</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;"> l.3.1. No. of clients involved </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;">l.4. Suspended sentence</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;"> l.4.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;">l.5. Maximum imposable penalty served</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;"> l.5.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;">II. Unfavorable Dispositions to Clients </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> a. Convicted as charged </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.convictedAsCharged.totalConvictedAsCharged">
+                            {{ $convictedAsCharged['totalConvictedAsCharged'] }}</td>
+                        <td x-text="items.convictedAsCharged.totalCriminalConvictedAsCharged">
+                            {{ $convictedAsCharged['totalCriminalConvictedAsCharged'] }}</td>
+                        <td x-text="items.convictedAsCharged.totalCivilConvictedAsCharged">
+                            {{ $convictedAsCharged['totalCivilConvictedAsCharged'] }}</td>
+                        <td x-text="items.convictedAsCharged.totalAdministrativeConvictedAsCharged">
+                            {{ $convictedAsCharged['totalAdministrativeConvictedAsCharged'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.convictedAsCharged.totalLaborConvictedAsCharged">
+                            {{ $convictedAsCharged['totalLaborConvictedAsCharged'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;">a.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;">b. Lost (civil, administrative & labor)</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.lostCivilLabor.totalLostCivilAdministrativeLabor">
+                            {{ $lostCivilLabor['totalLostCivilAdministrativeLabor'] }}</td>
+                        <td x-text="items.lostCivilLabor.totalCriminalCivilAdministrativeLabor">
+                            {{ $lostCivilLabor['totalCriminalCivilAdministrativeLabor'] }}</td>
+                        <td x-text="items.lostCivilLabor.totalCivilCivilAdministrativeLabor">
+                            {{ $lostCivilLabor['totalCivilCivilAdministrativeLabor'] }}</td>
+                        <td x-text="items.lostCivilLabor.totalAdministrativeCivilAdministrativeLabor">
+                            {{ $lostCivilLabor['totalAdministrativeCivilAdministrativeLabor'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.lostCivilLabor.totalLaborCivilAdministrativeLabor">
+                            {{ $lostCivilLabor['totalLaborCivilAdministrativeLabor'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;">b.1. No. of clients involved</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;">c. Dismissed (civil, administrative & labor)
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.dismissedCAL.totalDismissedCAL">{{ $dismissedCAL['totalDismissedCAL'] }}
+                        </td>
+                        <td x-text="items.dismissedCAL.totalCriminalCAL">{{ $dismissedCAL['totalCriminalCAL'] }}</td>
+                        <td x-text="items.dismissedCAL.totalCivilCAL">{{ $dismissedCAL['totalCivilCAL'] }}</td>
+                        <td x-text="items.dismissedCAL.totalAdministrativeCAL">
+                            {{ $dismissedCAL['totalAdministrativeCAL'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.dismissedCAL.totalLaborCAL">{{ $dismissedCAL['totalLaborCAL'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;">c.1. No. of clients involved </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="font-weight: bold;text-indent: 20px;"> d. Criminal cases for preliminary
                             investigation
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td x-text="items.preliminaryInvestigation.totalPreliminaryInvestigation">
+                            {{ $preliminaryInvestigation['totalPreliminaryInvestigation'] }}</td>
+                        <td x-text="items.preliminaryInvestigation.totalCriminalPreliminaryInvestigation">
+                            {{ $preliminaryInvestigation['totalCriminalPreliminaryInvestigation'] }}</td>
+                        <td x-text="items.preliminaryInvestigation.totalCivilPreliminaryInvestigation">
+                            {{ $preliminaryInvestigation['totalCivilPreliminaryInvestigation'] }}</td>
+                        <td x-text="items.preliminaryInvestigation.totalAdministrativePreliminaryInvestigation">
+                            {{ $preliminaryInvestigation['totalAdministrativePreliminaryInvestigation'] }}</td>
+                        <td>0</td>
+                        <td x-text="items.preliminaryInvestigation.totalLaborPreliminaryInvestigation">
+                            {{ $preliminaryInvestigation['totalLaborPreliminaryInvestigation'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;">d.1. Dismissed (complainant) </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;"> d.1.1. No. of clients involved </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 40px;font-weight: bold;">d.2. Cases filed in court (respondent) </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td style="text-indent: 60px;">d.2.1. No. of clients involved </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
                     </tr>
                 </tbody>
             </table>

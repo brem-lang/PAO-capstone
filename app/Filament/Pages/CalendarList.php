@@ -5,7 +5,6 @@ namespace App\Filament\Pages;
 use App\Models\CalendarEvents;
 use App\Models\User;
 use App\Services\EmailSender;
-use Carbon\Carbon;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -14,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteAction;
@@ -104,24 +104,6 @@ class CalendarList extends Page implements HasForms, HasTable
                     ->formatStateUsing(function ($state) {
                         return ucfirst($state) ?? 'n/a';
                     }),
-                // ->icon(function ($state) {
-                //     $startDate = Carbon::parse($state);
-                //     $now = Carbon::now();
-                //     if ($startDate->greaterThan($now)) {
-                //         return 'heroicon-o-x-circle';
-                //     } elseif ($startDate->lessThan($now)) {
-                //         return 'heroicon-o-bell-alert';
-                //     }
-                // })
-                // ->color(function ($state) {
-                //     $startDate = Carbon::parse($state);
-                //     $now = Carbon::now();
-                //     if ($startDate->greaterThan($now)) {
-                //         return 'danger';
-                //     } elseif ($startDate->lessThan($now)) {
-                //         return 'warning';
-                //     }
-                // }),
             ])
             ->filters([
                 SelectFilter::make('user_id')
@@ -138,21 +120,20 @@ class CalendarList extends Page implements HasForms, HasTable
                         $record->save();
 
                         (new EmailSender)->handle($record->user, $data, 'reschedule');
+
+                        Notification::make()
+                            ->title('Event Rescheduled')
+                            ->success()
+                            ->send();
                     })
                     ->form([
+                        TextInput::make('title')
+                            ->label('Place')
+                            ->required(),
                         DateTimePicker::make('startDate')
                             ->label('Start Date')
                             ->required(),
                     ])
-                    ->visible(function ($record) {
-                        $startDate = Carbon::parse($record->startDate);
-                        $now = Carbon::now();
-                        if ($startDate->greaterThan($now)) {
-                            return false;
-                        } elseif ($startDate->lessThan($now)) {
-                            return true;
-                        }
-                    })
                     ->label('Reschedule'),
                 EditAction::make('edit')
                     ->form(fn (Form $form) => $this->form($form)),

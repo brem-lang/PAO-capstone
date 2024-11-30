@@ -15,6 +15,15 @@
                         Notarize
                     </x-filament::button>
                 </div>
+
+                <div>
+                    <label>
+                        <x-filament::input.checkbox @click="$wire.autoFill();" />
+                        <span>
+                            Use Previous Data
+                        </span>
+                    </label>
+                </div>
             </div>
         </template>
 

@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -63,13 +62,11 @@ class Calendar extends Page implements HasForms
                 Section::make()
                     ->schema([
                         Select::make('user_id')
+                            ->required()
                             ->label('User')
                             ->options(User::where('role', 'client')->pluck('name', 'id')),
                         TextInput::make('title')
-                            ->label('Title')
-                            ->required(),
-                        Textarea::make('description')
-                            ->label('Description')
+                            ->label('Place')
                             ->required(),
                         DateTimePicker::make('startDate')
                             ->label('Start Date')
@@ -96,7 +93,6 @@ class Calendar extends Page implements HasForms
         Notification::make()
             ->title('You have event on '.$formattedDate)
             ->success()
-            ->body($data['description'])
             ->actions([
                 Action::make('read')
                     ->label('Mark as read')

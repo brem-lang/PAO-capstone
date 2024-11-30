@@ -48,7 +48,7 @@ class MyRequest extends Page implements HasForms, HasTable
                     ->label('Purpose')
                     ->formatStateUsing(fn (string $state): string => ucfirst($state))
                     ->weight(FontWeight::Bold),
-                TextColumn::make('created_at')->label('Date Transact')->date('F d, Y h:i A')->timezone('Asia/Manila')
+                TextColumn::make('created_at')->label('Date of Transaction')->date('F d, Y h:i A')->timezone('Asia/Manila')
                     ->searchable(),
                 TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {
                     'approved' => 'success',

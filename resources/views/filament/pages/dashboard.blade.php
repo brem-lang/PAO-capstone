@@ -99,12 +99,13 @@
 <script type="module">
     //pie chart
     const dataPie = {
-        labels: [@json($pieLabel)],
+        labels: ['Advice', 'Notarize'],
         datasets: [{
             label: 'Data',
-            data: [@json($pieData)],
+            data: @json($pieData),
             backgroundColor: [
-                'green',
+                '#90CCE1',
+                '#ADDFAD',
             ],
             borderColor: [
                 'black',
@@ -141,7 +142,7 @@
         datasets: [{
             label: 'Case',
             data: @json($barData), // Dummy data
-            backgroundColor: 'green', // Bar color
+            backgroundColor: '#2196f3', // Bar color
             borderColor: 'black', // Bar border color
             borderWidth: 1
         }]

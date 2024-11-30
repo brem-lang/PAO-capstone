@@ -9,12 +9,14 @@
             </x-filament::button>
         </div>
         <div style="margin-top: 31px;">
-            <x-filament::button icon="heroicon-o-printer" style="width: 100px;" wire:click.prevent="print">
+            <!-- Button that shows after loading is complete -->
+            <x-filament::button icon="heroicon-o-printer" style="width: 100px;" wire:click.prevent="print"
+                wire:target="getData" wire:loading.remove>
                 Print
             </x-filament::button>
         </div>
     </div>
-    <div
+    <div x-init="$wire.getData()" x-data="{ items: @entangle('case').live }"
         class="w-full gap-4 fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
         <table class="styled-table w-full">
             <thead>
@@ -43,92 +45,92 @@
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;">1. Cases pending, beginning</td>
-                    <td>{{ $casePending[0]['totalPending'] }}</td>
-                    <td>{{ $casePending[0]['crPending'] }}</td>
-                    <td>{{ $casePending[0]['cvPending'] }}</td>
-                    <td>{{ $casePending[0]['adPending'] }}</td>
-                    <td></td>
-                    <td>{{ $casePending[0]['adm3Pending'] }}</td>
+                    <td x-text="items.casePending.totalPending"></td>
+                    <td x-text="items.casePending.crPending"></td>
+                    <td x-text="items.casePending.cvPending"></td>
+                    <td x-text="items.casePending.adPending"></td>
+                    <td>0</td>
+                    <td x-text="items.casePending.adm3Pending"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;"> 2. New Cases Received</td>
-                    <td>{{ $caseReceived[0]['totalNewReceived'] }}</td>
-                    <td>{{ $caseReceived[0]['totalCriminalReceived'] }}</td>
-                    <td>{{ $caseReceived[0]['totalCivilReceived'] }}</td>
-                    <td>{{ $caseReceived[0]['totalAdministrativeReceived'] }}</td>
-                    <td></td>
-                    <td>{{ $caseReceived[0]['totalLaborReceived'] }}</td>
+                    <td x-text="items.caseReceived.totalNewReceived"></td>
+                    <td x-text="items.caseReceived.totalCriminalReceived"></td>
+                    <td x-text="items.caseReceived.totalCivilReceived"></td>
+                    <td x-text="items.caseReceived.totalAdministrativeReceived"></td>
+                    <td>0</td>
+                    <td x-text="items.caseReceived.totalLaborReceived"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 20px;">2.1. No. of clients involved</td>
-                    <td>{{ $caseReceived2One[0]['totalNewReceived2One'] }}</td>
-                    <td>{{ $caseReceived2One[0]['totalCriminalReceived2One'] }}</td>
-                    <td>{{ $caseReceived2One[0]['totalCivilReceived2One'] }}</td>
-                    <td>{{ $caseReceived2One[0]['totalAdministrativeReceived2One'] }}</td>
-                    <td></td>
-                    <td>{{ $caseReceived2One[0]['totalLaborReceived2One'] }}</td>
+                    <td x-text="items.caseReceived2One.totalNewReceived2One"></td>
+                    <td x-text="items.caseReceived2One.totalCriminalReceived2One"></td>
+                    <td x-text="items.caseReceived2One.totalCivilReceived2One"></td>
+                    <td x-text="items.caseReceived2One.totalAdministrativeReceived2One"></td>
+                    <td>0</td>
+                    <td x-text="items.caseReceived2One.totalLaborReceived2One"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;"> 3. Cases received from another PAO lawyer</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;"> 4. Cases transferred to another PAO lawyer</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;"> 5. Total Cases Handled (Item 1+2+3-4)</td>
-                    <td>{{ $CaseHandled[0]['totalCaseHandled'] }}</td>
-                    <td>{{ $CaseHandled[0]['totalCriminalCaseHandled'] }}</td>
-                    <td>{{ $CaseHandled[0]['totalCivilCaseHandled'] }}</td>
-                    <td>{{ $CaseHandled[0]['totalAdministrativeCaseHandled'] }}</td>
-                    <td></td>
-                    <td>{{ $CaseHandled[0]['totalLaborCaseHandled'] }}</td>
+                    <td x-text="items.CaseHandled.totalCaseHandled"></td>
+                    <td x-text="items.CaseHandled.totalCriminalCaseHandled"></td>
+                    <td x-text="items.CaseHandled.totalCivilCaseHandled"></td>
+                    <td x-text="items.CaseHandled.totalAdministrativeCaseHandled"></td>
+                    <td>0</td>
+                    <td x-text="items.CaseHandled.totalLaborCaseHandled"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;"> 6. Total Terminated Cases/Disposition (Old + New)</td>
-                    <td>{{ $terminated[0]['totalTerminated'] }}</td>
-                    <td>{{ $terminated[0]['totalCriminalTerminated'] }}</td>
-                    <td>{{ $terminated[0]['totalCivilTerminated'] }}</td>
-                    <td>{{ $terminated[0]['totalAdministrativeTerminated'] }}</td>
-                    <td></td>
-                    <td>{{ $terminated[0]['totalLaborTerminated'] }}</td>
+                    <td x-text="items.terminated.totalTerminated"></td>
+                    <td x-text="items.terminated.totalCriminalTerminated"></td>
+                    <td x-text="items.terminated.totalCivilTerminated"></td>
+                    <td x-text="items.terminated.totalAdministrativeTerminated"></td>
+                    <td>0</td>
+                    <td x-text="items.terminated.totalLaborTerminated"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 20px;"> a. Old Cases</td>
-                    <td>{{ $terminatedA[0]['totalTerminatedA'] }}</td>
-                    <td>{{ $terminatedA[0]['totalCriminalTerminatedA'] }}</td>
-                    <td>{{ $terminatedA[0]['totalCivilTerminatedA'] }}</td>
-                    <td>{{ $terminatedA[0]['totalAdministrativeTerminatedA'] }}</td>
-                    <td></td>
-                    <td>{{ $terminatedA[0]['totalLaborTerminatedA'] }}</td>
+                    <td x-text="items.terminatedA.totalTerminatedA"></td>
+                    <td x-text="items.terminatedA.totalCriminalTerminatedA"></td>
+                    <td x-text="items.terminatedA.totalCivilTerminatedA"></td>
+                    <td x-text="items.terminatedA.totalAdministrativeTerminatedA"></td>
+                    <td>0</td>
+                    <td x-text="items.terminatedA.totalLaborTerminatedA"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 20px;"> b. New Cases</td>
-                    <td>{{ $terminatedB[0]['totalTerminatedB'] }}</td>
-                    <td>{{ $terminatedB[0]['totalCriminalTerminatedB'] }}</td>
-                    <td>{{ $terminatedB[0]['totalCivilTerminatedB'] }}</td>
-                    <td>{{ $terminatedB[0]['totalAdministrativeTerminatedB'] }}</td>
-                    <td></td>
-                    <td>{{ $terminatedB[0]['totalLaborTerminatedB'] }}</td>
+                    <td x-text="items.terminatedB.totalTerminatedB"></td>
+                    <td x-text="items.terminatedB.totalCriminalTerminatedB"></td>
+                    <td x-text="items.terminatedB.totalCivilTerminatedB"></td>
+                    <td x-text="items.terminatedB.totalAdministrativeTerminatedB"></td>
+                    <td>0</td>
+                    <td x-text="items.terminatedB.totalLaborTerminatedB"></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -143,498 +145,503 @@
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;"> I. Favorable Dispositions to Clients </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> a. Acquitted </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.acquited.totalAcquited"></td>
+                    <td x-text="items.acquited.totalCriminalAcquited"></td>
+                    <td x-text="items.acquited.totalCivilAcquited"></td>
+                    <td x-text="items.acquited.totalAdministrativeAcquited"></td>
+                    <td>0</td>
+                    <td x-text="items.acquited.totalLaborAcquited"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> a.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> b. Dismissed with prejudice</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.dismissedwithPrejudice.totalDismissedWithPrejudice"></td>
+                    <td x-text="items.dismissedwithPrejudice.totalCriminalDismissedWithPrejudice"></td>
+                    <td x-text="items.dismissedwithPrejudice.totalCivilDismissedWithPrejudice"></td>
+                    <td x-text="items.dismissedwithPrejudice.totalAdministrativeDismissedWithPrejudice"></td>
+                    <td>0</td>
+                    <td x-text="items.dismissedwithPrejudice.totalLaborDismissedWithPrejudice"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> b.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> c. Motion to quash granted</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.motionToQuashGranted.totalMotionToQuashGranted"></td>
+                    <td x-text="items.motionToQuashGranted.totalCriminalMotionToQuashGranted"></td>
+                    <td x-text="items.motionToQuashGranted.totalCivilMotionToQuashGranted"></td>
+                    <td x-text="items.motionToQuashGranted.totalAdministrativeMotionToQuashGranted"></td>
+                    <td>0</td>
+                    <td x-text="items.motionToQuashGranted.totalLaborMotionToQuashGranted"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> c.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> d. Demurrer to evidence granted</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.demurrerToEvidenceGranted.totalDemurrerToEvidenceGranted"></td>
+                    <td x-text="items.demurrerToEvidenceGranted.totalCriminalDemurrerToEvidenceGranted"></td>
+                    <td x-text="items.demurrerToEvidenceGranted.totalCivilDemurrerToEvidenceGranted"></td>
+                    <td x-text="items.demurrerToEvidenceGranted.totalAdministrativeDemurrerToEvidenceGranted"></td>
+                    <td>0</td>
+                    <td x-text="items.demurrerToEvidenceGranted.totalLaborDemurrerToEvidenceGranted"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> d.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> e. Provisionally dismissed</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.provisionallyDismissed.totalProvisionallyDismissed"></td>
+                    <td x-text="items.provisionallyDismissed.totalCriminalProvisionallyDismissed"></td>
+                    <td x-text="items.provisionallyDismissed.totalCivilProvisionallyDismissed"></td>
+                    <td x-text="items.provisionallyDismissed.totalAdministrativeProvisionallyDismissed"></td>
+                    <td>0</td>
+                    <td x-text="items.provisionallyDismissed.totalLaborProvisionallyDismissed"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> e.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> f. Convicted to lesser offense</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.convictedToLesserOffense.totalConvictedToLesserOffense"></td>
+                    <td x-text="items.convictedToLesserOffense.totalCriminalConvictedToLesserOffense"></td>
+                    <td x-text="items.convictedToLesserOffense.totalCivilConvictedToLesserOffense"></td>
+                    <td x-text="items.convictedToLesserOffense.totalAdministrativeConvictedToLesserOffense"></td>
+                    <td>0</td>
+                    <td x-text="items.convictedToLesserOffense.totalLaborConvictedToLesserOffense"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> f.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> g. Probation granted</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.probationGranted.totalProbationGranted"></td>
+                    <td x-text="items.probationGranted.totalCriminalProbationGranted"></td>
+                    <td x-text="items.probationGranted.totalCivilProbationGranted"></td>
+                    <td x-text="items.probationGranted.totalAdministrativeProbationGranted"></td>
+                    <td>0</td>
+                    <td x-text="items.probationGranted.totalLaborProbationGranted"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> g.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> h. Won (civil, labor, and administrative)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.wonCivil.totalWonCivil"></td>
+                    <td x-text="items.wonCivil.totalCriminalWonCivil"></td>
+                    <td x-text="items.wonCivil.totalCivilWonCivil"></td>
+                    <td x-text="items.wonCivil.totalAdministrativeWonCivil"></td>
+                    <td>0</td>
+                    <td x-text="items.wonCivil.totalLaborWonCivil"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> h.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> i. Granted lesser award (civil, administrative &
                         labor)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.grantedAwarded.totalGrantedAwarded"></td>
+                    <td x-text="items.grantedAwarded.totalCriminalGrantedAwarded"></td>
+                    <td x-text="items.grantedAwarded.totalCivilGrantedAwarded"></td>
+                    <td x-text="items.grantedAwarded.totalAdministrativeGrantedAwarded"></td>
+                    <td>0</td>
+                    <td x-text="items.grantedAwarded.totalLaborGrantedAwarded"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> i.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> j. Dismissed cases based on compromise agreement
                         (civil & labor)
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.dismissedCompromise.totalDismissedCompromise"></td>
+                    <td x-text="items.dismissedCompromise.totalCriminalDismissedCompromise"></td>
+                    <td x-text="items.dismissedCompromise.totalCivilDismissedCompromise"></td>
+                    <td x-text="items.dismissedCompromise.totalAdministrativeDismissedCompromise"></td>
+                    <td>0</td>
+                    <td x-text="items.dismissedCompromise.totalLaborDismissedCompromise"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;"> j.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;">k. Criminal cases for preliminary investigation
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.casesForPreliminaryInvestigation.totalCasePreliminaryInvestigation"></td>
+                    <td x-text="items.casesForPreliminaryInvestigation.totalCriminalCasesForPreliminaryInvestigation">
+                    </td>
+                    <td x-text="items.casesForPreliminaryInvestigation.totalCivilCasesForPreliminaryInvestigation">
+                    </td>
+                    <td
+                        x-text="items.casesForPreliminaryInvestigation.totalAdministrativeCasesForPreliminaryInvestigation">
+                    </td>
+                    <td>0</td>
+                    <td x-text="items.casesForPreliminaryInvestigation.totalLaborCasesForPreliminaryInvestigation">
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;"> k.1. Case filed in court (complainant) </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;">k.1.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;">k.2. Dismissed (respondent)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;">k.2.1. No. of clients involved </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;">l. Pre-trial releases and other dispositions
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;">l.1. Bail (Non-bailable offense)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;">l.1.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;">l.2. Recognizance</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;">l.2.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;">l.3. Diversion proceedings / Intervention</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;"> l.3.1. No. of clients involved </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;">l.4. Suspended sentence</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;"> l.4.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;">l.5. Maximum imposable penalty served</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;"> l.5.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;">II. Unfavorable Dispositions to Clients </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> a. Convicted as charged </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.convictedAsCharged.totalConvictedAsCharged"></td>
+                    <td x-text="items.convictedAsCharged.totalCriminalConvictedAsCharged"></td>
+                    <td x-text="items.convictedAsCharged.totalCivilConvictedAsCharged"></td>
+                    <td x-text="items.convictedAsCharged.totalAdministrativeConvictedAsCharged"></td>
+                    <td>0</td>
+                    <td x-text="items.convictedAsCharged.totalLaborConvictedAsCharged"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;">a.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;">b. Lost (civil, administrative & labor)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.lostCivilLabor.totalLostCivilAdministrativeLabor"></td>
+                    <td x-text="items.lostCivilLabor.totalCriminalCivilAdministrativeLabor"></td>
+                    <td x-text="items.lostCivilLabor.totalCivilCivilAdministrativeLabor"></td>
+                    <td x-text="items.lostCivilLabor.totalAdministrativeCivilAdministrativeLabor"></td>
+                    <td>0</td>
+                    <td x-text="items.lostCivilLabor.totalLaborCivilAdministrativeLabor"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;">b.1. No. of clients involved</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;">c. Dismissed (civil, administrative & labor)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.dismissedCAL.totalDismissedCAL"></td>
+                    <td x-text="items.dismissedCAL.totalCriminalCAL"></td>
+                    <td x-text="items.dismissedCAL.totalCivilCAL"></td>
+                    <td x-text="items.dismissedCAL.totalAdministrativeCAL"></td>
+                    <td>0</td>
+                    <td x-text="items.dismissedCAL.totalLaborCAL"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;">c.1. No. of clients involved </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="font-weight: bold;text-indent: 20px;"> d. Criminal cases for preliminary investigation
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td x-text="items.preliminaryInvestigation.totalPreliminaryInvestigation"></td>
+                    <td x-text="items.preliminaryInvestigation.totalCriminalPreliminaryInvestigation"></td>
+                    <td x-text="items.preliminaryInvestigation.totalCivilPreliminaryInvestigation"></td>
+                    <td x-text="items.preliminaryInvestigation.totalAdministrativePreliminaryInvestigation"></td>
+                    <td>0</td>
+                    <td x-text="items.preliminaryInvestigation.totalLaborPreliminaryInvestigation"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;">d.1. Dismissed (complainant) </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;"> d.1.1. No. of clients involved </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 40px;font-weight: bold;">d.2. Cases filed in court (respondent) </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="text-indent: 60px;">d.2.1. No. of clients involved </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                 </tr>
             </tbody>
         </table>

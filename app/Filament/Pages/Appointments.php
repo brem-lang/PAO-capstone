@@ -7,7 +7,9 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -19,6 +21,7 @@ use Filament\Pages\Page;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -26,6 +29,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 
 class Appointments extends Page implements HasForms, HasTable
@@ -83,6 +87,31 @@ class Appointments extends Page implements HasForms, HasTable
                 TrashedFilter::make(),
             ])
             ->actions([
+                Action::make('download-pdf')
+                    ->label('Appointment')
+                    ->icon('heroicon-o-arrow-down-on-square')
+                    ->modalCancelAction(false)
+                    ->modalSubmitAction(false)
+                    ->modalHeading('PDF')
+                    ->modalWidth('full')
+                    ->modalContent(function ($record): View {
+                        return view('filament.pages.display-interviewsheet');
+                    }),
+                Action::make('download')
+                    ->label('Affidavit')
+                    ->icon('heroicon-o-arrow-down-on-square')
+                    ->modalCancelAction(false)
+                    ->modalSubmitAction(false)
+                    ->modalHeading('PDF')
+                    ->modalWidth('full')
+                    ->modalContent(function ($record): View {
+                        return view('filament.pages.display-pdf', [
+                            'file' => $record,
+                        ]);
+                    })
+                    ->visible(function ($record) {
+                        return $record->doc_type === 'notarize';
+                    }),
                 ViewAction::make()
                     ->form(function ($record, Form $form) {
                         if ($record->doc_type === 'advice') {
@@ -90,6 +119,14 @@ class Appointments extends Page implements HasForms, HasTable
                         } else {
                             return $this->previewNotarizeForm($form);
                         }
+                    }),
+                EditAction::make()
+                    ->label('Edit Affidavit')
+                    ->form(function ($record, Form $form) {
+                        return $this->previewNotarizeAOLForm($form);
+                    })
+                    ->visible(function ($record) {
+                        return $record->doc_type === 'notarize';
                     }),
                 Action::make('update')
                     ->icon('heroicon-o-arrow-path')
@@ -138,6 +175,7 @@ class Appointments extends Page implements HasForms, HasTable
         return [
             'previewAdviceForm',
             'previewNotarizeForm',
+            'previewNotarizeAOLForm',
         ];
     }
 
@@ -1488,5 +1526,91 @@ class Appointments extends Page implements HasForms, HasTable
                             ->columnSpan(2),
                     ])->columns(4),
             ]);
+    }
+
+    public function previewNotarizeAOLForm(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Select::make('id_type')
+                    ->dehydrated()
+                    ->label('ID Presented')
+                    ->options([
+                        'passport' => 'Passport',
+                        'drivers_license' => 'Driver\'s License',
+                        'prc_license' => 'PRC License (Professional Regulation Commission)',
+                        'umid' => 'UMID (Unified Multi-Purpose ID)',
+                        'postal_id' => 'Postal ID',
+                        'voters_id' => 'Voter\'s ID or Voter’s Certification with a photo',
+                        'philhealth' => 'PhilHealth',
+                        'pagibig' => 'Pag-IBIG ID',
+                        'barangay_cert' => 'Barangay Certification with Photo',
+                        'sss_id' => 'SSS ID (Social Security System)',
+                        'senior_citizen' => 'Senior Citizen ID',
+                        'pwd_id' => 'PWD ID (Persons with Disabilities)',
+                    ]),
+                Select::make('aol_type')
+                    ->dehydrated()
+                    ->label('Affidavit of Loss')
+                    ->live()
+                    ->options([
+                        'affidavit_loss' => 'Affidavit of Loss',
+                        'qr_code' => 'QR Code',
+                        'id' => 'I.D',
+                        'id_philippine' => 'I.D/Philippine I.D',
+                        'atm_passbook' => 'ATM/Passbook/Cash Card',
+                        'documents' => 'Document/s',
+                        'prof_nonprof_drivers_license' => 'Prof/Non-Prof Driver\'s License',
+                        'lost_items_documents' => 'Lost Item/s Document/s',
+                        'new_type' => 'New Type',
+                    ]),
+                TextInput::make('id_number'),
+                Select::make('stuDEmp')
+                    ->label('Student/Employee')
+                    ->options([
+                        'student' => 'Student',
+                        'employee' => 'Employee',
+                    ])
+                    ->visible(function (Get $get) {
+                        return in_array($get('aol_type'), ['affidavit_loss', 'id', 'documents']);
+                    }),
+                TextInput::make('documentTypeAOL')
+                    ->visible(function (Get $get) {
+                        if (in_array($get('aol_type'), ['prof_nonprof_drivers_license', 'atm_passbook', 'id_philippine'])) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    })
+                    ->label('Document Type'),
+                Textarea::make('issuedByAOL')
+                    ->visible(function (Get $get) {
+                        if (in_array($get('aol_type'), ['prof_nonprof_drivers_license', 'atm_passbook', 'id_philippine'])) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    })
+                    ->label('Issued By'),
+                TextInput::make('newAOL_type')
+                    ->label('Affidavit Name')
+                    ->columnSpanFull()
+                    ->visible(function (Get $get) {
+                        return $get('aol_type') == 'new_type';
+                    }),
+                Repeater::make('statements')
+                    ->reorderable(true)
+                    ->addActionLabel('Add Statement')
+                    ->label('Statements')
+                    ->simple(
+                        Textarea::make('statement')->required(),
+                    )
+                    ->columns(1)
+                    ->columnSpanFull()
+                    ->visible(function (Get $get) {
+                        return $get('aol_type') == 'new_type';
+                    }),
+            ])
+            ->columns(2);
     }
 }

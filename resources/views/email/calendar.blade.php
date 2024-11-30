@@ -361,6 +361,8 @@
                             ensure you are present.
                         </p>
 
+                        <p><b>Place:</b>{{ $data['title'] }}</p>
+
                         <p style="margin-bottom: 0"><b>Thank you!</b></p>
                         <p style="margin: 0">The PAO Team.</p><br>
 

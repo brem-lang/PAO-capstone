@@ -18,7 +18,6 @@ class Register extends RegisterPage
                     ->schema([
                         $this->getNameFormComponent(),
                         $this->getEmailFormComponent(),
-                        $this->getContactNumberFormComponent(),
                         $this->getPasswordFormComponent(),
                         $this->getPasswordConfirmationFormComponent(),
                     ])
@@ -56,14 +55,6 @@ class Register extends RegisterPage
             ->revealable(filament()->arePasswordsRevealable())
             ->required()
             ->dehydrated(false);
-    }
-
-    protected function getContactNumberFormComponent(): Component
-    {
-        return TextInput::make('number')
-            ->tel()->telRegex('/^(0|63)\d{10}$/')
-            ->label('Contact Number')
-            ->required();
     }
 
     protected function mutateFormDataBeforeRegister(array $data): array

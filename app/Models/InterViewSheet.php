@@ -14,6 +14,10 @@ class InterViewSheet extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'statements' => 'json', // Cast this field to JSON
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

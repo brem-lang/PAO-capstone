@@ -51,8 +51,7 @@
             <strong> EVENT INFORMATION</strong> 
             </h1>
             <div><strong>Name:</strong> <p style="padding-left: 15px"> - ${data.event.extendedProps.name} </p> </div>
-            <div><strong>Title:</strong><br> <p style="padding-left: 15px"> - ${data.event.title} </p></div>
-            <div><strong>Description:</strong><br> <p style="padding-left: 15px"> - ${data.event.extendedProps.description} </p></div>
+            <div><strong>Place:</strong><br> <p style="padding-left: 15px"> - ${data.event.title} </p></div>
             <div><strong>Date:</strong><br> <p style="padding-left: 15px"> - ${data.event.start} </p></div>
             </div>
             `;
