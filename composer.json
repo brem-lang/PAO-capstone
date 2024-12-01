@@ -12,6 +12,7 @@
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.0",
         "filament/filament": "^3.2",
+        "hasan-ahani/filament-otp-input": "^1.0",
         "laravel/framework": "^11.31",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",

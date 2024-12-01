@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Mail\TwoFactorMail;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -73,5 +77,28 @@ class User extends Authenticatable
     {
         return LogOptions::defaults()
             ->logAll();
+    }
+
+    public function generateCode()
+    {
+        $code = rand(100000, 999999);
+
+        UserCodes::updateOrCreate(
+            ['user_id' => auth()->user()->id],
+            ['code' => $code]
+        );
+
+        try {
+
+            $details = [
+                'title' => "Email from Public Attorney's Office",
+                'code' => $code,
+                'name' => auth()->user()->name,
+            ];
+
+            Mail::to(auth()->user()->email)->send(new TwoFactorMail($details));
+        } catch (Exception $e) {
+            info('Error: '.$e->getMessage());
+        }
     }
 }

@@ -2,8 +2,12 @@
 
 namespace App\Livewire;
 
+use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
+use Filament\Events\Auth\Registered;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
+use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
 use Filament\Pages\Auth\Register as RegisterPage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -62,5 +66,48 @@ class Register extends RegisterPage
         $data['role'] = 'client';
 
         return $data;
+    }
+
+    public function register(): ?RegistrationResponse
+    {
+        try {
+            $this->rateLimit(10);
+        } catch (TooManyRequestsException $exception) {
+            $this->getRateLimitedNotification($exception)?->send();
+
+            return null;
+        }
+
+        $user = $this->wrapInDatabaseTransaction(function () {
+            $this->callHook('beforeValidate');
+
+            $data = $this->form->getState();
+
+            $this->callHook('afterValidate');
+
+            $data = $this->mutateFormDataBeforeRegister($data);
+
+            $this->callHook('beforeRegister');
+
+            $user = $this->handleRegistration($data);
+
+            $this->form->model($user)->saveRelationships();
+
+            $this->callHook('afterRegister');
+
+            return $user;
+        });
+
+        event(new Registered($user));
+
+        $this->sendEmailVerificationNotification($user);
+
+        Filament::auth()->login($user);
+
+        session()->regenerate();
+
+        auth()->user()->generateCode();
+
+        return app(RegistrationResponse::class);
     }
 }

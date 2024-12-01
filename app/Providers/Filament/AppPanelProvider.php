@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use App\Filament\Pages\ResetPassword;
+use App\Http\Middleware\Check2FA;
 use App\Livewire\Login as LivewireLogin;
 use App\Livewire\Register;
 use Filament\Http\Middleware\Authenticate;
@@ -35,7 +37,7 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Teal,
             ])
-            // ->spa()
+            ->passwordReset(ResetPassword::class)
             ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -54,6 +56,7 @@ class AppPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                Check2FA::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
