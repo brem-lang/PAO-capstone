@@ -35,7 +35,7 @@ class SocialiteController extends Controller
                 'name' => $response->getName(),
                 'email' => $response->getEmail(),
                 'role' => 'client',
-                'password' => 'Password1234!',
+                'password' => 'password',
             ]);
         }
 

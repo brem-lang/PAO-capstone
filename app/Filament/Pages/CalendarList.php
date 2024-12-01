@@ -8,7 +8,6 @@ use App\Services\EmailSender;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -55,10 +54,7 @@ class CalendarList extends Page implements HasForms, HasTable
                             ->label('User')
                             ->options(User::where('role', 'client')->pluck('name', 'id')),
                         TextInput::make('title')
-                            ->label('Title')
-                            ->required(),
-                        Textarea::make('description')
-                            ->label('Description')
+                            ->label('Place')
                             ->required(),
                         DateTimePicker::make('startDate')
                             ->label('Start Date')
