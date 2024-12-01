@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
-use Session;
 
 class SocialiteController extends Controller
 {
@@ -42,7 +41,7 @@ class SocialiteController extends Controller
 
         auth()->guard()->login($user);
 
-        Session::put('user_2fa', auth()->user()->id);
+        auth()->user()->generateCode();
 
         return redirect('/app');
     }
