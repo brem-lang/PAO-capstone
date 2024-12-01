@@ -39,9 +39,10 @@ class SocialiteController extends Controller
                 'password' => 'Password1234!',
             ]);
         }
-        Session::put('user_2fa', auth()->user()->id);
 
         auth()->guard()->login($user);
+
+        Session::put('user_2fa', auth()->user()->id);
 
         return redirect('/app');
     }
