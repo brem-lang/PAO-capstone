@@ -93,11 +93,6 @@ class TwoFactor extends Component implements HasForms
                 ];
 
                 Mail::to(auth()->user()->email)->send(new TwoFactorMail($details));
-
-                Notification::make()
-                    ->title('Code sent to your Email')
-                    ->success()
-                    ->send();
             } catch (Exception $e) {
                 logger('Error: '.$e->getMessage());
             }

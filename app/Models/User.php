@@ -101,4 +101,9 @@ class User extends Authenticatable
             info('Error: '.$e->getMessage());
         }
     }
+
+    public function userCodes()
+    {
+        return $this->hasMany(UserCodes::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,22 @@ class RedirectAuthenticateSession
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $auth = auth()->user();
+
+        if ($auth->userCodes()) {
+            $time = Carbon::parse($auth->userCodes()->first()->updated_at);
+
+            $now = now();
+
+            $diffInMinutes = $time->diffInMinutes($now);
+
+            if ($diffInMinutes >= 1) {
+
+                Auth::logout();
+
+                return redirect('/app');
+            }
+        }
 
         if (! Session::has('user_2fa')) {
             if (! Auth::check()) {
