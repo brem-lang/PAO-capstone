@@ -80,6 +80,9 @@ class InterviewSheet extends Page implements HasForms
                 'region' => 'Region XI',
                 'regions' => '11',
                 'province' => '1102300000',
+                'name' => auth()->user()->name,
+                'email' => auth()->user()->email,
+                'citizenship' => 'philippine',
             ]);
 
             $this->adviceForm->fill([
@@ -87,6 +90,9 @@ class InterviewSheet extends Page implements HasForms
                 'regions' => '11',
                 'province' => '1102300000',
                 'newAOL_type' => 'Affidavit',
+                'name' => auth()->user()->name,
+                'email' => auth()->user()->email,
+                'citizenship' => 'philippine',
             ]);
         }
     }
@@ -607,7 +613,7 @@ class InterviewSheet extends Page implements HasForms
                                 ->label('Contact Number ng asawa')
                                 ->tel()->telRegex('/^(0|63)\d{10}$/'),
                             DatePicker::make('dateofKulong')
-                                ->label('Petsa ng pagakakulong')
+                                ->label('Petsa ng pagkakulong')
                                 ->disabled(function (Get $get) {
                                     return $get('nakakulong') === false;
                                 }),
@@ -1320,7 +1326,7 @@ class InterviewSheet extends Page implements HasForms
                             ->label('Contact Number ng asawa')
                             ->tel()->telRegex('/^(0|63)\d{10}$/'),
                         DatePicker::make('dateofKulong')
-                            ->label('Petsa ng pagakakulong')
+                            ->label('Petsa ng pagkakulong')
                             ->disabled(function (Get $get) {
                                 return $get('nakakulong') === false;
                             }),
@@ -2035,7 +2041,7 @@ class InterviewSheet extends Page implements HasForms
                                 ->label('Contact Number ng asawa')
                                 ->tel()->telRegex('/^(0|63)\d{10}$/'),
                             DatePicker::make('dateofKulong')
-                                ->label('Petsa ng pagakakulong')
+                                ->label('Petsa ng pagkakulong')
                                 ->disabled(function (Get $get) {
                                     return $get('nakakulong') === false;
                                 }),
@@ -2750,7 +2756,7 @@ class InterviewSheet extends Page implements HasForms
                             ->label('Contact Number ng asawa')
                             ->tel()->telRegex('/^(0|63)\d{10}$/'),
                         DatePicker::make('dateofKulong')
-                            ->label('Petsa ng pagakakulong')
+                            ->label('Petsa ng pagkakulong')
                             ->disabled(function (Get $get) {
                                 return $get('nakakulong') === false;
                             }),
