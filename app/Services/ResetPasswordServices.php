@@ -16,18 +16,18 @@ class ResetPasswordServices
         if ($record && ! $record->is_deactivated) {
             $encryptedEmail = Crypt::encrypt([
                 'email' => $record->email,
-                'expiration' => now()->addMinutes(2),
+                'expiration' => now()->addMinutes(5),
             ]);
 
             Mail::to($record->email)->send(new PasswordReset($record, $encryptedEmail));
         }
 
-        Notification::make()
-            ->title('Password reset request sent')
-            ->body('Check your email for you to change your password')
-            ->success()
-            ->seconds(4)
-            ->send();
+        // Notification::make()
+        //     ->title('Password reset request sent')
+        //     ->body('Check your email for you to change your password')
+        //     ->success()
+        //     ->seconds(4)
+        //     ->send();
 
         Redirect::to('/');
     }
