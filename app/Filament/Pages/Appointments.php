@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\IDType;
 use App\Models\InterViewSheet;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -1534,21 +1535,22 @@ class Appointments extends Page implements HasForms, HasTable
             ->schema([
                 Select::make('id_type')
                     ->dehydrated()
+                    ->searchable()
                     ->label('ID Presented')
-                    ->options([
-                        'passport' => 'Passport',
-                        'drivers_license' => 'Driver\'s License',
-                        'prc_license' => 'PRC License (Professional Regulation Commission)',
-                        'umid' => 'UMID (Unified Multi-Purpose ID)',
-                        'postal_id' => 'Postal ID',
-                        'voters_id' => 'Voter\'s ID or Voter’s Certification with a photo',
-                        'philhealth' => 'PhilHealth',
-                        'pagibig' => 'Pag-IBIG ID',
-                        'barangay_cert' => 'Barangay Certification with Photo',
-                        'sss_id' => 'SSS ID (Social Security System)',
-                        'senior_citizen' => 'Senior Citizen ID',
-                        'pwd_id' => 'PWD ID (Persons with Disabilities)',
-                    ]),
+                    ->options(IDType::pluck('description', 'name'))
+                    ->createOptionForm([
+                        TextInput::make('name')
+                            ->label('New ID Type') // Optional: Label for clarity
+                            ->required(),
+                    ])
+                    ->createOptionUsing(function ($data) {
+                        IDType::create([
+                            'name' => $data['name'],
+                            'description' => $data['name'],
+                        ]);
+
+                        return $data['name'];
+                    }),
                 Select::make('aol_type')
                     ->dehydrated()
                     ->label('Affidavit of Loss')

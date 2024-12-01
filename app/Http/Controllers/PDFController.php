@@ -70,7 +70,7 @@ class PDFController extends Controller
             'statements' => $interViewSheet->statements ?? null,
             //
             'name' => $interViewSheet->name,
-            'idType' => $this->handleIDType($interViewSheet->id_type),
+            'idType' => $this->handleIDType($interViewSheet->id_type) ?? $interViewSheet->id_type,
             'id_number' => $interViewSheet->id_number,
             'formattedDate' => $formattedDate,
             'address' => $interViewSheet->barangay.', '.$interViewSheet->city.', '.$this->handleTypeProvince($interViewSheet->province),
@@ -106,6 +106,8 @@ class PDFController extends Controller
         if (array_key_exists($idType, $idTypes)) {
             return $idTypes[$idType];
         }
+
+        return null;
     }
 
     public function handleTypeProvince($code)

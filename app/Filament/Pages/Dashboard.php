@@ -57,7 +57,7 @@ class Dashboard extends Page
         $data = InterViewSheet::selectRaw('doc_type, COUNT(*) as total')
             ->whereMonth('created_at', now()->month)
             ->whereYear('created_at', now()->year)
-            ->whereIn('doc_type', ['notarize', 'advice'])
+            ->whereIn('doc_type', ['advice', 'notarize'])
             ->groupBy('doc_type')
             ->pluck('total', 'doc_type')
             ->toArray();

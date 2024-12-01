@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\IDType;
 use App\Models\InterViewSheet as ModelsInterViewSheet;
 use Carbon\Carbon;
 use Faker\Provider\ar_EG\Text;
@@ -18,6 +19,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
@@ -2171,21 +2173,22 @@ class InterviewSheet extends Page implements HasForms
                         ->schema([
                             Select::make('id_type')
                                 ->dehydrated()
+                                ->searchable()
                                 ->label('ID Presented')
-                                ->options([
-                                    'passport' => 'Passport',
-                                    'drivers_license' => 'Driver\'s License',
-                                    'prc_license' => 'PRC License (Professional Regulation Commission)',
-                                    'umid' => 'UMID (Unified Multi-Purpose ID)',
-                                    'postal_id' => 'Postal ID',
-                                    'voters_id' => 'Voter\'s ID or Voter’s Certification with a photo',
-                                    'philhealth' => 'PhilHealth',
-                                    'pagibig' => 'Pag-IBIG ID',
-                                    'barangay_cert' => 'Barangay Certification with Photo',
-                                    'sss_id' => 'SSS ID (Social Security System)',
-                                    'senior_citizen' => 'Senior Citizen ID',
-                                    'pwd_id' => 'PWD ID (Persons with Disabilities)',
-                                ]),
+                                ->options(IDType::pluck('description', 'name'))
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('New ID Type') // Optional: Label for clarity
+                                        ->required(),
+                                ])
+                                ->createOptionUsing(function ($data) {
+                                    IDType::create([
+                                        'name' => $data['name'],
+                                        'description' => $data['name'],
+                                    ]);
+
+                                    return $data['name'];
+                                }),
                             Select::make('aol_type')
                                 ->dehydrated()
                                 ->label('Affidavit of Loss')
@@ -2243,6 +2246,9 @@ class InterviewSheet extends Page implements HasForms
                                     Textarea::make('statement')->required(),
                                 )
                                 ->columns(1)
+                                ->default([
+                                    'statement' => 'test',
+                                ])
                                 ->columnSpanFull()
                                 ->visible(function (Get $get) {
                                     return $get('aol_type') == 'new_type';
@@ -2894,7 +2900,7 @@ class InterviewSheet extends Page implements HasForms
 
     public function downloadAol()
     {
-        if ($this->notarizeData['id_type'] === null || $this->notarizeData['aol_type'] === null || $this->notarizeData['id_number'] === null || $this->notarizeData['newAOL_type'] === null) {
+        if ($this->notarizeData['id_type'] == null || $this->notarizeData['aol_type'] == null || $this->notarizeData['id_number'] == null) {
             Notification::make()
                 ->title('Please Select fill up to Download AOL')
                 ->warning()
@@ -2944,6 +2950,10 @@ class InterviewSheet extends Page implements HasForms
 
             $formattedDate = $date->format('jS').' day of '.$date->format('F Y');
 
+            $data = array_column($this->notarizeData['statements'], 'statement');
+            // $data[] =>
+            $data[] = 'That I am executing this affidavit in order to inform the authorities concerned of the veracity of the forgoing facts and for whatever legal purpose it may serve.';
+
             $pdf = \PDF::loadView('pdf.'.$view, [
                 'age' => $this->notarizeData['age'],
                 'civilStatus' => $this->notarizeData['civilStatus'],
@@ -2951,10 +2961,10 @@ class InterviewSheet extends Page implements HasForms
                 'documentTypeAOL' => $this->notarizeData['documentTypeAOL'],
                 'issuedByAOL' => $this->notarizeData['issuedByAOL'],
                 'newAOL_type' => $this->notarizeData['newAOL_type'] ?? null,
-                'statements' => array_column($this->notarizeData['statements'], 'statement') ?? null,
+                'statements' => $data ?? null,
                 //
                 'name' => $this->notarizeData['name'],
-                'idType' => $this->handleIDType($this->notarizeData['id_type']),
+                'idType' => $this->handleIDType($this->notarizeData['id_type']) ?? $this->notarizeData['id_type'],
                 'id_number' => $this->notarizeData['id_number'],
                 'formattedDate' => $formattedDate,
                 'address' => $this->notarizeData['barangay'].', '.$this->notarizeData['city'].', '.$this->handleTypeProvince($this->notarizeData['province']),
@@ -2986,6 +2996,8 @@ class InterviewSheet extends Page implements HasForms
         if (array_key_exists($idType, $idTypes)) {
             return $idTypes[$idType];
         }
+
+        return null;
     }
 
     public function handleTypeProvince($code)
@@ -3015,6 +3027,10 @@ class InterviewSheet extends Page implements HasForms
 
     public function saveNotarizeForm()
     {
+        $statments = array_column($this->notarizeData['statements'], 'statement');
+        // $data[] =>
+        $statments[] = 'That I am executing this affidavit in order to inform the authorities concerned of the veracity of the forgoing facts and for whatever legal purpose it may serve.';
+
         $user = [
             'status' => 'pending',
             'user_id' => auth()->user()->id,
@@ -3025,7 +3041,7 @@ class InterviewSheet extends Page implements HasForms
             'stuDEmp' => $this->notarizeData['stuDEmp'],
             'documentTypeAOL' => $this->notarizeData['documentTypeAOL'],
             'issuedByAOL' => $this->notarizeData['issuedByAOL'],
-            'statements' => array_column($this->notarizeData['statements'], 'statement'),
+            'statements' => $statments,
             'newAOL_type' => $this->notarizeData['newAOL_type'],
         ];
         $data = array_merge($this->previewNotarizeForm->getState(), $user);
