@@ -14,10 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(
-            ContractsLoginResponse::class,
-            \App\Http\Responses\LoginResponse::class
-        );
+        // $this->app->singleton(
+        //     ContractsLoginResponse::class,
+        //     \App\Http\Responses\LoginResponse::class
+        // );
 
         FilamentColor::register([
             'primary' => Color::Teal,

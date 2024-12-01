@@ -27,7 +27,7 @@ class RedirectAuthenticateSession
 
             $diffInMinutes = $time->diffInMinutes($now);
 
-            if ($diffInMinutes >= 1) {
+            if ($diffInMinutes >= 2) {
 
                 Auth::logout();
 
