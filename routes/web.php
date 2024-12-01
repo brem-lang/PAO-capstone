@@ -22,7 +22,7 @@ Route::get('line-chart-filter', [GraphController::class, 'LineChartFilter'])->na
 
 Route::get('/generate-appointment-pdf/{interViewSheet}', [PDFController::class, 'generatePDF'])->name('generate-appointment-pdf')->middleware('auth');
 
-Route::get('/generate-interviewsheet-pdf', [PDFController::class, 'sheet'])->name('generate-interviewsheet-pdf')->middleware('auth');
+Route::get('/generate-interviewsheet-pdf/{interViewSheet}', [PDFController::class, 'sheet'])->name('generate-interviewsheet-pdf')->middleware('auth');
 
 Route::get('2fa', TwoFactor::class)->name('2fa.index')->middleware('redirect2FA');
 

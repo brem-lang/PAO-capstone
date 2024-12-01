@@ -2179,7 +2179,8 @@ class InterviewSheet extends Page implements HasForms
                                 ->createOptionForm([
                                     TextInput::make('name')
                                         ->label('New ID Type') // Optional: Label for clarity
-                                        ->required(),
+                                        ->required()
+                                        ->unique(IDType::class, 'name'),
                                 ])
                                 ->createOptionUsing(function ($data) {
                                     IDType::create([

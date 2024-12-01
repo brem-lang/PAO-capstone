@@ -79,9 +79,10 @@ class PDFController extends Controller
         return $pdf->stream(ucfirst($interViewSheet->aol_type).'-'.now()->format('Y-m-d h:i:s').'.pdf');
     }
 
-    public function sheet()
+    public function sheet(InterViewSheet $interViewSheet)
     {
-        $pdf = \PDF::loadView('pdf.advice')->setPaper('legal');
+
+        $pdf = \PDF::loadView('pdf.advice', $interViewSheet->toArray())->setPaper('legal');
 
         return $pdf->stream(now()->format('Y-m-d h:i:s').'.pdf');
     }

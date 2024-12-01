@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\IDType;
 use App\Models\InterViewSheet;
+use Dompdf\FrameDecorator\Text;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -96,7 +97,9 @@ class Appointments extends Page implements HasForms, HasTable
                     ->modalHeading('PDF')
                     ->modalWidth('full')
                     ->modalContent(function ($record): View {
-                        return view('filament.pages.display-interviewsheet');
+                        return view('filament.pages.display-interviewsheet', [
+                            'file' => $record,
+                        ]);
                     }),
                 Action::make('download')
                     ->label('Affidavit')
@@ -132,6 +135,8 @@ class Appointments extends Page implements HasForms, HasTable
                 Action::make('update')
                     ->icon('heroicon-o-arrow-path')
                     ->form([
+                        TextInput::make('control_no')
+                            ->unique(InterViewSheet::class, 'control_no'),
                         Select::make('status')
                             ->options([
                                 'pending' => 'Pending',
@@ -143,6 +148,7 @@ class Appointments extends Page implements HasForms, HasTable
                     ->modalWidth('sm')
                     ->action(function ($record, $data) {
                         $record->update([
+                            'control_no' => $data['control_no'],
                             'status' => $data['status'],
                         ]);
 
@@ -168,7 +174,11 @@ class Appointments extends Page implements HasForms, HasTable
             ])
             ->bulkActions([
                 // ...
-            ]);
+            ])
+            ->modifyQueryUsing(function ($query) {
+
+                return $query->latest();
+            });
     }
 
     protected function getForms(): array
@@ -689,6 +699,7 @@ class Appointments extends Page implements HasForms, HasTable
                             ->tel()->telRegex('/^(0|63)\d{10}$/')
                             ->required(),
                         DatePicker::make('dateofKulong')
+                            ->label('Petsa ng pagkakulong')
                             ->disabled(function (Get $get) {
                                 return $get('nakakulong') === false;
                             })
@@ -1402,6 +1413,7 @@ class Appointments extends Page implements HasForms, HasTable
                             ->tel()->telRegex('/^(0|63)\d{10}$/')
                             ->required(),
                         DatePicker::make('dateofKulong')
+                            ->label('Petsa ng pagakakulong')
                             ->disabled(function (Get $get) {
                                 return $get('nakakulong') === false;
                             })
@@ -1541,7 +1553,8 @@ class Appointments extends Page implements HasForms, HasTable
                     ->createOptionForm([
                         TextInput::make('name')
                             ->label('New ID Type') // Optional: Label for clarity
-                            ->required(),
+                            ->required()
+                            ->unique(IDType::class, 'name'),
                     ])
                     ->createOptionUsing(function ($data) {
                         IDType::create([

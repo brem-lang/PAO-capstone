@@ -127,7 +127,7 @@
                     <span class="underline">{{ $issuedByAOL }}</span>;
                 </li>
                 <li>
-                    That the aforementioned <span>__________________________________</span> was
+                    That the aforementioned <span class="underline">{{ $documentTypeAOL }}</span> was
                     lost and/ or misplaced and despite diligent effort to locate it the same could no
                     longer be found;
 

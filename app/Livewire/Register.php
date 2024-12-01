@@ -30,6 +30,20 @@ class Register extends RegisterPage
         ];
     }
 
+    protected function getEmailFormComponent(): Component
+    {
+        return TextInput::make('email')
+            ->label(__('filament-panels::pages/auth/register.form.email.label'))
+            ->email()
+            ->required()
+            ->maxLength(255)
+            ->unique($this->getUserModel())
+            ->rules([
+                'regex:/^[\w\-.]+@(gmail\.com|yahoo\.com)$/i',
+            ])
+            ->validationAttribute('email');
+    }
+
     protected function getPasswordFormComponent(): Component
     {
         return TextInput::make('password')
