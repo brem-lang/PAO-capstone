@@ -31,7 +31,37 @@
                         </x-filament::button>
                     </div>
                 </div>
+
+                <div class="flex flex-col items-center" style="margin-top:-10px;"><span style="font-size:12px;">Note:
+                        <strong>The code has sent to your email, this will
+                            expire in two mins!!</strong></span>
+                    {{-- <div id="timer"></div> --}}
+                </div>
             </section>
         </main>
     </div>
+    <script>
+        let time = 2 * 60; // 2 minutes in seconds
+
+        function startCountdown() {
+            const timerDisplay = document.getElementById('timer');
+
+            const countdown = setInterval(() => {
+                const minutes = Math.floor(time / 60);
+                const seconds = time % 60;
+                timerDisplay.textContent =
+                    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                if (time <= 0) {
+                    clearInterval(countdown);
+                    timerDisplay.textContent = "Time's Up!";
+                }
+                time--;
+            }, 1000);
+        }
+
+        // Start the countdown immediately
+        startCountdown();
+    </script>
+
 </div>

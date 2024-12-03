@@ -342,7 +342,7 @@
             style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
             &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
         </div>
-        <h1 style="text-align: center;"><a href="{{ $_SERVER['HTTP_HOST'] }}">Company Portal</a></h1>
+        <h1 style="text-align: center;"><a href="{{ $_SERVER['HTTP_HOST'] }}">PAO</a></h1>
 
         <div style="max-width: 600px; margin: 0 auto;" class="email-container">
             <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
@@ -350,32 +350,21 @@
                 <tr>
                     <td valign="middle" class="hero bg_white" style="padding: 20px">
                         <h2 style="margin: 0">
-                            Hello {{ $details['name'] }},
+                            Dear <strong>{{ $details['name'] }}</strong>,
                         </h2>
-
-                        <h3 style="font-size: 15px">Here's the OTP code <b> {{ $details['code'] }} </b> </h3>
-
-                        <h3 style="font-size: 15px">To proceed with the process, input the provided OTP
-                            code.</b>
-                        </h3>
-
-                        <p style="margin-bottom: 0"><b>Regards:</b></p>
-                        <p style="margin: 0">PAO</p><br>
-
-                        <hr style="border-top: 1px solid rgb(207, 207, 207)">
-
-                        <br>
-                        <p style="margin: 0">
-                            Note: <b>
-                                The code has a validity period of two minutes.
-                            </b>
+                        <span>
+                            To ensure the security of your account, please use the code provided below:
+                        </span>
+                        <p><strong>{{ $details['code'] }}</strong></p>
+                        <p>
+                            This code is valid for 2 minutes only and should not be shared with anyone to maintain
+                            account security.
                         </p>
-
-                        <p style="margin: 0">
-                            Portal : <a href="{{ config('app.url') }}" target="_blank">
-                                <b> {{ config('app.url') }} </b>
-                            </a>
+                        <p>
+                            If you have any questions or require further assistance, feel free to reach out to us.
                         </p>
+                        <p style="margin-bottom: 0"><b>Thank you, </b></p>
+                        <p style="margin: 0">The PAO Team </p><br>
                     </td>
                 </tr>
             </table>

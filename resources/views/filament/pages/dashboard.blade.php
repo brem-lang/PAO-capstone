@@ -26,12 +26,6 @@
                     <div>
                         <canvas id="pieChart"></canvas>
                     </div>
-                    {{-- <x-filament::input.wrapper>
-                        <x-filament::input.select id="pieChartFilter">
-                            <option value="advice">Advice</option>
-                            <option value="notarize">Notarize</option>
-                        </x-filament::input.select>
-                    </x-filament::input.wrapper> --}}
                 </div>
             </div>
 
@@ -43,18 +37,55 @@
                     <div style="height: 300px;">
                         <canvas id="barChart"></canvas>
                     </div>
-                    {{-- <x-filament::input.wrapper>
-                        <x-filament::input.select id="barChartFilter">
-                            <option value="pending">Pending</option>
-                            <option value="resolved">Resolved</option>
-                            <option value="terminated">Terminated</option>
-                        </x-filament::input.select>
-                    </x-filament::input.wrapper> --}}
                 </div>
             </div>
         </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Pie Chart -->
+            <div>
+                <h2 class="text-2xl font-semibold">Yearly Case</h2>
+                <div
+                    class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
+                    <div style="height: 259px;">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;margin-top: 5px;">
+                        <x-filament::input.wrapper style="flex: 1;">
+                            <x-filament::input.select id="yearOldNew">
+                                <option value="old">Old</option>
+                                <option value="new">New</option>
+                            </x-filament::input.select>
+                        </x-filament::input.wrapper>
 
-        <div style="margin-top:-10px;">
+                        <x-filament::input.wrapper style="flex: 1;">
+                            <x-filament::input.select id="typeCase">
+                                <option value="Criminal">Criminal</option>
+                                <option value="Administrative">Administrative</option>
+                                <option value="Civil">Civil</option>
+                                <option value="Appealed">Appealed</option>
+                                <option value="Labor">Labor</option>
+                            </x-filament::input.select>
+                        </x-filament::input.wrapper>
+
+                        <x-filament::button id='lineChartFilter'>
+                            Search
+                        </x-filament::button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bar Chart -->
+            <div>
+                <h2 class="text-2xl font-semibold">Gender</h2>
+                <div
+                    class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
+                    <div>
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div style="margin-top:-10px;">
             <h2 class="text-2xl font-semibold">Yearly Case</h2>
             <div
                 class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
@@ -86,7 +117,7 @@
                 </div>
 
             </div>
-        </div>
+        </div> --}}
 
 
         <h2 class="text-2xl font-semibold" style="margin-bottom: -30px;">Appointments</h2>
@@ -134,6 +165,45 @@
     const myPieChart = new Chart(
         document.getElementById('pieChart'),
         configPie
+    );
+
+    //gender
+    const genderdataPie = {
+        labels: ['Male', 'Female'],
+        datasets: [{
+            label: 'Gender',
+            data: @json($genderData),
+            backgroundColor: [
+                'pink',
+                '#99b3ff',
+            ],
+            borderColor: [
+                'black',
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const genderconfigPie = {
+        type: 'pie',
+        data: genderdataPie,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    enabled: true,
+                }
+            }
+        },
+    };
+
+    const mygenderPieChart = new Chart(
+        document.getElementById('genderChart'),
+        genderconfigPie
     );
 
     //barchart

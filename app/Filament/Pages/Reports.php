@@ -671,6 +671,8 @@ class Reports extends Page implements HasForms
             ? Carbon::parse($this->data['to'])->format('F d, Y')
             : '-';
 
+        $data['month'] = Carbon::parse($this->data['to'])->format('F Y');
+
         $pdf = \PDF::loadView('pdf.reports', $data)->setPaper('legal');
 
         return response()->streamDownload(function () use ($pdf) {

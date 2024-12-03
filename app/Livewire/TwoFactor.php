@@ -66,7 +66,7 @@ class TwoFactor extends Component implements HasForms
             }
         } catch (TooManyRequestsException $exception) {
             Notification::make()
-                ->title('Too many request')
+                ->title('Too many request!!')
                 ->danger()
                 ->send();
         }
@@ -93,12 +93,17 @@ class TwoFactor extends Component implements HasForms
                 ];
 
                 Mail::to(auth()->user()->email)->send(new TwoFactorMail($details));
+
+                Notification::make()
+                    ->title('New code has been successfully sent to your email.')
+                    ->success()
+                    ->send();
             } catch (Exception $e) {
                 logger('Error: '.$e->getMessage());
             }
         } catch (TooManyRequestsException $exception) {
             Notification::make()
-                ->title('Too many request')
+                ->title('Too many request!!')
                 ->danger()
                 ->send();
         }

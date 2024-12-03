@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\CalendarEvents;
 use App\Models\InterViewSheet;
 use App\Models\Transaction;
+use App\Models\User;
 use Carbon\Carbon;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
@@ -29,12 +30,15 @@ class Dashboard extends Page
 
     public $values = [];
 
+    public $genderData = [];
+
     public function mount()
     {
         if (! auth()->user()->isClient()) {
             $this->getPieData('advice');
             $this->getBarDataCase('pending');
             $this->lineChart();
+            $this->getGenderChart();
         } else {
             $events = CalendarEvents::where('user_id', auth()->user()->id)->get();
 
@@ -101,5 +105,16 @@ class Dashboard extends Page
 
         $this->years = $years;
         $this->values = $values;
+    }
+
+    public function getGenderChart()
+    {
+        // Count male clients
+        $maleClientsCount = User::where('role', 'client')->where('gender', 'male')->count();
+
+        // Count female clients
+        $femaleClientsCount = User::where('role', 'client')->where('gender', 'female')->count();
+
+        $this->genderData = [$maleClientsCount, $femaleClientsCount];
     }
 }

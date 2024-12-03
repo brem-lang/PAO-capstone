@@ -67,4 +67,26 @@
             <button> </button>
         </x-slot>
     </x-filament::modal>
+
+    {{-- pdf --}}
+    <x-filament::modal id="downloadAOLForm" width="full">
+        <x-slot name="heading">
+            PDF
+        </x-slot>
+        <iframe src="{{ $AOLpdf }}" width="100%" height="600px" style="border: none;"></iframe>
+    </x-filament::modal>
+
+    <x-filament::modal id="downloadAdviceForm" width="full">
+        <x-slot name="heading">
+            PDF
+        </x-slot>
+        <iframe src="{{ $Advicepdf }}" width="100%" height="600px" style="border: none;"></iframe>
+    </x-filament::modal>
+
+    <x-filament::modal id="downloadAdviceForm1" width="full">
+        <x-slot name="heading">
+            PDF
+        </x-slot>
+        <iframe src="{{ $Advicepdf1 }}" width="100%" height="600px" style="border: none;"></iframe>
+    </x-filament::modal>
 </x-filament-panels::page>

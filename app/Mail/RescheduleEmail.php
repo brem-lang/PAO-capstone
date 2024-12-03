@@ -26,8 +26,9 @@ class RescheduleEmail extends Mailable
      */
     public function envelope(): Envelope
     {
+
         return new Envelope(
-            subject: "Email from Public Attorney's Office",
+            subject: 'Update: Hearing Rescheduled',
         );
     }
 

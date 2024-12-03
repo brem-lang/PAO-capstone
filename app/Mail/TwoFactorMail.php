@@ -26,7 +26,7 @@ class TwoFactorMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'OTP Verification',
+            subject: 'Verification Code for Secure Access',
         );
     }
 

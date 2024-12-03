@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -26,8 +27,10 @@ class MailSender extends Mailable
      */
     public function envelope(): Envelope
     {
+        $formattedDate = Carbon::parse($this->data['startDate'])->format('F j Y g:i A');
+
         return new Envelope(
-            subject: "Email from Public Attorney's Office",
+            subject: 'Reminder: Upcoming Hearing on '.$formattedDate,
         );
     }
 

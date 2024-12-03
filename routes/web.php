@@ -30,11 +30,3 @@ Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect']
     ->name('socialite.redirect');
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])
     ->name('socialite.callback');
-
-Route::get('/test', function () {
-
-    dd(app()->environment('production'), app()->isProduction());
-    $pdf = \PDF::loadView('pdf.advice')->setPaper('legal');
-
-    return $pdf->stream(now()->format('Y-m-d h:i:s').'.pdf');
-});

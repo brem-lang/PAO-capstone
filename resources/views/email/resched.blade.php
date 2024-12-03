@@ -342,38 +342,34 @@
             style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
             &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
         </div>
-        <h1 style="text-align: center;"><a href="{{ config('app.url') }}">Portal</a></h1>
+        <h1 style="text-align: center;"><a href="{{ config('app.url') }}">PAO</a></h1>
 
         <div style="max-width: 600px; margin: 0 auto;" class="email-container">
             <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
                 style="margin: auto;">
                 <tr>
                     <td valign="middle" class="hero bg_white" style="padding: 20px">
-                        {{-- <h2 style="margin: 0">
-                            Dear {{ $user->name }},
-                        </h2> --}}
-
-                        <p>
+                        <h2 style="margin: 0">
                             Dear <strong>{{ $user->name }}</strong>,
-                            We apologize for the inconvenience, but your hearing has been rescheduled on
-                            <strong>{{ \Carbon\Carbon::parse($data['startDate'])->format('F j Y g:i A') }}</strong>.
-                            Please ensure you are present.
+                        </h2>
+
+                        <p>We would like to inform you that your hearing has been rescheduled. Below are the updated
+                            details for your hearing:
                         </p>
-
-                        <p><b>Place:</b>{{ $data['title'] }}</p>
-
-                        <p style="margin-bottom: 0"><b>Thank you for your understanding,</b></p>
-                        <p style="margin: 0">The PAO Team.</p><br>
-
-                        <hr style="border-top: 1px solid rgb(207, 207, 207)">
-
-                        <br>
-
-                        <p style="margin: 0">
-                            Portal : <a href="{{ config('app.url') }}" target="_blank">
-                                <b> {{ config('app.url') }} </b>
-                            </a>
+                        <p>New Date:
+                            <strong>
+                                {{ \Carbon\Carbon::parse($data['startDate'])->format('F j Y') }}
+                            </strong>
                         </p>
+                        <p>Time:
+                            <strong>
+                                {{ \Carbon\Carbon::parse($data['startDate'])->format('h:i:s A') }}
+                            </strong>
+                        </p>
+                        <p>Place: <strong>{{ $user->name }}</strong></p>
+
+                        <p style="margin-bottom: 0"><b>Thank you, </b></p>
+                        <p style="margin: 0">The PAO Team </p><br>
                     </td>
                 </tr>
             </table>

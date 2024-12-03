@@ -127,7 +127,35 @@
 
         .date {
             text-align: right;
-            margin-bottom: 5px;
+            margin-top: 40px;
+        }
+
+        .date1 {
+            text-align: left;
+        }
+
+        .signature-label {
+            margin-top: 5px;
+            font-size: 12px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .printed-name {
+            align-items: center;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 3px;
+            margin-top: -28px;
+        }
+
+        .signature-label::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            width: 100%;
+            border-top: 1px solid #000;
         }
     </style>
 </head>
@@ -147,12 +175,13 @@
                 <h6 style="font-weight: 100">Regional Office No. XI</h6>
                 <h6 style="font-weight: 100">District Office PANABO CITY</h6>
                 <h6>INDIVIDUAL PERFORMANCE REPORT</h6>
+                <h6 style="font-weight: 100">For the month of <strong>{{ $month }}</strong></h6>
             </div>
         </div>
-        <div class="date">
+        {{-- <div class="date">
             <span style="font-size: 10px;">Date: {{ $from }} - {{ $to }}</span><br>
             <span style="font-size: 10px;">Exported Date: {{ now()->timezone('Asia/Manila')->format('F j, Y') }}</span>
-        </div>
+        </div> --}}
         <div
             class="w-full gap-4 fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
             <table class="styled-table w-full">
@@ -878,6 +907,15 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="date">
+            <div class="signature-label">Signature Over Printed Name</div>
+        </div>
+
+        <div class="date1">
+            <div class="printed-name">{{ auth()->user()->name }}</div>
+            <div class="signature-label">Signature Over Printed Name</div>
         </div>
     </div>
 </body>
