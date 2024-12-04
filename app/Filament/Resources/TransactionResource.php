@@ -16,6 +16,7 @@ use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class TransactionResource extends Resource
@@ -299,7 +300,10 @@ class TransactionResource extends Resource
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
-            ]);
+            ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->latest();
+            });
     }
 
     public static function getRelations(): array
