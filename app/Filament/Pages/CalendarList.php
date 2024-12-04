@@ -120,6 +120,7 @@ class CalendarList extends Page implements HasForms, HasTable
                     ->action(function ($record, $data) {
                         $record->status = 'reschedule';
                         $record->startDate = $data['startDate'];
+                        $record->title = $data['title'];
                         $record->save();
 
                         (new EmailSender)->handle($record->user, $data, 'reschedule');
