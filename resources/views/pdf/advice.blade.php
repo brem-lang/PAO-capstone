@@ -695,7 +695,6 @@
                 </ol>
             </div>
             @php
-                $date = $created_at;
                 $formattedDate = \Carbon\Carbon::now()->format('jS \\d\\a\\y \\o\\f F Y');
                 // $formattedDate = \Carbon\Carbon::parse($date)->format('jS \\d\\a\\y \\o\\f F Y');
             @endphp
