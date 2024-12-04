@@ -366,7 +366,7 @@
                                 {{ \Carbon\Carbon::parse($data['startDate'])->format('h:i:s A') }}
                             </strong>
                         </p>
-                        <p>Place: <strong>{{ $user->name }}</strong></p>
+                        <p>Place: <strong>{{ $user->title }}</strong></p>
 
                         <p style="margin-bottom: 0"><b>Thank you, </b></p>
                         <p style="margin: 0">The PAO Team </p><br>

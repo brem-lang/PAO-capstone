@@ -216,7 +216,7 @@ class Reports extends Page implements HasForms
                 }
             }
             //new cases received
-            if ($value->created_at->between(Carbon::now()->startOfYear(), Carbon::now()->endOfYear())) {
+            if (Carbon::parse($value->case_received)->format('Y') == Carbon::now()->startOfYear()->format('Y')) {
                 $totalNewReceived++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalReceived++;
@@ -261,15 +261,15 @@ class Reports extends Page implements HasForms
                     $totalADM2CriminalTerminated++;
                 }
             }
-            //old
-            if ($value->created_at->year <= Carbon::now()->subYear()->year && $value->status === 'terminated') {
+            //old $value->created_at->year <= Carbon::now()->subYear()->year
+            if (Carbon::parse($value->case_received)->format('Y') <= Carbon::now()->subYear()->format('Y') && $value->status === 'terminated') {
                 $totalTerminatedA++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedA++;
                 } elseif ($value->case_type == 'Civil') {
                     $totalCivilTerminatedA++;
                 } elseif ($value->case_type == 'Administrative') {
-                    $totalAdministrativeTerminatedB++;
+                    $totalAdministrativeTerminatedA++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborTerminatedA++;
                 }
@@ -278,7 +278,7 @@ class Reports extends Page implements HasForms
                 }
             }
             //new
-            if ($value->created_at->year == Carbon::now()->year && $value->status === 'terminated') {
+            if (Carbon::parse($value->case_received)->format('Y') == Carbon::now()->format('Y') && $value->status === 'terminated') {
                 $totalTerminatedB++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedB++;
