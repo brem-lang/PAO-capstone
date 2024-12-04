@@ -307,6 +307,11 @@ class Profile extends Page implements HasForms
                                 'CAR' => 'CAR',
                                 'BRMM' => 'BRMM',
                             ]),
+                        Select::make('gender')
+                            ->options([
+                                'Male' => 'Male',
+                                'Female' => 'Female',
+                            ]),
                     ])->columns(2),
             ])
             ->statePath('data');

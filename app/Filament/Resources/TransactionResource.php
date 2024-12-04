@@ -120,7 +120,7 @@ class TransactionResource extends Resource
                                 'Manifestation' => 'Manifestation',
                                 'Disp. measures' => 'Disp. measures',
                                 'Trial / prom.' => 'Trial / prom.',
-                                'Affidavit Desist.' => 'Affidavit Desist.',
+                                'Affidavit Desist' => 'Affidavit Desist',
                                 'Released bail' => 'Released bail',
                                 'Motion to release' => 'Motion to release',
                                 'Arraigned' => 'Arraigned',
@@ -250,18 +250,22 @@ class TransactionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('item_no')
+                    ->limit(50)
                     ->label('Item No')
                     ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('control_no')
+                    ->limit(50)
                     ->label('Control No')
                     ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title_of_case')
+                    ->limit(50)
                     ->label('Title of Case')
                     ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('case_no')
+                    ->limit(50)
                     ->label('Case No')
                     ->toggleable()
                     ->searchable(),

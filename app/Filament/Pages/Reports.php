@@ -49,12 +49,14 @@ class Reports extends Page implements HasForms
         $totalAdministrative = 0;
         $totalLabor = 0;
         $totalPending = 0;
+        $totalADM2 = 0;
 
         $totalCriminalReceived = 0;
         $totalCivilReceived = 0;
         $totalAdministrativeReceived = 0;
         $totalLaborReceived = 0;
         $totalNewReceived = 0;
+        $totalADM2Received = 0;
 
         $totalCriminalReceived2One = 0;
         $totalCivilReceived2One = 0;
@@ -67,114 +69,133 @@ class Reports extends Page implements HasForms
         $totalAdministrativeCaseHandled = 0;
         $totalLaborCaseHandled = 0;
         $totalCaseHandled = 0;
+        $totalADM2Handled = 0;
 
         $totalCriminalTerminated = 0;
         $totalCivilTerminated = 0;
         $totalAdministrativeTerminated = 0;
         $totalLaborTerminated = 0;
         $totalTerminated = 0;
+        $totalADM2CriminalTerminated = 0;
 
         $totalCriminalTerminatedA = 0;
         $totalCivilTerminatedA = 0;
         $totalAdministrativeTerminatedA = 0;
         $totalLaborTerminatedA = 0;
         $totalTerminatedA = 0;
+        $totalADM2TerminatedA = 0;
 
         $totalCriminalTerminatedB = 0;
         $totalCivilTerminatedB = 0;
         $totalAdministrativeTerminatedB = 0;
         $totalLaborTerminatedB = 0;
         $totalTerminatedB = 0;
+        $totalADM2TerminatedB = 0;
 
         $totalAcquited = 0;
         $totalCriminalAcquited = 0;
         $totalCivilAcquited = 0;
         $totalAdministrativeAcquited = 0;
         $totalLaborAcquited = 0;
+        $totalADM2Acquited = 0;
 
         $totalDismissedWithPrejudice = 0;
         $totalCriminalDismissedWithPrejudice = 0;
         $totalCivilDismissedWithPrejudice = 0;
         $totalAdministrativeDismissedWithPrejudice = 0;
         $totalLaborDismissedWithPrejudice = 0;
+        $totalADM2DismissedWithPrejudice = 0;
 
         $totalMotionToQuashGranted = 0;
         $totalCriminalMotionToQuashGranted = 0;
         $totalCivilMotionToQuashGranted = 0;
         $totalAdministrativeMotionToQuashGranted = 0;
         $totalLaborMotionToQuashGranted = 0;
+        $totalADM2MotionToQuashGranted = 0;
 
         $totalDemurrerToEvidenceGranted = 0;
         $totalCriminalDemurrerToEvidenceGranted = 0;
         $totalCivilDemurrerToEvidenceGranted = 0;
         $totalAdministrativeDemurrerToEvidenceGranted = 0;
         $totalLaborDemurrerToEvidenceGranted = 0;
+        $totalADM2DemurrerToEvidenceGranted = 0;
 
         $totalProvisionallyDismissed = 0;
         $totalCriminalProvisionallyDismissed = 0;
         $totalCivilProvisionallyDismissed = 0;
         $totalAdministrativeProvisionallyDismissed = 0;
         $totalLaborProvisionallyDismissed = 0;
+        $totalADM2ProvisionallyDismissed = 0;
 
         $totalConvictedToLesserOffense = 0;
         $totalCriminalConvictedToLesserOffense = 0;
         $totalCivilConvictedToLesserOffense = 0;
         $totalAdministrativeConvictedToLesserOffense = 0;
         $totalLaborConvictedToLesserOffense = 0;
+        $totalADM2ConvictedToLesserOffense = 0;
 
         $totalProbationGranted = 0;
         $totalCriminalProbationGranted = 0;
         $totalCivilProbationGranted = 0;
         $totalAdministrativeProbationGranted = 0;
         $totalLaborProbationGranted = 0;
+        $totalADM2ProbationGranted = 0;
 
         $totalWonCivil = 0;
         $totalCriminalWonCivil = 0;
         $totalCivilWonCivil = 0;
         $totalAdministrativeWonCivil = 0;
         $totalLaborWonCivil = 0;
+        $totalADM2WonCivil = 0;
 
         $totalGrantedAwarded = 0;
         $totalCriminalGrantedAwarded = 0;
         $totalCivilGrantedAwarded = 0;
         $totalAdministrativeGrantedAwarded = 0;
         $totalLaborGrantedAwarded = 0;
+        $totalADM2GrantedAwarded = 0;
 
         $totalDismissedCompromise = 0;
         $totalCriminalDismissedCompromise = 0;
         $totalCivilDismissedCompromise = 0;
         $totalAdministrativeDismissedCompromise = 0;
         $totalLaborDismissedCompromise = 0;
+        $totalADM2DismissedCompromise = 0;
 
         $totalCriminalCasesForPreliminaryInvestigation = 0;
         $totalCivilCasesForPreliminaryInvestigation = 0;
         $totalAdministrativeCasesForPreliminaryInvestigation = 0;
         $totalLaborCasesForPreliminaryInvestigation = 0;
         $totalCasePreliminaryInvestigation = 0;
+        $totalADM2CriminalCasesForPreliminaryInvestigation = 0;
 
         $totalConvictedAsCharged = 0;
         $totalCriminalConvictedAsCharged = 0;
         $totalCivilConvictedAsCharged = 0;
         $totalAdministrativeConvictedAsCharged = 0;
         $totalLaborConvictedAsCharged = 0;
+        $totalADM2ConvictedAsCharged = 0;
 
         $totalLostCivilAdministrativeLabor = 0;
         $totalCriminalCivilAdministrativeLabor = 0;
         $totalCivilCivilAdministrativeLabor = 0;
         $totalAdministrativeCivilAdministrativeLabor = 0;
         $totalLaborCivilAdministrativeLabor = 0;
+        $totalADM2LostCivilAdministrativeLabor = 0;
 
         $totalDismissedCAL = 0;
         $totalCriminalCAL = 0;
         $totalCivilCAL = 0;
         $totalAdministrativeCAL = 0;
         $totalLaborCAL = 0;
+        $totalADM2DismissedCAL = 0;
 
         $totalPreliminaryInvestigation = 0;
         $totalCriminalPreliminaryInvestigation = 0;
         $totalCivilPreliminaryInvestigation = 0;
         $totalAdministrativePreliminaryInvestigation = 0;
         $totalLaborPreliminaryInvestigation = 0;
+        $totalADM2PreliminaryInvestigation = 0;
 
         foreach ($transactions as $value) {
 
@@ -189,6 +210,10 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLabor++;
                 }
+
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2++;
+                }
             }
             //new cases received
             if ($value->created_at->between(Carbon::now()->startOfYear(), Carbon::now()->endOfYear())) {
@@ -202,6 +227,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborReceived++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2Received++;
+                }
             }
             $totalCaseHandled++;
             if ($value->case_type == 'Criminal') {
@@ -213,6 +241,9 @@ class Reports extends Page implements HasForms
             } elseif ($value->case_type == 'Labor') {
                 $totalLaborCaseHandled++;
             }
+            if ($value->last_action_taken == 'Affidavit Desist') {
+                $totalADM2Handled++;
+            }
 
             //terminated
             if ($value->status === 'terminated') {
@@ -220,15 +251,18 @@ class Reports extends Page implements HasForms
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminated++;
                 } elseif ($value->case_type == 'Civil') {
-                    $totalCivil++;
+                    $totalCivilTerminated++;
                 } elseif ($value->case_type == 'Administrative') {
-                    $totalAdministrative++;
+                    $totalAdministrativeTerminated++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborTerminated++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2CriminalTerminated++;
+                }
             }
             //old
-            if ($value->created_at->year < Carbon::now()->subYear()->year && $value->status === 'terminated') {
+            if ($value->created_at->year <= Carbon::now()->subYear()->year && $value->status === 'terminated') {
                 $totalTerminatedA++;
                 if ($value->case_type == 'Criminal') {
                     $totalCriminalTerminatedA++;
@@ -238,6 +272,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativeTerminatedB++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborTerminatedA++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2TerminatedA++;
                 }
             }
             //new
@@ -251,6 +288,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativeTerminatedB++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborTerminatedB++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2TerminatedB++;
                 }
             }
 
@@ -266,6 +306,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborAcquited++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2Acquited++;
+                }
             }
             // Dismissed with prejudice
             if ($value->cause_of_termination === 'Dismissed with prejudice') {
@@ -279,6 +322,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativeDismissedWithPrejudice++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborDismissedWithPrejudice++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2DismissedWithPrejudice++;
                 }
             }
             // Motion to quash granted
@@ -294,6 +340,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborMotionToQuashGranted++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2MotionToQuashGranted++;
+                }
             }
             // Demurrer to evidence granted
             if ($value->cause_of_termination === 'Demurrer to evidence granted') {
@@ -308,6 +357,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborDemurrerToEvidenceGranted++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2DemurrerToEvidenceGranted++;
+                }
             }
             // Provisionally dismissed
             if ($value->cause_of_termination === 'Provisionally dismissed') {
@@ -320,6 +372,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativeProvisionallyDismissed++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborProvisionallyDismissed++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2ProvisionallyDismissed++;
                 }
             }
             // Convicted to lesser offense
@@ -334,6 +389,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborConvictedToLesserOffense++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2ConvictedToLesserOffense++;
+                }
             }
             // Probation granted
             if ($value->cause_of_termination === 'Probation granted') {
@@ -346,6 +404,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativeProbationGranted++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborProbationGranted++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2ProbationGranted++;
                 }
             }
             // Won (civil, labor, and administrative)
@@ -360,6 +421,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborWonCivil++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2WonCivil++;
+                }
             }
             // Granted lesser award (civil, administrative & labor)
             if ($value->cause_of_termination === 'Granted lesser award (civil, administrative & labor)') {
@@ -373,6 +437,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborGrantedAwarded++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2GrantedAwarded++;
+                }
             }
             // Dismissed cases based on compromise agreement (civil & labor)
             if ($value->cause_of_termination === 'Dismissed cases based on compromise agreement (civil & labor)') {
@@ -385,6 +452,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativeDismissedCompromise++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborDismissedCompromise++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2DismissedCompromise++;
                 }
             }
             // Favorable Criminal cases for preliminary investigation
@@ -400,6 +470,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborCasesForPreliminaryInvestigation++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2CriminalCasesForPreliminaryInvestigation++;
+                }
             }
             // Convicted as charged
             if ($value->cause_of_termination === 'Convicted as charged') {
@@ -412,6 +485,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativeConvictedAsCharged++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborConvictedAsCharged++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2ConvictedAsCharged++;
                 }
             }
             // Lost (civil, administrative & labor)
@@ -427,6 +503,9 @@ class Reports extends Page implements HasForms
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborCivilAdministrativeLabor++;
                 }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2LostCivilAdministrativeLabor++;
+                }
             }
             // Dismissed (civil, administrative & labor)
             if ($value->cause_of_termination === 'Dismissed (civil, administrative & labor)') {
@@ -440,6 +519,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativeCAL++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborCAL++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2DismissedCAL++;
                 }
             }
 
@@ -455,6 +537,9 @@ class Reports extends Page implements HasForms
                     $totalAdministrativePreliminaryInvestigation++;
                 } elseif ($value->case_type == 'Labor') {
                     $totalLaborPreliminaryInvestigation++;
+                }
+                if ($value->last_action_taken == 'Affidavit Desist') {
+                    $totalADM2PreliminaryInvestigation++;
                 }
             }
         }
@@ -482,6 +567,7 @@ class Reports extends Page implements HasForms
                 'cvPending' => $totalCivil,
                 'adPending' => $totalAdministrative,
                 'adm3Pending' => $totalLabor,
+                'totalADM2' => $totalADM2,
             ],
             'caseReceived' => [
                 'totalNewReceived' => $totalNewReceived,
@@ -489,6 +575,7 @@ class Reports extends Page implements HasForms
                 'totalCivilReceived' => $totalCivilReceived,
                 'totalAdministrativeReceived' => $totalAdministrativeReceived,
                 'totalLaborReceived' => $totalLaborReceived,
+                'totalADM2Received' => $totalADM2Received,
             ],
             'caseReceived2One' => [
                 'totalNewReceived2One' => $totalNewReceived2One,
@@ -503,6 +590,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeCaseHandled' => $totalAdministrativeCaseHandled,
                 'totalLaborCaseHandled' => $totalLaborCaseHandled,
                 'totalCaseHandled' => $totalCaseHandled,
+                'totalADM2Handled' => $totalADM2Handled,
             ],
             'terminated' => [
                 'totalCriminalTerminated' => $totalCriminalTerminated,
@@ -510,6 +598,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeTerminated' => $totalAdministrativeTerminated,
                 'totalLaborTerminated' => $totalLaborTerminated,
                 'totalTerminated' => $totalTerminated,
+                'totalADM2CriminalTerminated' => $totalADM2CriminalTerminated,
             ],
             'terminatedA' => [
                 'totalCriminalTerminatedA' => $totalCriminalTerminatedA,
@@ -517,6 +606,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeTerminatedA' => $totalAdministrativeTerminatedA,
                 'totalLaborTerminatedA' => $totalLaborTerminatedA,
                 'totalTerminatedA' => $totalTerminatedA,
+                'totalADM2TerminatedA' => $totalADM2TerminatedA,
             ],
             'terminatedB' => [
                 'totalCriminalTerminatedB' => $totalCriminalTerminatedB,
@@ -524,6 +614,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeTerminatedB' => $totalAdministrativeTerminatedB,
                 'totalLaborTerminatedB' => $totalLaborTerminatedB,
                 'totalTerminatedB' => $totalTerminatedB,
+                'totalADM2TerminatedB' => $totalADM2TerminatedB,
             ],
             'acquited' => [
                 'totalCriminalAcquited' => $totalCriminalAcquited,
@@ -531,6 +622,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeAcquited' => $totalAdministrativeAcquited,
                 'totalLaborAcquited' => $totalLaborAcquited,
                 'totalAcquited' => $totalAcquited,
+                'totalADM2Acquited' => $totalADM2Acquited,
             ],
             'dismissedwithPrejudice' => [
                 'totalCriminalDismissedWithPrejudice' => $totalCriminalDismissedWithPrejudice,
@@ -538,6 +630,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeDismissedWithPrejudice' => $totalAdministrativeDismissedWithPrejudice,
                 'totalLaborDismissedWithPrejudice' => $totalLaborDismissedWithPrejudice,
                 'totalDismissedWithPrejudice' => $totalDismissedWithPrejudice,
+                'totalADM2DismissedWithPrejudice' => $totalADM2DismissedWithPrejudice,
             ],
             'motionToQuashGranted' => [
                 'totalCriminalMotionToQuashGranted' => $totalCriminalMotionToQuashGranted,
@@ -545,6 +638,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeMotionToQuashGranted' => $totalAdministrativeMotionToQuashGranted,
                 'totalLaborMotionToQuashGranted' => $totalLaborMotionToQuashGranted,
                 'totalMotionToQuashGranted' => $totalMotionToQuashGranted,
+                'totalADM2MotionToQuashGranted' => $totalADM2MotionToQuashGranted,
             ],
             'demurrerToEvidenceGranted' => [
                 'totalCriminalDemurrerToEvidenceGranted' => $totalCriminalDemurrerToEvidenceGranted,
@@ -552,6 +646,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeDemurrerToEvidenceGranted' => $totalAdministrativeDemurrerToEvidenceGranted,
                 'totalLaborDemurrerToEvidenceGranted' => $totalLaborDemurrerToEvidenceGranted,
                 'totalDemurrerToEvidenceGranted' => $totalDemurrerToEvidenceGranted,
+                'totalADM2DemurrerToEvidenceGranted' => $totalADM2DemurrerToEvidenceGranted,
             ],
             'provisionallyDismissed' => [
                 'totalCriminalProvisionallyDismissed' => $totalCriminalProvisionallyDismissed,
@@ -559,6 +654,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeProvisionallyDismissed' => $totalAdministrativeProvisionallyDismissed,
                 'totalLaborProvisionallyDismissed' => $totalLaborProvisionallyDismissed,
                 'totalProvisionallyDismissed' => $totalProvisionallyDismissed,
+                'totalADM2ProvisionallyDismissed' => $totalADM2ProvisionallyDismissed,
             ],
             'convictedToLesserOffense' => [
                 'totalCriminalConvictedToLesserOffense' => $totalCriminalConvictedToLesserOffense,
@@ -566,6 +662,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeConvictedToLesserOffense' => $totalAdministrativeConvictedToLesserOffense,
                 'totalLaborConvictedToLesserOffense' => $totalLaborConvictedToLesserOffense,
                 'totalConvictedToLesserOffense' => $totalConvictedToLesserOffense,
+                'totalADM2ConvictedToLesserOffense' => $totalADM2ConvictedToLesserOffense,
             ],
             'probationGranted' => [
                 'totalCriminalProbationGranted' => $totalCriminalProbationGranted,
@@ -573,6 +670,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeProbationGranted' => $totalAdministrativeProbationGranted,
                 'totalLaborProbationGranted' => $totalLaborProbationGranted,
                 'totalProbationGranted' => $totalProbationGranted,
+                'totalADM2ProbationGranted' => $totalADM2ProbationGranted,
             ],
             'wonCivil' => [
                 'totalWonCivil' => $totalWonCivil,
@@ -580,6 +678,7 @@ class Reports extends Page implements HasForms
                 'totalCivilWonCivil' => $totalCivilWonCivil,
                 'totalAdministrativeWonCivil' => $totalAdministrativeWonCivil,
                 'totalLaborWonCivil' => $totalLaborWonCivil,
+                'totalADM2WonCivil' => $totalADM2WonCivil,
             ],
             'grantedAwarded' => [
                 'totalGrantedAwarded' => $totalGrantedAwarded,
@@ -587,6 +686,7 @@ class Reports extends Page implements HasForms
                 'totalCivilGrantedAwarded' => $totalCivilGrantedAwarded,
                 'totalAdministrativeGrantedAwarded' => $totalAdministrativeGrantedAwarded,
                 'totalLaborGrantedAwarded' => $totalLaborGrantedAwarded,
+                'totalADM2GrantedAwarded' => $totalADM2GrantedAwarded,
             ],
             'dismissedCompromise' => [
                 'totalDismissedCompromise' => $totalDismissedCompromise,
@@ -594,6 +694,7 @@ class Reports extends Page implements HasForms
                 'totalCivilDismissedCompromise' => $totalCivilDismissedCompromise,
                 'totalAdministrativeDismissedCompromise' => $totalAdministrativeDismissedCompromise,
                 'totalLaborDismissedCompromise' => $totalLaborDismissedCompromise,
+                'totalADM2DismissedCompromise' => $totalADM2DismissedCompromise,
             ],
             'casesForPreliminaryInvestigation' => [
                 'totalCriminalCasesForPreliminaryInvestigation' => $totalCriminalCasesForPreliminaryInvestigation,
@@ -601,6 +702,7 @@ class Reports extends Page implements HasForms
                 'totalAdministrativeCasesForPreliminaryInvestigation' => $totalAdministrativeCasesForPreliminaryInvestigation,
                 'totalLaborCasesForPreliminaryInvestigation' => $totalLaborCasesForPreliminaryInvestigation,
                 'totalCasePreliminaryInvestigation' => $totalCasePreliminaryInvestigation,
+                'totalADM2CriminalCasesForPreliminaryInvestigation' => $totalADM2CriminalCasesForPreliminaryInvestigation,
             ],
             'convictedAsCharged' => [
                 'totalConvictedAsCharged' => $totalConvictedAsCharged,
@@ -608,6 +710,7 @@ class Reports extends Page implements HasForms
                 'totalCivilConvictedAsCharged' => $totalCivilConvictedAsCharged,
                 'totalAdministrativeConvictedAsCharged' => $totalAdministrativeConvictedAsCharged,
                 'totalLaborConvictedAsCharged' => $totalLaborConvictedAsCharged,
+                'totalADM2ConvictedAsCharged' => $totalADM2ConvictedAsCharged,
             ],
             'lostCivilLabor' => [
                 'totalLostCivilAdministrativeLabor' => $totalLostCivilAdministrativeLabor,
@@ -615,6 +718,7 @@ class Reports extends Page implements HasForms
                 'totalCivilCivilAdministrativeLabor' => $totalCivilCivilAdministrativeLabor,
                 'totalAdministrativeCivilAdministrativeLabor' => $totalAdministrativeCivilAdministrativeLabor,
                 'totalLaborCivilAdministrativeLabor' => $totalLaborCivilAdministrativeLabor,
+                'totalADM2LostCivilAdministrativeLabor' => $totalADM2LostCivilAdministrativeLabor,
             ],
             'dismissedCAL' => [
                 'totalDismissedCAL' => $totalDismissedCAL,
@@ -622,6 +726,7 @@ class Reports extends Page implements HasForms
                 'totalCivilCAL' => $totalCivilCAL,
                 'totalAdministrativeCAL' => $totalAdministrativeCAL,
                 'totalLaborCAL' => $totalLaborCAL,
+                'totalADM2DismissedCAL' => $totalADM2DismissedCAL,
             ],
             'preliminaryInvestigation' => [
                 'totalPreliminaryInvestigation' => $totalPreliminaryInvestigation,
@@ -629,6 +734,7 @@ class Reports extends Page implements HasForms
                 'totalCivilPreliminaryInvestigation' => $totalCivilPreliminaryInvestigation,
                 'totalAdministrativePreliminaryInvestigation' => $totalAdministrativePreliminaryInvestigation,
                 'totalLaborPreliminaryInvestigation' => $totalLaborPreliminaryInvestigation,
+                'totalADM2PreliminaryInvestigation' => $totalADM2PreliminaryInvestigation,
             ],
         ];
     }
@@ -661,6 +767,8 @@ class Reports extends Page implements HasForms
 
     public function print()
     {
+        $this->form->getState();
+
         $data = $this->case;
 
         $data['from'] = isset($this->data['from'])
@@ -678,10 +786,5 @@ class Reports extends Page implements HasForms
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
         }, 'Reports-'.now()->format('Y-m-d h:i:s').'.pdf');
-    }
-
-    public function checker()
-    {
-        dd($this->case);
     }
 }

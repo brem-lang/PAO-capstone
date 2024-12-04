@@ -215,7 +215,7 @@
                         <td>{{ $casePending['crPending'] }}</td>
                         <td>{{ $casePending['cvPending'] }}</td>
                         <td>{{ $casePending['adPending'] }}</td>
-                        <td>0</td>
+                        <td>{{ $casePending['totalADM2'] }}</td>
                         <td>{{ $casePending['adm3Pending'] }}</td>
                     </tr>
                     <tr>
@@ -225,7 +225,7 @@
                         <td>{{ $caseReceived['totalCriminalReceived'] }}</td>
                         <td>{{ $caseReceived['totalCivilReceived'] }}</td>
                         <td>{{ $caseReceived['totalAdministrativeReceived'] }}</td>
-                        <td>0</td>
+                        <td>{{ $caseReceived['totalADM2Received'] }}</td>
                         <td>{{ $caseReceived['totalLaborReceived'] }}</td>
                     </tr>
                     <tr>
@@ -273,7 +273,7 @@
                             {{ $CaseHandled['totalCivilCaseHandled'] }}</td>
                         <td x-text="items.CaseHandled.totalAdministrativeCaseHandled">
                             {{ $CaseHandled['totalAdministrativeCaseHandled'] }}</td>
-                        <td>0</td>
+                        <td>{{ $CaseHandled['totalADM2Handled'] }}</td>
                         <td x-text="items.CaseHandled.totalLaborCaseHandled">
                             {{ $CaseHandled['totalLaborCaseHandled'] }}</td>
                     </tr>
@@ -287,7 +287,7 @@
                         </td>
                         <td x-text="items.terminated.totalAdministrativeTerminated">
                             {{ $terminated['totalAdministrativeTerminated'] }}</td>
-                        <td>0</td>
+                        <td> {{ $terminated['totalADM2CriminalTerminated'] }}</td>
                         <td x-text="items.terminated.totalLaborTerminated">{{ $terminated['totalLaborTerminated'] }}
                         </td>
                     </tr>
@@ -301,7 +301,7 @@
                             {{ $terminatedA['totalCivilTerminatedA'] }}</td>
                         <td x-text="items.terminatedA.totalAdministrativeTerminatedA">
                             {{ $terminatedA['totalAdministrativeTerminatedA'] }}</td>
-                        <td>0</td>
+                        <td> {{ $terminatedA['totalADM2TerminatedA'] }}</td>
                         <td x-text="items.terminatedA.totalLaborTerminatedA">
                             {{ $terminatedA['totalLaborTerminatedA'] }}
                         </td>
@@ -316,7 +316,7 @@
                             {{ $terminatedB['totalCivilTerminatedB'] }}</td>
                         <td x-text="items.terminatedB.totalAdministrativeTerminatedB">
                             {{ $terminatedB['totalAdministrativeTerminatedB'] }}</td>
-                        <td>0</td>
+                        <td>{{ $terminatedB['totalADM2TerminatedB'] }}</td>
                         <td x-text="items.terminatedB.totalLaborTerminatedB">
                             {{ $terminatedB['totalLaborTerminatedB'] }}
                         </td>
@@ -351,7 +351,7 @@
                             {{ $acquited['totalCivilAcquited'] }}</td>
                         <td x-text="items.acquited.totalAdministrativeAcquited">
                             {{ $acquited['totalAdministrativeAcquited'] }}</td>
-                        <td>0</td>
+                        <td>{{ $acquited['totalADM2Acquited'] }}</td>
                         <td x-text="items.acquited.totalLaborAcquited">{{ $acquited['totalLaborAcquited'] }}</td>
                     </tr>
                     <tr>
@@ -375,7 +375,7 @@
                             {{ $dismissedwithPrejudice['totalCivilDismissedWithPrejudice'] }}</td>
                         <td x-text="items.dismissedwithPrejudice.totalAdministrativeDismissedWithPrejudice">
                             {{ $dismissedwithPrejudice['totalAdministrativeDismissedWithPrejudice'] }}</td>
-                        <td>0</td>
+                        <td>{{ $dismissedwithPrejudice['totalADM2DismissedWithPrejudice'] }}</td>
                         <td x-text="items.dismissedwithPrejudice.totalLaborDismissedWithPrejudice">
                             {{ $dismissedwithPrejudice['totalLaborDismissedWithPrejudice'] }}</td>
                     </tr>
@@ -400,7 +400,7 @@
                             {{ $motionToQuashGranted['totalCivilMotionToQuashGranted'] }}</td>
                         <td x-text="items.motionToQuashGranted.totalAdministrativeMotionToQuashGranted">
                             {{ $motionToQuashGranted['totalAdministrativeMotionToQuashGranted'] }}</td>
-                        <td>0</td>
+                        <td> {{ $motionToQuashGranted['totalADM2MotionToQuashGranted'] }}</td>
                         <td x-text="items.motionToQuashGranted.totalLaborMotionToQuashGranted">
                             {{ $motionToQuashGranted['totalLaborMotionToQuashGranted'] }}</td>
                     </tr>
@@ -425,7 +425,7 @@
                             {{ $demurrerToEvidenceGranted['totalCivilDemurrerToEvidenceGranted'] }}</td>
                         <td x-text="items.demurrerToEvidenceGranted.totalAdministrativeDemurrerToEvidenceGranted">
                             {{ $demurrerToEvidenceGranted['totalAdministrativeDemurrerToEvidenceGranted'] }}</td>
-                        <td>0</td>
+                        <td> {{ $demurrerToEvidenceGranted['totalADM2DemurrerToEvidenceGranted'] }}</td>
                         <td x-text="items.demurrerToEvidenceGranted.totalLaborDemurrerToEvidenceGranted">
                             {{ $demurrerToEvidenceGranted['totalLaborDemurrerToEvidenceGranted'] }}</td>
                     </tr>
@@ -450,7 +450,7 @@
                             {{ $provisionallyDismissed['totalCivilProvisionallyDismissed'] }}</td>
                         <td x-text="items.provisionallyDismissed.totalAdministrativeProvisionallyDismissed">
                             {{ $provisionallyDismissed['totalAdministrativeProvisionallyDismissed'] }}</td>
-                        <td>0</td>
+                        <td> {{ $provisionallyDismissed['totalADM2ProvisionallyDismissed'] }}</td>
                         <td x-text="items.provisionallyDismissed.totalLaborProvisionallyDismissed">
                             {{ $provisionallyDismissed['totalLaborProvisionallyDismissed'] }}</td>
                     </tr>
@@ -475,7 +475,7 @@
                             {{ $convictedToLesserOffense['totalCivilConvictedToLesserOffense'] }}</td>
                         <td x-text="items.convictedToLesserOffense.totalAdministrativeConvictedToLesserOffense">
                             {{ $convictedToLesserOffense['totalAdministrativeConvictedToLesserOffense'] }}</td>
-                        <td>0</td>
+                        <td>{{ $convictedToLesserOffense['totalADM2ConvictedToLesserOffense'] }}</td>
                         <td x-text="items.convictedToLesserOffense.totalLaborConvictedToLesserOffense">
                             {{ $convictedToLesserOffense['totalLaborConvictedToLesserOffense'] }}</td>
                     </tr>
@@ -500,7 +500,7 @@
                             {{ $probationGranted['totalCivilProbationGranted'] }}</td>
                         <td x-text="items.probationGranted.totalAdministrativeProbationGranted">
                             {{ $probationGranted['totalAdministrativeProbationGranted'] }}</td>
-                        <td>0</td>
+                        <td> {{ $probationGranted['totalADM2ProbationGranted'] }}</td>
                         <td x-text="items.probationGranted.totalLaborProbationGranted">
                             {{ $probationGranted['totalLaborProbationGranted'] }}</td>
                     </tr>
@@ -524,7 +524,7 @@
                         <td x-text="items.wonCivil.totalCivilWonCivil">{{ $wonCivil['totalCivilWonCivil'] }}</td>
                         <td x-text="items.wonCivil.totalAdministrativeWonCivil">
                             {{ $wonCivil['totalAdministrativeWonCivil'] }}</td>
-                        <td>0</td>
+                        <td> {{ $wonCivil['totalADM2WonCivil'] }}</td>
                         <td x-text="items.wonCivil.totalLaborWonCivil">{{ $wonCivil['totalLaborWonCivil'] }}</td>
                     </tr>
                     <tr>
@@ -550,7 +550,7 @@
                             {{ $grantedAwarded['totalCivilGrantedAwarded'] }}</td>
                         <td x-text="items.grantedAwarded.totalAdministrativeGrantedAwarded">
                             {{ $grantedAwarded['totalAdministrativeGrantedAwarded'] }}</td>
-                        <td>0</td>
+                        <td>{{ $grantedAwarded['totalADM2GrantedAwarded'] }}</td>
                         <td x-text="items.grantedAwarded.totalLaborGrantedAwarded">
                             {{ $grantedAwarded['totalLaborGrantedAwarded'] }}</td>
                     </tr>
@@ -578,7 +578,7 @@
                             {{ $dismissedCompromise['totalCivilDismissedCompromise'] }}</td>
                         <td x-text="items.dismissedCompromise.totalAdministrativeDismissedCompromise">
                             {{ $dismissedCompromise['totalAdministrativeDismissedCompromise'] }}</td>
-                        <td>0</td>
+                        <td> {{ $dismissedCompromise['totalADM2DismissedCompromise'] }}</td>
                         <td x-text="items.dismissedCompromise.totalLaborDismissedCompromise">
                             {{ $dismissedCompromise['totalLaborDismissedCompromise'] }}</td>
                     </tr>
@@ -609,7 +609,8 @@
                             x-text="items.casesForPreliminaryInvestigation.totalAdministrativeCasesForPreliminaryInvestigation">
                             {{ $casesForPreliminaryInvestigation['totalAdministrativeCasesForPreliminaryInvestigation'] }}
                         </td>
-                        <td>0</td>
+                        <td> {{ $casesForPreliminaryInvestigation['totalADM2CriminalCasesForPreliminaryInvestigation'] }}
+                        </td>
                         <td x-text="items.casesForPreliminaryInvestigation.totalLaborCasesForPreliminaryInvestigation">
                             {{ $casesForPreliminaryInvestigation['totalLaborCasesForPreliminaryInvestigation'] }}
                         </td>
@@ -786,7 +787,7 @@
                             {{ $convictedAsCharged['totalCivilConvictedAsCharged'] }}</td>
                         <td x-text="items.convictedAsCharged.totalAdministrativeConvictedAsCharged">
                             {{ $convictedAsCharged['totalAdministrativeConvictedAsCharged'] }}</td>
-                        <td>0</td>
+                        <td> {{ $convictedAsCharged['totalADM2ConvictedAsCharged'] }}</td>
                         <td x-text="items.convictedAsCharged.totalLaborConvictedAsCharged">
                             {{ $convictedAsCharged['totalLaborConvictedAsCharged'] }}</td>
                     </tr>
@@ -811,7 +812,7 @@
                             {{ $lostCivilLabor['totalCivilCivilAdministrativeLabor'] }}</td>
                         <td x-text="items.lostCivilLabor.totalAdministrativeCivilAdministrativeLabor">
                             {{ $lostCivilLabor['totalAdministrativeCivilAdministrativeLabor'] }}</td>
-                        <td>0</td>
+                        <td> {{ $lostCivilLabor['totalADM2LostCivilAdministrativeLabor'] }}</td>
                         <td x-text="items.lostCivilLabor.totalLaborCivilAdministrativeLabor">
                             {{ $lostCivilLabor['totalLaborCivilAdministrativeLabor'] }}</td>
                     </tr>
@@ -835,7 +836,7 @@
                         <td x-text="items.dismissedCAL.totalCivilCAL">{{ $dismissedCAL['totalCivilCAL'] }}</td>
                         <td x-text="items.dismissedCAL.totalAdministrativeCAL">
                             {{ $dismissedCAL['totalAdministrativeCAL'] }}</td>
-                        <td>0</td>
+                        <td>{{ $dismissedCAL['totalADM2DismissedCAL'] }}</td>
                         <td x-text="items.dismissedCAL.totalLaborCAL">{{ $dismissedCAL['totalLaborCAL'] }}</td>
                     </tr>
                     <tr>
@@ -861,7 +862,7 @@
                             {{ $preliminaryInvestigation['totalCivilPreliminaryInvestigation'] }}</td>
                         <td x-text="items.preliminaryInvestigation.totalAdministrativePreliminaryInvestigation">
                             {{ $preliminaryInvestigation['totalAdministrativePreliminaryInvestigation'] }}</td>
-                        <td>0</td>
+                        <td> {{ $preliminaryInvestigation['totalADM2PreliminaryInvestigation'] }}</td>
                         <td x-text="items.preliminaryInvestigation.totalLaborPreliminaryInvestigation">
                             {{ $preliminaryInvestigation['totalLaborPreliminaryInvestigation'] }}</td>
                     </tr>

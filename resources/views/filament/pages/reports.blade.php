@@ -49,7 +49,7 @@
                     <td x-text="items.casePending.crPending"></td>
                     <td x-text="items.casePending.cvPending"></td>
                     <td x-text="items.casePending.adPending"></td>
-                    <td>0</td>
+                    <td x-text="items.casePending.totalADM2"></td>
                     <td x-text="items.casePending.adm3Pending"></td>
                 </tr>
                 <tr>
@@ -59,7 +59,7 @@
                     <td x-text="items.caseReceived.totalCriminalReceived"></td>
                     <td x-text="items.caseReceived.totalCivilReceived"></td>
                     <td x-text="items.caseReceived.totalAdministrativeReceived"></td>
-                    <td>0</td>
+                    <td x-text="items.caseReceived.totalADM2Received"></td>
                     <td x-text="items.caseReceived.totalLaborReceived"></td>
                 </tr>
                 <tr>
@@ -99,7 +99,7 @@
                     <td x-text="items.CaseHandled.totalCriminalCaseHandled"></td>
                     <td x-text="items.CaseHandled.totalCivilCaseHandled"></td>
                     <td x-text="items.CaseHandled.totalAdministrativeCaseHandled"></td>
-                    <td>0</td>
+                    <td x-text="items.CaseHandled.totalADM2Handled"></td>
                     <td x-text="items.CaseHandled.totalLaborCaseHandled"></td>
                 </tr>
                 <tr>
@@ -109,7 +109,7 @@
                     <td x-text="items.terminated.totalCriminalTerminated"></td>
                     <td x-text="items.terminated.totalCivilTerminated"></td>
                     <td x-text="items.terminated.totalAdministrativeTerminated"></td>
-                    <td>0</td>
+                    <td x-text="items.terminated.totalADM2CriminalTerminated"></td>
                     <td x-text="items.terminated.totalLaborTerminated"></td>
                 </tr>
                 <tr>
@@ -119,7 +119,7 @@
                     <td x-text="items.terminatedA.totalCriminalTerminatedA"></td>
                     <td x-text="items.terminatedA.totalCivilTerminatedA"></td>
                     <td x-text="items.terminatedA.totalAdministrativeTerminatedA"></td>
-                    <td>0</td>
+                    <td x-text="items.terminatedA.totalADM2TerminatedA"></td>
                     <td x-text="items.terminatedA.totalLaborTerminatedA"></td>
                 </tr>
                 <tr>
@@ -129,7 +129,7 @@
                     <td x-text="items.terminatedB.totalCriminalTerminatedB"></td>
                     <td x-text="items.terminatedB.totalCivilTerminatedB"></td>
                     <td x-text="items.terminatedB.totalAdministrativeTerminatedB"></td>
-                    <td>0</td>
+                    <td x-text="items.terminatedB.totalADM2TerminatedB"></td>
                     <td x-text="items.terminatedB.totalLaborTerminatedB"></td>
                 </tr>
                 <tr>
@@ -159,7 +159,7 @@
                     <td x-text="items.acquited.totalCriminalAcquited"></td>
                     <td x-text="items.acquited.totalCivilAcquited"></td>
                     <td x-text="items.acquited.totalAdministrativeAcquited"></td>
-                    <td>0</td>
+                    <td x-text="items.acquited.totalADM2Acquited"></td>
                     <td x-text="items.acquited.totalLaborAcquited"></td>
                 </tr>
                 <tr>
@@ -179,7 +179,7 @@
                     <td x-text="items.dismissedwithPrejudice.totalCriminalDismissedWithPrejudice"></td>
                     <td x-text="items.dismissedwithPrejudice.totalCivilDismissedWithPrejudice"></td>
                     <td x-text="items.dismissedwithPrejudice.totalAdministrativeDismissedWithPrejudice"></td>
-                    <td>0</td>
+                    <td x-text="items.dismissedwithPrejudice.totalADM2DismissedWithPrejudice"></td>
                     <td x-text="items.dismissedwithPrejudice.totalLaborDismissedWithPrejudice"></td>
                 </tr>
                 <tr>
@@ -199,7 +199,7 @@
                     <td x-text="items.motionToQuashGranted.totalCriminalMotionToQuashGranted"></td>
                     <td x-text="items.motionToQuashGranted.totalCivilMotionToQuashGranted"></td>
                     <td x-text="items.motionToQuashGranted.totalAdministrativeMotionToQuashGranted"></td>
-                    <td>0</td>
+                    <td x-text="items.motionToQuashGranted.totalADM2MotionToQuashGranted"></td>
                     <td x-text="items.motionToQuashGranted.totalLaborMotionToQuashGranted"></td>
                 </tr>
                 <tr>
@@ -219,7 +219,7 @@
                     <td x-text="items.demurrerToEvidenceGranted.totalCriminalDemurrerToEvidenceGranted"></td>
                     <td x-text="items.demurrerToEvidenceGranted.totalCivilDemurrerToEvidenceGranted"></td>
                     <td x-text="items.demurrerToEvidenceGranted.totalAdministrativeDemurrerToEvidenceGranted"></td>
-                    <td>0</td>
+                    <td x-text="items.demurrerToEvidenceGranted.totalADM2DemurrerToEvidenceGranted"></td>
                     <td x-text="items.demurrerToEvidenceGranted.totalLaborDemurrerToEvidenceGranted"></td>
                 </tr>
                 <tr>
@@ -239,7 +239,7 @@
                     <td x-text="items.provisionallyDismissed.totalCriminalProvisionallyDismissed"></td>
                     <td x-text="items.provisionallyDismissed.totalCivilProvisionallyDismissed"></td>
                     <td x-text="items.provisionallyDismissed.totalAdministrativeProvisionallyDismissed"></td>
-                    <td>0</td>
+                    <td x-text="items.provisionallyDismissed.totalADM2ProvisionallyDismissed"></td>
                     <td x-text="items.provisionallyDismissed.totalLaborProvisionallyDismissed"></td>
                 </tr>
                 <tr>
@@ -259,7 +259,7 @@
                     <td x-text="items.convictedToLesserOffense.totalCriminalConvictedToLesserOffense"></td>
                     <td x-text="items.convictedToLesserOffense.totalCivilConvictedToLesserOffense"></td>
                     <td x-text="items.convictedToLesserOffense.totalAdministrativeConvictedToLesserOffense"></td>
-                    <td>0</td>
+                    <td x-text="items.convictedToLesserOffense.totalADM2ConvictedToLesserOffense"></td>
                     <td x-text="items.convictedToLesserOffense.totalLaborConvictedToLesserOffense"></td>
                 </tr>
                 <tr>
@@ -279,7 +279,7 @@
                     <td x-text="items.probationGranted.totalCriminalProbationGranted"></td>
                     <td x-text="items.probationGranted.totalCivilProbationGranted"></td>
                     <td x-text="items.probationGranted.totalAdministrativeProbationGranted"></td>
-                    <td>0</td>
+                    <td x-text="items.probationGranted.totalADM2ProbationGranted"></td>
                     <td x-text="items.probationGranted.totalLaborProbationGranted"></td>
                 </tr>
                 <tr>
@@ -299,7 +299,7 @@
                     <td x-text="items.wonCivil.totalCriminalWonCivil"></td>
                     <td x-text="items.wonCivil.totalCivilWonCivil"></td>
                     <td x-text="items.wonCivil.totalAdministrativeWonCivil"></td>
-                    <td>0</td>
+                    <td x-text="items.wonCivil.totalADM2WonCivil"></td>
                     <td x-text="items.wonCivil.totalLaborWonCivil"></td>
                 </tr>
                 <tr>
@@ -320,7 +320,7 @@
                     <td x-text="items.grantedAwarded.totalCriminalGrantedAwarded"></td>
                     <td x-text="items.grantedAwarded.totalCivilGrantedAwarded"></td>
                     <td x-text="items.grantedAwarded.totalAdministrativeGrantedAwarded"></td>
-                    <td>0</td>
+                    <td x-text="items.grantedAwarded.totalADM2GrantedAwarded"></td>
                     <td x-text="items.grantedAwarded.totalLaborGrantedAwarded"></td>
                 </tr>
                 <tr>
@@ -342,7 +342,7 @@
                     <td x-text="items.dismissedCompromise.totalCriminalDismissedCompromise"></td>
                     <td x-text="items.dismissedCompromise.totalCivilDismissedCompromise"></td>
                     <td x-text="items.dismissedCompromise.totalAdministrativeDismissedCompromise"></td>
-                    <td>0</td>
+                    <td x-text="items.dismissedCompromise.totalADM2DismissedCompromise"></td>
                     <td x-text="items.dismissedCompromise.totalLaborDismissedCompromise"></td>
                 </tr>
                 <tr>
@@ -367,7 +367,9 @@
                     <td
                         x-text="items.casesForPreliminaryInvestigation.totalAdministrativeCasesForPreliminaryInvestigation">
                     </td>
-                    <td>0</td>
+                    <td
+                        x-text="items.casesForPreliminaryInvestigation.totalADM2CriminalCasesForPreliminaryInvestigation">
+                    </td>
                     <td x-text="items.casesForPreliminaryInvestigation.totalLaborCasesForPreliminaryInvestigation">
                     </td>
                 </tr>
@@ -539,7 +541,7 @@
                     <td x-text="items.convictedAsCharged.totalCriminalConvictedAsCharged"></td>
                     <td x-text="items.convictedAsCharged.totalCivilConvictedAsCharged"></td>
                     <td x-text="items.convictedAsCharged.totalAdministrativeConvictedAsCharged"></td>
-                    <td>0</td>
+                    <td x-text="items.convictedAsCharged.totalADM2ConvictedAsCharged"></td>
                     <td x-text="items.convictedAsCharged.totalLaborConvictedAsCharged"></td>
                 </tr>
                 <tr>
@@ -559,7 +561,7 @@
                     <td x-text="items.lostCivilLabor.totalCriminalCivilAdministrativeLabor"></td>
                     <td x-text="items.lostCivilLabor.totalCivilCivilAdministrativeLabor"></td>
                     <td x-text="items.lostCivilLabor.totalAdministrativeCivilAdministrativeLabor"></td>
-                    <td>0</td>
+                    <td x-text="items.lostCivilLabor.totalADM2LostCivilAdministrativeLabor"></td>
                     <td x-text="items.lostCivilLabor.totalLaborCivilAdministrativeLabor"></td>
                 </tr>
                 <tr>
@@ -579,7 +581,7 @@
                     <td x-text="items.dismissedCAL.totalCriminalCAL"></td>
                     <td x-text="items.dismissedCAL.totalCivilCAL"></td>
                     <td x-text="items.dismissedCAL.totalAdministrativeCAL"></td>
-                    <td>0</td>
+                    <td x-text="items.dismissedCAL.totalADM2DismissedCAL"></td>
                     <td x-text="items.dismissedCAL.totalLaborCAL"></td>
                 </tr>
                 <tr>
@@ -600,7 +602,7 @@
                     <td x-text="items.preliminaryInvestigation.totalCriminalPreliminaryInvestigation"></td>
                     <td x-text="items.preliminaryInvestigation.totalCivilPreliminaryInvestigation"></td>
                     <td x-text="items.preliminaryInvestigation.totalAdministrativePreliminaryInvestigation"></td>
-                    <td>0</td>
+                    <td x-text="items.preliminaryInvestigation.totalADM2PreliminaryInvestigation"></td>
                     <td x-text="items.preliminaryInvestigation.totalLaborPreliminaryInvestigation"></td>
                 </tr>
                 <tr>

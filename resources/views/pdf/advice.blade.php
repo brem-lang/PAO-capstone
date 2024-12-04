@@ -674,13 +674,11 @@
             <div class="content1" style="margin-top: -20px;">
                 <p style="font-size: 13px;">
                     I, <span class="underline">{{ $name }}</span>, <span
-                        class="underline">{{ ucfirst($stuDEmp) }}</span>
+                        class="underline">{{ ucfirst($civilStatus) }}</span>
                     of <span class="underline">{{ $age }}</span> yrs old,
                     <span class="underline">{{ $civilStatus }}</span>, Filipino, and a resident of
                     <span class="underline">{{ $barangay . '-' . $city }}</span>, after being duly sworn to law do
-                    hereby depose
-                    and
-                    say:
+                    hereby depose and say:
                 </p>
 
                 <ol class="statement1" style="font-size: 13px;margin-top: -10px;">

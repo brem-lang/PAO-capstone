@@ -280,7 +280,13 @@ class Client extends Page implements HasForms, HasTable
                                 'CAR' => 'CAR',
                                 'BRMM' => 'BRMM',
                             ]),
+                        Select::make('gender')
+                            ->options([
+                                'Male' => 'Male',
+                                'Female' => 'Female',
+                            ]),
                     ])
+
                     ->columns(2),
             ])
             ->statePath('data');
