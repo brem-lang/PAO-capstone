@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\IDType;
 use App\Models\InterViewSheet as ModelsInterViewSheet;
+use App\Models\User;
 use Carbon\Carbon;
 use Faker\Provider\ar_EG\Text;
 use Filament\Forms\Components\Checkbox;
@@ -20,6 +21,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
@@ -3099,6 +3101,17 @@ class InterviewSheet extends Page implements HasForms
             ->success()
             ->send();
 
+        Notification::make()
+            ->title(auth()->user()->name.' has filled up the advice form')
+            ->success()
+            ->actions([
+                Action::make('read')
+                    ->label('Mark as read')
+                    ->button()
+                    ->markAsRead(),
+            ])
+            ->sendToDatabase(User::where('role', 'staff')->get());
+
         $pdfPath = public_path('temp/Advice1-pdf'.auth()->user()->id.'.pdf');
 
         if (file_exists($pdfPath)) {
@@ -3137,6 +3150,17 @@ class InterviewSheet extends Page implements HasForms
             ->body('View your request to my request tab and wait for the staff to approved your request , it will show to your notification bell once approved ')
             ->success()
             ->send();
+
+        Notification::make()
+            ->title(auth()->user()->name.' has filled up the notarize form')
+            ->success()
+            ->actions([
+                Action::make('read')
+                    ->label('Mark as read')
+                    ->button()
+                    ->markAsRead(),
+            ])
+            ->sendToDatabase(User::where('role', 'staff')->get());
 
         $NotarizepdfPath = public_path('temp/Notarize-pdf'.auth()->user()->id.'.pdf');
 

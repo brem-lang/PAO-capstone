@@ -108,6 +108,19 @@ class Calendar extends Page implements HasForms
             ])
             ->sendToDatabase($user);
 
+        if (auth()->user()->isStaff()) {
+            Notification::make()
+                ->title('Reminder: Upcoming Hearing on'.$formattedDate.' in '.$data['title'])
+                ->success()
+                ->actions([
+                    Action::make('read')
+                        ->label('Mark as read')
+                        ->button()
+                        ->markAsRead(),
+                ])
+                ->sendToDatabase(User::where('role', 'attorney')->get());
+        }
+
         (new EmailSender)->handle($user, $data);
 
         return redirect('/app/calendar');

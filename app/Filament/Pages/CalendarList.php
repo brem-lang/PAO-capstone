@@ -5,12 +5,14 @@ namespace App\Filament\Pages;
 use App\Models\CalendarEvents;
 use App\Models\User;
 use App\Services\EmailSender;
+use Carbon\Carbon;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Actions\Action as ActionsAction;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Tables\Actions\Action;
@@ -125,10 +127,25 @@ class CalendarList extends Page implements HasForms, HasTable
 
                         (new EmailSender)->handle($record->user, $data, 'reschedule');
 
+                        $formattedDate = Carbon::parse($data['startDate'])->format('F j Y g:i A');
+
                         Notification::make()
                             ->title('Event Rescheduled')
                             ->success()
                             ->send();
+
+                        if (auth()->user()->isStaff()) {
+                            Notification::make()
+                                ->title('Hearing has been Rescheduled on'.$formattedDate.' in '.$data['title'])
+                                ->success()
+                                ->actions([
+                                    ActionsAction::make('read')
+                                        ->label('Mark as read')
+                                        ->button()
+                                        ->markAsRead(),
+                                ])
+                                ->sendToDatabase(User::where('role', 'attorney')->get());
+                        }
                     })
                     ->form([
                         Select::make('title')
