@@ -174,8 +174,8 @@
             label: 'Gender',
             data: @json($genderData),
             backgroundColor: [
-                'pink',
                 '#99b3ff',
+                'pink',
             ],
             borderColor: [
                 'black',
