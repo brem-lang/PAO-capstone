@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
@@ -27,5 +28,10 @@ class InterViewSheet extends Model
     {
         return LogOptions::defaults()
             ->logAll();
+    }
+
+    public function scopeCurrentYear($query)
+    {
+        return $query->whereYear('created_at', Carbon::now()->year);
     }
 }

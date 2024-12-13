@@ -32,11 +32,15 @@ class Dashboard extends Page
 
     public $genderData = [];
 
+    public $appointmentData = [];
+
+    public $monthlyCase = [];
+
     public function mount()
     {
         if (! auth()->user()->isClient()) {
-            $this->getPieData('advice');
-            $this->getBarDataCase('pending');
+            $this->getAppointmentRequest();
+            $this->getMonthlyChart();
             $this->lineChart();
             $this->getGenderChart();
         } else {
@@ -67,6 +71,62 @@ class Dashboard extends Page
             ->toArray();
 
         $this->pieData = array_values($data);
+    }
+
+    public function getAppointmentRequest()
+    {
+        $currentYear = Carbon::now()->year;
+
+        // Advice Requests per month
+        $adviceRequests = InterViewSheet::currentYear()
+            ->where('doc_type', 'advice')
+            ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('count', 'month')
+            ->toArray();
+
+        // Notarize Requests per month
+        $notarizeRequests = InterViewSheet::currentYear()
+            ->where('doc_type', 'notarize')
+            ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('count', 'month')
+            ->toArray();
+
+        // Fill missing months with zeros
+
+        $this->appointmentData = [
+            'advice' => collect(range(1, 12))->map(fn ($month) => $adviceRequests[$month] ?? 0)->toArray(),
+            'notarize' => collect(range(1, 12))->map(fn ($month) => $notarizeRequests[$month] ?? 0)->toArray(),
+        ];
+    }
+
+    public function getMonthlyChart()
+    {
+
+        $currentYear = Carbon::now()->year;
+
+        $caseTypes = ['Criminal', 'Civil', 'Administrative', 'Appealed', 'Labor'];
+
+        // Initialize result array
+        $data = [];
+
+        foreach ($caseTypes as $caseType) {
+            // Fetch transactions grouped by month for the given case type
+            $caseCounts = Transaction::whereYear('created_at', $currentYear)
+                ->where('case_type', $caseType)
+                ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+                ->groupBy('month')
+                ->orderBy('month')
+                ->pluck('count', 'month')
+                ->toArray();
+
+            // Fill missing months with 0
+            $data[$caseType] = collect(range(1, 12))->map(fn ($month) => $caseCounts[$month] ?? 0)->toArray();
+        }
+        $this->monthlyCase = $data;
     }
 
     public function getBarDataCase($type)

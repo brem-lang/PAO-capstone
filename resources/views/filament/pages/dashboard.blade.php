@@ -19,12 +19,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Pie Chart -->
             <div>
-                <h2 class="text-2xl font-semibold">{{ now()->format('F') }}</h2>
-
+                <h2 class="text-2xl font-semibold">Monthly Advice/Notary Request</h2>
                 <div
                     class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
-                    <div>
-                        <canvas id="pieChart"></canvas>
+                    <div style="height: 300px;">
+                        <canvas id="appointmentChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -35,7 +34,7 @@
                 <div
                     class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
                     <div style="height: 300px;">
-                        <canvas id="barChart"></canvas>
+                        <canvas id="CaseChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -129,42 +128,56 @@
 
 <script type="module">
     //pie chart
-    const dataPie = {
-        labels: ['Advice', 'Notarize'],
+    //barchart
+    const appointmentData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [{
-            label: 'Data',
-            data: @json($pieData),
-            backgroundColor: [
-                '#90CCE1',
-                '#ADDFAD',
-            ],
-            borderColor: [
-                'black',
-            ],
-            borderWidth: 1
-        }]
+                label: 'Advice Requests',
+                data: @json($appointmentData['advice']),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Notary Requests',
+                data: @json($appointmentData['notarize']),
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }
+        ]
     };
 
-    const configPie = {
-        type: 'pie',
-        data: dataPie,
+    // Configuration for Bar chart
+    const appointmentConfig = {
+        type: 'bar',
+        data: appointmentData,
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            indexAxis: 'x', // Horizontal bar chart
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            },
             plugins: {
                 legend: {
-                    position: 'bottom',
+                    position: 'top'
                 },
                 tooltip: {
-                    enabled: true,
+                    enabled: true
                 }
             }
         },
     };
 
-    const myPieChart = new Chart(
-        document.getElementById('pieChart'),
-        configPie
+    const myAppointmentChart = new Chart(
+        document.getElementById('appointmentChart'),
+        appointmentConfig
     );
 
     //gender
@@ -206,26 +219,62 @@
         genderconfigPie
     );
 
-    //barchart
-    const barData = {
+    //linechartcase
+    const caseData = {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [{
-            label: 'Case',
-            data: @json($barData), // Dummy data
-            backgroundColor: '#2196f3', // Bar color
-            borderColor: 'black', // Bar border color
-            borderWidth: 1
-        }]
+                label: 'Criminal',
+                data: @json($monthlyCase['Criminal']),
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                tension: 0.4
+            },
+            {
+                label: 'Civil',
+                data: @json($monthlyCase['Civil']),
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                tension: 0.4
+            },
+            {
+                label: 'Administrative',
+                data: @json($monthlyCase['Administrative']),
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.4
+            },
+            {
+                label: 'Appealed',
+                data: @json($monthlyCase['Appealed']),
+                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                tension: 0.4
+            },
+            {
+                label: 'Labor',
+                data: @json($monthlyCase['Labor']),
+                borderColor: 'rgba(255, 206, 86, 1)',
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                tension: 0.4
+            }
+        ]
     };
 
     // Configuration for Bar chart
-    const barConfig = {
-        type: 'bar',
-        data: barData,
+    const caseConfig = {
+        type: 'line',
+        data: caseData,
         options: {
             responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: 'y', // Horizontal bar chart
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Monthly Case Statistics'
+                }
+            },
             scales: {
                 y: {
                     beginAtZero: true,
@@ -245,10 +294,11 @@
         },
     };
 
-    const myBarChart = new Chart(
-        document.getElementById('barChart'),
-        barConfig
+    const myCaseChart = new Chart(
+        document.getElementById('CaseChart'),
+        caseConfig
     );
+
 
 
     //line chart
