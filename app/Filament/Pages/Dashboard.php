@@ -32,9 +32,18 @@ class Dashboard extends Page
 
     public $genderData = [];
 
-    public $appointmentData = [];
+    public $appointmentData = [
+        'advice' => [],
+        'notarize' => [],
+    ];
 
-    public $monthlyCase = [];
+    public $monthlyCase = [
+        'Criminal' => [],
+        'Civil' => [],
+        'Administrative' => [],
+        'Appealed' => [],
+        'Labor' => [],
+    ];
 
     public function mount()
     {
