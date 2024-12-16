@@ -5,7 +5,6 @@ namespace App\Filament\Pages;
 use App\Models\CalendarEvents;
 use App\Models\InterViewSheet;
 use App\Models\Transaction;
-use App\Models\User;
 use Carbon\Carbon;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +29,11 @@ class Dashboard extends Page
 
     public $values = [];
 
-    public $genderData = [];
+    public $CaseStatusData = [
+        'pending' => [],
+        'terminated' => [],
+        'resolved' => [],
+    ];
 
     public $appointmentData = [
         'advice' => [],
@@ -178,12 +181,9 @@ class Dashboard extends Page
 
     public function getGenderChart()
     {
-        // Count male clients
-        $maleClientsCount = User::where('role', 'client')->where('gender', 'male')->count();
-
-        // Count female clients
-        $femaleClientsCount = User::where('role', 'client')->where('gender', 'female')->count();
-
-        $this->genderData = [$maleClientsCount, $femaleClientsCount];
+        $pending = Transaction::where('status', 'pending')->count();
+        $terminated = Transaction::where('status', 'terminated')->count();
+        $resolved = Transaction::where('status', 'resolved')->count();
+        $this->CaseStatusData = [$pending, $terminated, $resolved];
     }
 }

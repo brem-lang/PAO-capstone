@@ -75,11 +75,11 @@
 
             <!-- Bar Chart -->
             <div>
-                <h2 class="text-2xl font-semibold">Gender</h2>
+                <h2 class="text-2xl font-semibold">Case Status Overview</h2>
                 <div
                     class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
                     <div>
-                        <canvas id="genderChart"></canvas>
+                        <canvas id="caseStatusChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -182,13 +182,14 @@
 
     //gender
     const genderdataPie = {
-        labels: ['Male', 'Female'],
+        labels: ['Pending', 'Terminated', 'Resolved'],
         datasets: [{
-            label: 'Gender',
-            data: @json($genderData),
+            label: 'Status',
+            data: @json($CaseStatusData),
             backgroundColor: [
-                '#99b3ff',
-                'pink',
+                '#808080',
+                '#FFFF00',
+                '#90EE90',
             ],
             borderColor: [
                 'black',
@@ -215,7 +216,7 @@
     };
 
     const mygenderPieChart = new Chart(
-        document.getElementById('genderChart'),
+        document.getElementById('caseStatusChart'),
         genderconfigPie
     );
 
