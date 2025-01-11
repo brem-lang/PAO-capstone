@@ -32,7 +32,7 @@ class Attorneys extends Page implements HasForms, HasTable
 
     protected static string $view = 'filament.pages.attorneys';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Users';
 
     public ?array $data = [];
 

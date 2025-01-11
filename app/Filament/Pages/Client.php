@@ -32,6 +32,8 @@ class Client extends Page implements HasForms, HasTable
 
     protected static ?int $navigationSort = 2;
 
+    protected static ?string $navigationGroup = 'Users';
+
     public array $data = [];
 
     public static function canAccess(): bool

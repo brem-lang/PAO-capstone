@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -25,7 +26,9 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Users';
+
+    protected static ?string $navigationLabel = 'Staffs';
 
     public static function canAccess(): bool
     {
@@ -38,17 +41,26 @@ class UserResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-                        TextInput::make('name'),
-                        TextInput::make('email'),
+                        TextInput::make('name')
+                            ->required()
+                            ->unique(),
+                        TextInput::make('email')
+                            ->required()
+                            ->unique(),
                         Select::make('gender')
+                            ->required()
                             ->options([
                                 'Male' => 'Male',
                                 'Female' => 'Female',
                             ]),
-                        TextInput::make('number')->tel()->telRegex('/^(0|63)\d{10}$/'),
-                        DatePicker::make('birthday'),
-                        TextInput::make('age'),
+                        TextInput::make('number')->tel()->telRegex('/^(0|63)\d{10}$/')
+                            ->required(),
+                        DatePicker::make('birthday')
+                            ->required(),
+                        TextInput::make('age')
+                            ->required(),
                         Select::make('religion')
+                            ->required()
                             ->options([
                                 'rc' => 'Roman Catholic',
                                 'islam' => 'Islam',
@@ -59,6 +71,7 @@ class UserResource extends Resource
                                 'others' => 'Others',
                             ]),
                         Select::make('citizenship')
+                            ->required()
                             ->searchable()
                             ->options([
                                 'afghan' => 'Afghan',
@@ -244,6 +257,7 @@ class UserResource extends Resource
                                 'zimbabwean' => 'Zimbabwean',
                             ]),
                         Select::make('civil_status')
+                            ->required()
                             ->label('Civil Status')
                             ->options([
                                 'Single' => 'Single',
@@ -252,8 +266,10 @@ class UserResource extends Resource
                                 'Divorced' => 'Divorced',
                                 'Separated' => 'Separated',
                             ]),
-                        TextInput::make('address'),
+                        TextInput::make('address')
+                            ->required(),
                         Select::make('region')
+                            ->required()
                             ->options([
                                 'Region I' => 'Region I',
                                 'Region II' => 'Region II',
@@ -313,6 +329,7 @@ class UserResource extends Resource
                             ->send();
                     }),
                 Tables\Actions\EditAction::make(),
+                RestoreAction::make(),
                 DeleteAction::make(),
             ])
             ->bulkActions([
