@@ -268,7 +268,7 @@ class ReplicatedDataRelationManager extends RelationManager
                 ]),
             ])
             ->modifyQueryUsing(function (Builder $query) {
-                $query->orderBy('title_of_case', 'asc');
+                $query->orderBy('created_at', 'asc');
             });
     }
 }
