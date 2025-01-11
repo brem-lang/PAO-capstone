@@ -24,6 +24,8 @@ Route::get('/generate-appointment-pdf/{interViewSheet}', [PDFController::class, 
 
 Route::get('/generate-interviewsheet-pdf/{interViewSheet}', [PDFController::class, 'sheet'])->name('generate-interviewsheet-pdf')->middleware('auth');
 
+Route::get('/generate-id-pdf/{user}', [PDFController::class, 'generateID'])->name('generate-id-pdf')->middleware('auth');
+
 Route::get('2fa', TwoFactor::class)->name('2fa.index')->middleware('redirect2FA');
 
 Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])

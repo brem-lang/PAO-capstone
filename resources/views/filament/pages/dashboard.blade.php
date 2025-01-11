@@ -8,7 +8,7 @@
         </div>
     </div>
     @if (auth()->user()->isClient())
-        <div id="calendar"
+        <div id="calendar" style="height: auto;width: 60%;"
             class="fi-ta-ctn divide-y divide-gray-200 p-4 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
         </div>
     @endif
@@ -412,6 +412,7 @@
             <strong> EVENT INFORMATION</strong> 
             </h1>
             <div><strong>Name:</strong> <p style="padding-left: 15px"> - ${data.event.extendedProps.name} </p> </div>
+            <div><strong>Attorney:</strong> <p style="padding-left: 15px"> - ${data.event.extendedProps.attorney} </p> </div>
             <div><strong>Title:</strong><br> <p style="padding-left: 15px"> - ${data.event.title} </p></div>
             <div><strong>Description:</strong><br> <p style="padding-left: 15px"> - ${data.event.extendedProps.description} </p></div>
             <div><strong>Date:</strong><br> <p style="padding-left: 15px"> - ${data.event.start} </p></div>

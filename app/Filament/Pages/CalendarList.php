@@ -54,6 +54,10 @@ class CalendarList extends Page implements HasForms, HasTable
                         Select::make('user_id')
                             ->label('User')
                             ->options(User::where('role', 'client')->pluck('name', 'id')),
+                        Select::make('attorney_id')
+                            ->required()
+                            ->label('Attorney')
+                            ->options(User::where('role', 'attorney')->pluck('name', 'id')),
                         Select::make('title')
                             ->label('Place')
                             ->required()
@@ -159,8 +163,14 @@ class CalendarList extends Page implements HasForms, HasTable
                                 'MCTC-CARMEN' => 'MCTC-CARMEN',
                                 'MCTC STO. TOMAS' => 'MCTC STO. TOMAS',
                             ]),
+                        Select::make('attorney_id')
+                            ->required()
+                            ->label('Attorney')
+                            ->options(User::where('role', 'attorney')->pluck('name', 'id')),
+
                         DateTimePicker::make('startDate')
                             ->label('Start Date')
+                            ->minDate(now()->startOfDay())
                             ->required(),
                     ])
                     ->label('Reschedule'),

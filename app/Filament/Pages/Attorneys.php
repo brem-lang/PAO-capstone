@@ -10,7 +10,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\RestoreAction;
@@ -21,22 +23,22 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class Client extends Page implements HasForms, HasTable
+class Attorneys extends Page implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.client';
+    protected static string $view = 'filament.pages.attorneys';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?string $navigationGroup = 'Settings';
 
-    public array $data = [];
+    public ?array $data = [];
 
     public static function canAccess(): bool
     {
-        return ! auth()->user()->isClient();
+        return auth()->user()->id == 1;
     }
 
     public function form(Form $form): Form
@@ -66,7 +68,7 @@ class Client extends Page implements HasForms, HasTable
                                 'others' => 'Others',
                             ]),
                         Select::make('citizenship')
-                            ->searchable()
+                            ->required()
                             ->options([
                                 'afghan' => 'Afghan',
                                 'albanian' => 'Albanian',
@@ -249,7 +251,8 @@ class Client extends Page implements HasForms, HasTable
                                 'yemeni' => 'Yemeni',
                                 'zambian' => 'Zambian',
                                 'zimbabwean' => 'Zimbabwean',
-                            ]),
+                            ])
+                            ->default('philippine'),
                         Select::make('civil_status')
                             ->label('Civil Status')
                             ->options([
@@ -295,7 +298,7 @@ class Client extends Page implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(User::where('role', 'client')->latest())
+            ->query(User::where('role', 'attorney')->where('id', '!=', auth()->user()->id)->latest())
             ->columns([
                 TextColumn::make('name')
                     ->toggleable()
@@ -309,6 +312,12 @@ class Client extends Page implements HasForms, HasTable
                 TextColumn::make('email')
                     ->toggleable()
                     ->searchable(),
+                TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {
+                    'inactive' => 'danger',
+                    'active' => 'success',
+                })
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
+                    ->searchable(),
             ])
             ->filters([
                 TrashedFilter::make(),
@@ -316,13 +325,46 @@ class Client extends Page implements HasForms, HasTable
             ->actions([
                 ViewAction::make()
                     ->form(fn (Form $form) => $this->form($form)),
-                // EditAction::make()
-                //     ->form(fn (Form $form) => $this->form($form)),
+                EditAction::make()
+                    ->form(fn (Form $form) => $this->form($form)),
+                Action::make('update')
+                    ->icon('heroicon-o-arrow-path')
+                    ->form([
+                        Select::make('status')->options([
+                            'inactive' => 'Inactive',
+                            'active' => 'Active',
+                        ]),
+                    ])->action(function ($data, $record) {
+                        $record->update($data);
+
+                        Notification::make()
+                            ->title('Status Updated')
+                            ->success()
+                            ->send();
+                    }),
                 RestoreAction::make(),
                 DeleteAction::make(),
+
             ])
             ->bulkActions([
                 // ...
             ]);
+    }
+
+    public function add()
+    {
+        $data = $this->form->getState();
+        $data['role'] = 'attorney';
+        $data['status'] = 'active';
+        $data['password'] = 'Password1234!';
+
+        User::create($data);
+
+        Notification::make()
+            ->title('User Added')
+            ->success()
+            ->send();
+
+        return redirect('/app/attorneys');
     }
 }

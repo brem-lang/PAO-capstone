@@ -19,6 +19,11 @@ class CalendarEvents extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function attorney()
+    {
+        return $this->belongsTo(User::class, 'attorney_id', 'id');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

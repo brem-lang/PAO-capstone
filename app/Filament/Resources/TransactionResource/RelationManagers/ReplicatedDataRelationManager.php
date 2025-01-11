@@ -1,54 +1,23 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\TransactionResource\RelationManagers;
 
-use App\Filament\Resources\TransactionResource\Pages;
-use App\Filament\Resources\TransactionResource\RelationManagers\ReplicatedDataRelationManager;
-use App\Models\Transaction;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
-use Filament\Tables\Actions\DeleteAction as ActionsDeleteAction;
-use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
-class TransactionResource extends Resource
+class ReplicatedDataRelationManager extends RelationManager
 {
-    protected static ?string $model = Transaction::class;
+    protected static string $relationship = 'replicatedData';
 
-    protected static ?string $navigationIcon = 'heroicon-o-calendar-date-range';
-
-    protected static ?int $navigationSort = 3;
-
-    public static function canCreate(): bool
-    {
-        return auth()->user()->isStaff();
-    }
-
-    public static function canEdit(Model $record): bool
-    {
-        return auth()->user()->isStaff();
-    }
-
-    public static function canDelete(Model $record): bool
-    {
-        return auth()->user()->isStaff();
-    }
-
-    public static function canAccess(): bool
-    {
-        return ! auth()->user()->isClient();
-    }
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -247,9 +216,10 @@ class TransactionResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('transaction_id')
             ->columns([
                 Tables\Columns\TextColumn::make('title_of_case')
                     ->limit(50)
@@ -271,55 +241,34 @@ class TransactionResource extends Resource
                     ->label('Case No')
                     ->toggleable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('court_body')
-                    ->label('Court/Body')
-                    ->toggleable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->toggleable()
-                    ->badge()->color(fn (string $state): string => match ($state) {
-                        'pending' => 'gray',
-                        'resolved' => 'success',
-                        'terminated' => 'warning',
-                    })
-                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Date Edited')
                     ->date('F d, Y h:i A')->timezone('Asia/Manila')
                     ->sortable(),
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
+            ])
+            ->headerActions([
+                // Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                RestoreAction::make(),
-                ActionsDeleteAction::make(),
+                ViewAction::make()
+                    ->form(fn (Form $form) => $this->form($form))
+                    ->modalHeading('View Transaction')
+                    ->modalWidth('full'),
+                Tables\Actions\EditAction::make()
+                    ->modalHeading('Edit Transaction')
+                    ->modalWidth('full'),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ])
             ->modifyQueryUsing(function (Builder $query) {
                 $query->orderBy('title_of_case', 'asc');
             });
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            ReplicatedDataRelationManager::class,
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListTransactions::route('/'),
-            'create' => Pages\CreateTransaction::route('/create'),
-            'edit' => Pages\EditTransaction::route('/{record}/edit'),
-        ];
     }
 }

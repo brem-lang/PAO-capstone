@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IDType;
 use App\Models\InterViewSheet;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -114,5 +116,18 @@ class PDFController extends Controller
     public function handleTypeProvince($code)
     {
         return DB::table('provinces')->where('code', $code)->first()->name;
+    }
+
+    public function generateID(User $user)
+    {
+
+        $pdf = \PDF::loadView('pdf.viewID', [
+            'idType' => IDType::where('id', $user->documents->first()->id_type)->first()->name,
+            'id_number' => $user->documents->first()->id_number,
+            'front_id' => $user->documents->first()->front_id,
+            'back_id' => $user->documents->first()->back_id,
+        ])->setPaper('legal');
+
+        return $pdf->stream(now()->format('Y-m-d h:i:s').'.pdf');
     }
 }

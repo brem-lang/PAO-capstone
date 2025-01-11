@@ -15,11 +15,13 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Pages\Page;
 use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 
 class MyRequest extends Page implements HasForms, HasTable
@@ -62,6 +64,37 @@ class MyRequest extends Page implements HasForms, HasTable
                 // ...
             ])
             ->actions([
+                Action::make('download-pdf')
+                    ->label('Appointment')
+                    ->icon('heroicon-o-arrow-down-on-square')
+                    ->visible(function ($record) {
+                        return $record->status === 'approved';
+                    })
+                    ->modalCancelAction(false)
+                    ->modalSubmitAction(false)
+                    ->modalHeading('PDF')
+                    ->modalWidth('full')
+                    ->modalContent(function ($record): View {
+
+                        return view('filament.pages.display-interviewsheet', [
+                            'file' => $record,
+                        ]);
+                    }),
+                Action::make('download')
+                    ->label('Affidavit')
+                    ->icon('heroicon-o-arrow-down-on-square')
+                    ->modalCancelAction(false)
+                    ->modalSubmitAction(false)
+                    ->modalHeading('PDF')
+                    ->modalWidth('full')
+                    ->modalContent(function ($record): View {
+                        return view('filament.pages.display-pdf', [
+                            'file' => $record,
+                        ]);
+                    })
+                    ->visible(function ($record) {
+                        return $record->doc_type === 'notarize';
+                    }),
                 ViewAction::make()
                     ->form(function ($record, Form $form) {
                         if ($record->doc_type === 'advice') {

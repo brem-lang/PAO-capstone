@@ -911,12 +911,14 @@
         </div>
 
         <div class="date">
-            <div class="signature-label">Signature Over Printed Name</div>
+            <div class="signature-label"></div>
         </div>
 
         <div class="date1">
-            <div class="printed-name">{{ auth()->user()->name }}</div>
-            <div class="signature-label">Signature Over Printed Name</div>
+            <div class="printed-name">Name :{{ auth()->user()->name }}</div><br>
+            <div class="printed-name">Date :{{ now()->timezone('Asia/Manila')->format('F j, Y') }}</div>
+            {{-- <div class="printed-name">{{ auth()->user()->name }}</div>
+            <div class="signature-label">Signature Over Printed Name</div> --}}
         </div>
     </div>
 </body>

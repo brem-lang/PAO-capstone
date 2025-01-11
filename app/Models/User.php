@@ -106,4 +106,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserCodes::class);
     }
+
+    public function documents()
+    {
+        return $this->hasMany(Documents::class, 'user_id', 'id');
+    }
 }

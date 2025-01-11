@@ -43,6 +43,8 @@ class Appointments extends Page implements HasForms, HasTable
 
     protected static string $view = 'filament.pages.appointments';
 
+    protected static ?string $title = 'Transcripts';
+
     protected static ?int $navigationSort = 6;
 
     public static function canAccess(): bool
@@ -115,6 +117,18 @@ class Appointments extends Page implements HasForms, HasTable
                     })
                     ->visible(function ($record) {
                         return $record->doc_type === 'notarize';
+                    }),
+                Action::make('download_id')
+                    ->label('ID')
+                    ->icon('heroicon-o-arrow-down-on-square')
+                    ->modalCancelAction(false)
+                    ->modalSubmitAction(false)
+                    ->modalHeading('PDF')
+                    ->modalWidth('full')
+                    ->modalContent(function ($record): View {
+                        return view('filament.pages.display_id', [
+                            'file' => $record->user_id,
+                        ]);
                     }),
                 ViewAction::make()
                     ->form(function ($record, Form $form) {

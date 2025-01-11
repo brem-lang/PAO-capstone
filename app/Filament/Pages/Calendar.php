@@ -45,6 +45,7 @@ class Calendar extends Page implements HasForms
             return [
                 'id' => $event->id,
                 'name' => $event->user['name'],
+                'attorney' => $event->attorney['name'] ?? null,
                 'title' => $event->title,
                 'start' => $event->startDate,
                 'description' => $event->description,
@@ -64,6 +65,10 @@ class Calendar extends Page implements HasForms
                             ->required()
                             ->label('User')
                             ->options(User::where('role', 'client')->pluck('name', 'id')),
+                        Select::make('attorney_id')
+                            ->required()
+                            ->label('Attorney')
+                            ->options(User::where('role', 'attorney')->pluck('name', 'id')),
                         Select::make('title')
                             ->label('Place')
                             ->required()
@@ -77,6 +82,8 @@ class Calendar extends Page implements HasForms
                             ]),
                         DateTimePicker::make('startDate')
                             ->label('Start Date')
+                            ->minDate(now()->startOfDay())
+                            ->maxDate(now()->endOfDay())
                             ->required(),
                     ])
                     ->columns(2),

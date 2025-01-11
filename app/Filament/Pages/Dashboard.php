@@ -62,6 +62,7 @@ class Dashboard extends Page
                 return [
                     'id' => $event->id,
                     'name' => $event->user['name'],
+                    'attorney' => $event->attorney['name'] ?? null,
                     'title' => $event->title,
                     'start' => $event->startDate,
                     'description' => $event->description,

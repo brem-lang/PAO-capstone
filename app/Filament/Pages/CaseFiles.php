@@ -215,16 +215,16 @@ class CaseFiles extends Page implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Transaction::latest())
+            ->query(Transaction::orderBy('title_of_case', 'asc'))
             ->columns([
+                TextColumn::make('title_of_case')
+                    ->label('Title of Case')
+                    ->searchable(),
                 TextColumn::make('item_no')
                     ->label('Item No')
                     ->searchable(),
                 TextColumn::make('control_no')
                     ->label('Control No')
-                    ->searchable(),
-                TextColumn::make('title_of_case')
-                    ->label('Title of Case')
                     ->searchable(),
                 TextColumn::make('case_no')
                     ->label('Case No')

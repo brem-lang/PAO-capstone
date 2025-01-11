@@ -215,7 +215,7 @@ class Reports extends Page implements HasForms
                     $totalADM2++;
                 }
             }
-            //new cases received
+            // new cases received
             if (Carbon::parse($value->case_received)->format('Y') == Carbon::now()->startOfYear()->format('Y')) {
                 $totalNewReceived++;
                 if ($value->case_type == 'Criminal') {
@@ -245,7 +245,7 @@ class Reports extends Page implements HasForms
                 $totalADM2Handled++;
             }
 
-            //terminated
+            // terminated
             if ($value->status === 'terminated') {
                 $totalTerminated++;
                 if ($value->case_type == 'Criminal') {
@@ -261,7 +261,7 @@ class Reports extends Page implements HasForms
                     $totalADM2CriminalTerminated++;
                 }
             }
-            //old $value->created_at->year <= Carbon::now()->subYear()->year
+            // old $value->created_at->year <= Carbon::now()->subYear()->year
             if (Carbon::parse($value->case_received)->format('Y') <= Carbon::now()->subYear()->format('Y') && $value->status === 'terminated') {
                 $totalTerminatedA++;
                 if ($value->case_type == 'Criminal') {
@@ -277,7 +277,7 @@ class Reports extends Page implements HasForms
                     $totalADM2TerminatedA++;
                 }
             }
-            //new
+            // new
             if (Carbon::parse($value->case_received)->format('Y') == Carbon::now()->format('Y') && $value->status === 'terminated') {
                 $totalTerminatedB++;
                 if ($value->case_type == 'Criminal') {
@@ -294,7 +294,7 @@ class Reports extends Page implements HasForms
                 }
             }
 
-            //acquited
+            // acquited
             if ($value->cause_of_termination === 'Acquitted') {
                 $totalAcquited++;
                 if ($value->case_type == 'Criminal') {
