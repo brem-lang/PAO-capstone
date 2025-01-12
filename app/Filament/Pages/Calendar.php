@@ -83,7 +83,6 @@ class Calendar extends Page implements HasForms
                         DateTimePicker::make('startDate')
                             ->label('Start Date')
                             ->minDate(now()->startOfDay())
-                            ->maxDate(now()->endOfDay())
                             ->required(),
                     ])
                     ->columns(2),

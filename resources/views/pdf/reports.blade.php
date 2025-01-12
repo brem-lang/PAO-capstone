@@ -190,8 +190,8 @@
                         <th>KEY RESULTS AREA</th>
                         <th>KEY INDICATORS OF PERFORMANCE</th>
                         <th>Total</th>
-                        <th>Criminal Cases</th>
-                        <th>Civil Cases</th>
+                        <th>CR</th>
+                        <th>CV</th>
                         <th>ADM1</th>
                         <th>ADM2</th>
                         <th>ADM3</th>
