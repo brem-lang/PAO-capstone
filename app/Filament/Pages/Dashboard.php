@@ -60,12 +60,12 @@ class Dashboard extends Page
 
             $mappedEvents = $events->map(function ($event) {
                 return [
-                    'id' => $event->id,
-                    'name' => $event->user['name'],
+                    'id' => $event->id ?? null,
+                    'name' => $event->user['name'] ?? null,
                     'attorney' => $event->attorney['name'] ?? null,
                     'title' => $event->title,
-                    'start' => $event->startDate,
-                    'description' => $event->description,
+                    'start' => $event->startDate ?? null,
+                    'description' => $event->description ?? null,
                 ];
             });
 
