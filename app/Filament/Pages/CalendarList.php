@@ -99,10 +99,10 @@ class CalendarList extends Page implements HasForms, HasTable
                     ->label('Title')
                     ->toggleable()
                     ->searchable(),
-                TextColumn::make('description')
-                    ->label('Description')
-                    ->toggleable()
-                    ->searchable(),
+                // TextColumn::make('description')
+                //     ->label('Description')
+                //     ->toggleable()
+                //     ->searchable(),
                 TextColumn::make('startDate')
                     ->label('Interview Date')
                     ->date('F d, Y h:i A')
