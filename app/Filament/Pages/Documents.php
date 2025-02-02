@@ -4,13 +4,17 @@ namespace App\Filament\Pages;
 
 use App\Models\Documents as ModelsDocuments;
 use App\Models\IDType;
+use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Notifications\Actions\Action as ActionsAction;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Tables\Actions\Action;
@@ -69,25 +73,41 @@ class Documents extends Page implements HasForms, HasTable
                         'approved' => 'success',
                         'rejected' => 'danger',
                     })
-                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state == 'approved' ? 'completed' : $state)))
+                    ->searchable(),
+                TextColumn::make('created_at')->label('Created At')->date('F d, Y h:i A')->timezone('Asia/Manila')
                     ->searchable(),
             ])
             ->filters([])
             ->actions([
                 Action::make('update')
+                    ->hidden(fn ($record) => $record->status == 'approved')
                     ->icon('heroicon-o-arrow-path')
                     ->form([
                         Select::make('status')->options([
-                            'pending' => 'Pending',
                             'approved' => 'Approved',
                             'rejected' => 'Rejected',
-                        ]),
+                        ])->live(),
+                        TextArea::make('reason')
+                            ->label('Reason')
+                            ->visible(
+                                fn (Get $get) => $get('status') === 'rejected'
+                            ),
                     ])->action(function ($data, $record) {
+
+                        $data['reason'] = $data['reason'] ?? null;
                         $record->update($data);
 
                         Notification::make()
-                            ->title('Your id has been '.$data['status'])
+                            ->title('Your document has been '.$data['status'])
                             ->success()
+                            ->body($data['reason'])
+                            ->actions([
+                                ActionsAction::make('read')
+                                    ->label('Mark as read')
+                                    ->button()
+                                    ->markAsRead(),
+                            ])
                             ->sendToDatabase($record->user);
 
                         Notification::make()
@@ -178,6 +198,31 @@ class Documents extends Page implements HasForms, HasTable
 
         Notification::make()
             ->title('Document Added')
+            ->success()
+            ->send();
+
+        Notification::make()
+            ->title(auth()->user()->name.' added a document')
+            ->success()
+            ->actions([
+                ActionsAction::make('read')
+                    ->label('Mark as read')
+                    ->button()
+                    ->markAsRead(),
+            ])
+            ->sendToDatabase(User::whereIn('role', ['attorney', 'staff'])->get());
+
+        redirect('/app/documents');
+    }
+
+    public function accept()
+    {
+        $user = auth()->user();
+        $user->terms_condition = true;
+        $user->save();
+
+        Notification::make()
+            ->title('Accepted')
             ->success()
             ->send();
 
