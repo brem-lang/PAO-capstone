@@ -31,9 +31,9 @@
     </style>
     @if (auth()->user()->isClient())
 
-        @if (auth()->user()->terms_condition)
+        @if (auth()->user()?->terms_condition)
 
-            @if (auth()->user()->documents->first()->status === 'rejected')
+            @if (auth()->user()->documents->first()?->status === 'rejected')
                 <div class="container">
                     <h1></h1>
                     <p style="color: red">The uploaded documents are not valid.</p>
@@ -44,7 +44,7 @@
 
             {{ $this->form }}
             <div class="text-left">
-                @if (auth()->user()->documents->first()->status === 'rejected')
+                @if (auth()->user()->documents->first()?->status === 'rejected')
                     <x-filament::button wire:click="submit" class="align-right">
                         Submit
                     </x-filament::button>
