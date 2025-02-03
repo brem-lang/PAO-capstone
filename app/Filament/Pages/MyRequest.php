@@ -56,7 +56,7 @@ class MyRequest extends Page implements HasForms, HasTable
                     'approved' => 'success',
                     'pending' => 'gray',
                 })
-                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state == 'approved' ? 'completed' : $state)))
                     ->searchable()
                     ->toggleable(),
             ])

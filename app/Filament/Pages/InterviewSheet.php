@@ -4,6 +4,8 @@ namespace App\Filament\Pages;
 
 use App\Models\IDType;
 use App\Models\InterViewSheet as ModelsInterViewSheet;
+use App\Models\Language;
+use App\Models\Religion;
 use App\Models\User;
 use Carbon\Carbon;
 use Faker\Provider\ar_EG\Text;
@@ -338,15 +340,29 @@ class InterviewSheet extends Page implements HasForms
                             Select::make('religion')
                                 ->label('Relihiyon')
                                 ->required()
-                                ->options([
-                                    'Roman Catholic' => 'Roman Catholic',
-                                    'Islam' => 'Islam',
-                                    'Iglesia ni Cristo' => 'Iglesia ni Cristo',
-                                    'Seventh Day Adventist' => 'Seventh Day Adventist',
-                                    'Bible Baptist Church' => 'Bible Baptist Church',
-                                    "Jehovah's Witness" => "Jehovah's Witness",
-                                    'Others' => 'Others',
-                                ]),
+                                // ->options([
+                                //     'Roman Catholic' => 'Roman Catholic',
+                                //     'Islam' => 'Islam',
+                                //     'Iglesia ni Cristo' => 'Iglesia ni Cristo',
+                                //     'Seventh Day Adventist' => 'Seventh Day Adventist',
+                                //     'Bible Baptist Church' => 'Bible Baptist Church',
+                                //     "Jehovah's Witness" => "Jehovah's Witness",
+                                //     'Others' => 'Others',
+                                // ])
+                                ->options(Religion::pluck('name', 'name'))
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('') // Optional: Label for clarity
+                                        ->required()
+                                        ->unique(Religion::class, 'name'),
+                                ])
+                                ->createOptionUsing(function ($data) {
+                                    $type = Religion::create([
+                                        'name' => $data['name'],
+                                    ]);
+
+                                    return $data['name'];
+                                }),
                             Select::make('degree')
                                 ->label('Naabot na Pag-aaral')  // Set the label
                                 ->options([
@@ -549,26 +565,41 @@ class InterviewSheet extends Page implements HasForms
                                 ->required(),
                             Select::make('language')
                                 ->label('Dialekto')
-                                ->options([
-                                    'Bisaya' => 'Bisaya',
-                                    'Tagalog' => 'Tagalog',
-                                    'English' => 'English',
-                                    'Ilocano' => 'Ilocano',
-                                    'Hiligaynon' => 'Hiligaynon',
-                                    'Bikol' => 'Bikol',
-                                    'Waray' => 'Waray',
-                                    'Kapampangan' => 'Kapampangan',
-                                    'Pangasinan' => 'Pangasinan',
-                                    'Chavacano' => 'Chavacano',
-                                    'Maranao' => 'Maranao',
-                                    'Tausug' => 'Tausug',
-                                    'Maguindanao' => 'Maguindanao',
-                                    'Ivatan' => 'Ivatan',
-                                    'Kinaray-a' => 'Kinaray-a',
-                                    'Yakan' => 'Yakan',
-                                    'Sambal' => 'Sambal',
-                                    'Others' => 'Others',
+                                ->searchable()
+                                ->options(Language::pluck('name', 'name'))
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('') // Optional: Label for clarity
+                                        ->required()
+                                        ->unique(Language::class, 'name'),
                                 ])
+                                ->createOptionUsing(function ($data) {
+                                    $type = Language::create([
+                                        'name' => $data['name'],
+                                    ]);
+
+                                    return $data['name'];
+                                })
+                                // ->options([
+                                //     'Bisaya' => 'Bisaya',
+                                //     'Tagalog' => 'Tagalog',
+                                //     'English' => 'English',
+                                //     'Ilocano' => 'Ilocano',
+                                //     'Hiligaynon' => 'Hiligaynon',
+                                //     'Bikol' => 'Bikol',
+                                //     'Waray' => 'Waray',
+                                //     'Kapampangan' => 'Kapampangan',
+                                //     'Pangasinan' => 'Pangasinan',
+                                //     'Chavacano' => 'Chavacano',
+                                //     'Maranao' => 'Maranao',
+                                //     'Tausug' => 'Tausug',
+                                //     'Maguindanao' => 'Maguindanao',
+                                //     'Ivatan' => 'Ivatan',
+                                //     'Kinaray-a' => 'Kinaray-a',
+                                //     'Yakan' => 'Yakan',
+                                //     'Sambal' => 'Sambal',
+                                //     'Others' => 'Others',
+                                // ])
                                 ->required(),
                             FieldSet::make('')
                                 ->schema([
@@ -1058,15 +1089,29 @@ class InterviewSheet extends Page implements HasForms
                         Select::make('religion')
                             ->label('Relihiyon')
                             ->required()
-                            ->options([
-                                'Roman Catholic' => 'Roman Catholic',
-                                'Islam' => 'Islam',
-                                'Iglesia ni Cristo' => 'Iglesia ni Cristo',
-                                'Seventh Day Adventist' => 'Seventh Day Adventist',
-                                'Bible Baptist Church' => 'Bible Baptist Church',
-                                "Jehovah's Witness" => "Jehovah's Witness",
-                                'Others' => 'Others',
-                            ]),
+                            // ->options([
+                            //     'Roman Catholic' => 'Roman Catholic',
+                            //     'Islam' => 'Islam',
+                            //     'Iglesia ni Cristo' => 'Iglesia ni Cristo',
+                            //     'Seventh Day Adventist' => 'Seventh Day Adventist',
+                            //     'Bible Baptist Church' => 'Bible Baptist Church',
+                            //     "Jehovah's Witness" => "Jehovah's Witness",
+                            //     'Others' => 'Others',
+                            // ])
+                            ->options(Religion::pluck('name', 'name'))
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('') // Optional: Label for clarity
+                                    ->required()
+                                    ->unique(Religion::class, 'name'),
+                            ])
+                            ->createOptionUsing(function ($data) {
+                                $type = Religion::create([
+                                    'name' => $data['name'],
+                                ]);
+
+                                return $data['name'];
+                            }),
                         Select::make('degree')
                             ->label('Naabot na Pag-aaral')  // Set the label
                             ->options([
@@ -1269,26 +1314,40 @@ class InterviewSheet extends Page implements HasForms
                             ->required(),
                         Select::make('language')
                             ->label('Dialekto')
-                            ->options([
-                                'Bisaya' => 'Bisaya',
-                                'Tagalog' => 'Tagalog',
-                                'English' => 'English',
-                                'Ilocano' => 'Ilocano',
-                                'Hiligaynon' => 'Hiligaynon',
-                                'Bikol' => 'Bikol',
-                                'Waray' => 'Waray',
-                                'Kapampangan' => 'Kapampangan',
-                                'Pangasinan' => 'Pangasinan',
-                                'Chavacano' => 'Chavacano',
-                                'Maranao' => 'Maranao',
-                                'Tausug' => 'Tausug',
-                                'Maguindanao' => 'Maguindanao',
-                                'Ivatan' => 'Ivatan',
-                                'Kinaray-a' => 'Kinaray-a',
-                                'Yakan' => 'Yakan',
-                                'Sambal' => 'Sambal',
-                                'Others' => 'Others',
+                            ->options(Language::pluck('name', 'name'))
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('') // Optional: Label for clarity
+                                    ->required()
+                                    ->unique(Language::class, 'name'),
                             ])
+                            ->createOptionUsing(function ($data) {
+                                $type = Language::create([
+                                    'name' => $data['name'],
+                                ]);
+
+                                return $data['name'];
+                            })
+                            // ->options([
+                            //     'Bisaya' => 'Bisaya',
+                            //     'Tagalog' => 'Tagalog',
+                            //     'English' => 'English',
+                            //     'Ilocano' => 'Ilocano',
+                            //     'Hiligaynon' => 'Hiligaynon',
+                            //     'Bikol' => 'Bikol',
+                            //     'Waray' => 'Waray',
+                            //     'Kapampangan' => 'Kapampangan',
+                            //     'Pangasinan' => 'Pangasinan',
+                            //     'Chavacano' => 'Chavacano',
+                            //     'Maranao' => 'Maranao',
+                            //     'Tausug' => 'Tausug',
+                            //     'Maguindanao' => 'Maguindanao',
+                            //     'Ivatan' => 'Ivatan',
+                            //     'Kinaray-a' => 'Kinaray-a',
+                            //     'Yakan' => 'Yakan',
+                            //     'Sambal' => 'Sambal',
+                            //     'Others' => 'Others',
+                            // ])
                             ->required(),
                         FieldSet::make('')
                             ->schema([
@@ -1786,15 +1845,29 @@ class InterviewSheet extends Page implements HasForms
                             Select::make('religion')
                                 ->label('Relihiyon')
                                 ->required()
-                                ->options([
-                                    'Roman Catholic' => 'Roman Catholic',
-                                    'Islam' => 'Islam',
-                                    'Iglesia ni Cristo' => 'Iglesia ni Cristo',
-                                    'Seventh Day Adventist' => 'Seventh Day Adventist',
-                                    'Bible Baptist Church' => 'Bible Baptist Church',
-                                    "Jehovah's Witness" => "Jehovah's Witness",
-                                    'Others' => 'Others',
-                                ]),
+                                // ->options([
+                                //     'Roman Catholic' => 'Roman Catholic',
+                                //     'Islam' => 'Islam',
+                                //     'Iglesia ni Cristo' => 'Iglesia ni Cristo',
+                                //     'Seventh Day Adventist' => 'Seventh Day Adventist',
+                                //     'Bible Baptist Church' => 'Bible Baptist Church',
+                                //     "Jehovah's Witness" => "Jehovah's Witness",
+                                //     'Others' => 'Others',
+                                // ])
+                                ->options(Religion::pluck('name', 'name'))
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('') // Optional: Label for clarity
+                                        ->required()
+                                        ->unique(Religion::class, 'name'),
+                                ])
+                                ->createOptionUsing(function ($data) {
+                                    $type = Religion::create([
+                                        'name' => $data['name'],
+                                    ]);
+
+                                    return $data['name'];
+                                }),
                             Select::make('degree')
                                 ->label('Naabot na Pag-aaral')  // Set the label
                                 ->options([
@@ -1997,26 +2070,40 @@ class InterviewSheet extends Page implements HasForms
                                 ->required(),
                             Select::make('language')
                                 ->label('Dialekto')
-                                ->options([
-                                    'Bisaya' => 'Bisaya',
-                                    'Tagalog' => 'Tagalog',
-                                    'English' => 'English',
-                                    'Ilocano' => 'Ilocano',
-                                    'Hiligaynon' => 'Hiligaynon',
-                                    'Bikol' => 'Bikol',
-                                    'Waray' => 'Waray',
-                                    'Kapampangan' => 'Kapampangan',
-                                    'Pangasinan' => 'Pangasinan',
-                                    'Chavacano' => 'Chavacano',
-                                    'Maranao' => 'Maranao',
-                                    'Tausug' => 'Tausug',
-                                    'Maguindanao' => 'Maguindanao',
-                                    'Ivatan' => 'Ivatan',
-                                    'Kinaray-a' => 'Kinaray-a',
-                                    'Yakan' => 'Yakan',
-                                    'Sambal' => 'Sambal',
-                                    'Others' => 'Others',
+                                ->options(Language::pluck('name', 'name'))
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('') // Optional: Label for clarity
+                                        ->required()
+                                        ->unique(Language::class, 'name'),
                                 ])
+                                ->createOptionUsing(function ($data) {
+                                    $type = Language::create([
+                                        'name' => $data['name'],
+                                    ]);
+
+                                    return $data['name'];
+                                })
+                                // ->options([
+                                //     'Bisaya' => 'Bisaya',
+                                //     'Tagalog' => 'Tagalog',
+                                //     'English' => 'English',
+                                //     'Ilocano' => 'Ilocano',
+                                //     'Hiligaynon' => 'Hiligaynon',
+                                //     'Bikol' => 'Bikol',
+                                //     'Waray' => 'Waray',
+                                //     'Kapampangan' => 'Kapampangan',
+                                //     'Pangasinan' => 'Pangasinan',
+                                //     'Chavacano' => 'Chavacano',
+                                //     'Maranao' => 'Maranao',
+                                //     'Tausug' => 'Tausug',
+                                //     'Maguindanao' => 'Maguindanao',
+                                //     'Ivatan' => 'Ivatan',
+                                //     'Kinaray-a' => 'Kinaray-a',
+                                //     'Yakan' => 'Yakan',
+                                //     'Sambal' => 'Sambal',
+                                //     'Others' => 'Others',
+                                // ])
                                 ->required(),
                             FieldSet::make('')
                                 ->schema([
@@ -2223,7 +2310,7 @@ class InterviewSheet extends Page implements HasForms
                                 ->options(IDType::pluck('name', 'id'))
                                 ->createOptionForm([
                                     TextInput::make('name')
-                                        ->label('New ID Type') // Optional: Label for clarity
+                                        ->label('') // Optional: Label for clarity
                                         ->required()
                                         ->unique(IDType::class, 'name'),
                                 ])
@@ -2518,15 +2605,29 @@ class InterviewSheet extends Page implements HasForms
                         Select::make('religion')
                             ->label('Relihiyon')
                             ->required()
-                            ->options([
-                                'Roman Catholic' => 'Roman Catholic',
-                                'Islam' => 'Islam',
-                                'Iglesia ni Cristo' => 'Iglesia ni Cristo',
-                                'Seventh Day Adventist' => 'Seventh Day Adventist',
-                                'Bible Baptist Church' => 'Bible Baptist Church',
-                                "Jehovah's Witness" => "Jehovah's Witness",
-                                'Others' => 'Others',
-                            ]),
+                            // ->options([
+                            //     'Roman Catholic' => 'Roman Catholic',
+                            //     'Islam' => 'Islam',
+                            //     'Iglesia ni Cristo' => 'Iglesia ni Cristo',
+                            //     'Seventh Day Adventist' => 'Seventh Day Adventist',
+                            //     'Bible Baptist Church' => 'Bible Baptist Church',
+                            //     "Jehovah's Witness" => "Jehovah's Witness",
+                            //     'Others' => 'Others',
+                            // ])
+                            ->options(Religion::pluck('name', 'name'))
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('') // Optional: Label for clarity
+                                    ->required()
+                                    ->unique(Religion::class, 'name'),
+                            ])
+                            ->createOptionUsing(function ($data) {
+                                $type = Religion::create([
+                                    'name' => $data['name'],
+                                ]);
+
+                                return $data['name'];
+                            }),
                         Select::make('degree')
                             ->label('Naabot na Pag-aaral')  // Set the label
                             ->options([
@@ -2729,26 +2830,40 @@ class InterviewSheet extends Page implements HasForms
                             ->required(),
                         Select::make('language')
                             ->label('Dialekto')
-                            ->options([
-                                'Bisaya' => 'Bisaya',
-                                'Tagalog' => 'Tagalog',
-                                'English' => 'English',
-                                'Ilocano' => 'Ilocano',
-                                'Hiligaynon' => 'Hiligaynon',
-                                'Bikol' => 'Bikol',
-                                'Waray' => 'Waray',
-                                'Kapampangan' => 'Kapampangan',
-                                'Pangasinan' => 'Pangasinan',
-                                'Chavacano' => 'Chavacano',
-                                'Maranao' => 'Maranao',
-                                'Tausug' => 'Tausug',
-                                'Maguindanao' => 'Maguindanao',
-                                'Ivatan' => 'Ivatan',
-                                'Kinaray-a' => 'Kinaray-a',
-                                'Yakan' => 'Yakan',
-                                'Sambal' => 'Sambal',
-                                'Others' => 'Others',
+                            ->options(Language::pluck('name', 'name'))
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('') // Optional: Label for clarity
+                                    ->required()
+                                    ->unique(Language::class, 'name'),
                             ])
+                            ->createOptionUsing(function ($data) {
+                                $type = Language::create([
+                                    'name' => $data['name'],
+                                ]);
+
+                                return $data['name'];
+                            })
+                            // ->options([
+                            //     'Bisaya' => 'Bisaya',
+                            //     'Tagalog' => 'Tagalog',
+                            //     'English' => 'English',
+                            //     'Ilocano' => 'Ilocano',
+                            //     'Hiligaynon' => 'Hiligaynon',
+                            //     'Bikol' => 'Bikol',
+                            //     'Waray' => 'Waray',
+                            //     'Kapampangan' => 'Kapampangan',
+                            //     'Pangasinan' => 'Pangasinan',
+                            //     'Chavacano' => 'Chavacano',
+                            //     'Maranao' => 'Maranao',
+                            //     'Tausug' => 'Tausug',
+                            //     'Maguindanao' => 'Maguindanao',
+                            //     'Ivatan' => 'Ivatan',
+                            //     'Kinaray-a' => 'Kinaray-a',
+                            //     'Yakan' => 'Yakan',
+                            //     'Sambal' => 'Sambal',
+                            //     'Others' => 'Others',
+                            // ])
                             ->required(),
                         FieldSet::make('')
                             ->schema([
@@ -3216,5 +3331,11 @@ class InterviewSheet extends Page implements HasForms
         }
 
         redirect('/app/interview-sheet');
+    }
+
+    public function redirectTo()
+    {
+
+        redirect('/app/documents');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\ResetPassword;
+use App\Filament\Resources\ActivityResource;
 use App\Http\Middleware\Check2FA;
 use App\Livewire\Login as LivewireLogin;
 use App\Livewire\Register;
@@ -67,6 +68,7 @@ class AppPanelProvider extends PanelProvider
             )
             ->plugins([
                 ActivitylogPlugin::make()
+                    ->resource(ActivityResource::class)
                     ->navigationGroup('Settings')
                     ->navigationSort(1)
                     ->authorize(

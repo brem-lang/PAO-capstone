@@ -31,6 +31,8 @@ class Documents extends Page implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
+    protected static bool $canCreateAnother = true;
+
     public ?array $data = [];
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
@@ -90,6 +92,8 @@ class Documents extends Page implements HasForms, HasTable
                         ])->live(),
                         TextArea::make('reason')
                             ->label('Reason')
+                            ->disabled()
+                            ->default('Your ID has been rejected. It may be a blurred or unidentified image. Please re-upload it.')
                             ->visible(
                                 fn (Get $get) => $get('status') === 'rejected'
                             ),
@@ -158,11 +162,26 @@ class Documents extends Page implements HasForms, HasTable
                             ->dehydrated()
                             ->searchable()
                             ->label('ID Type')
-                            ->options(IDType::pluck('name', 'id')),
+                            ->options(IDType::pluck('name', 'id'))
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('New ID Type') // Optional: Label for clarity
+                                    ->required()
+                                    ->unique(IDType::class, 'name'),
+                            ])
+                            ->createOptionUsing(function ($data) {
+                                $type = IDType::create([
+                                    'name' => $data['name'],
+                                    'description' => $data['name'],
+                                ]);
+
+                                return $type->id;
+                            }),
                         TextInput::make('id_number')
                             ->label('ID Number')
                             ->required(),
                         FileUpload::make('front_id')
+                            ->hint('Please avoid to upload blurry images.')
                             ->openable()
                             ->label('Front ID')
                             ->required()
@@ -171,6 +190,7 @@ class Documents extends Page implements HasForms, HasTable
                             ->disk('public_uploads')        // Custom disk for public storage
                             ->rules(['nullable', 'mimes:jpg,jpeg,png', 'max:1024']),
                         FileUpload::make('back_id')
+                            ->hint('Please avoid to upload blurry images.')
                             ->label('Back ID')
                             ->openable()
                             ->maxSize(1024)

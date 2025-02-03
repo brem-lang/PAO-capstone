@@ -92,7 +92,13 @@
         </x-filament::modal>
     @else
         <h1 style="color: red;margin-top: 200px;" class="text-center">You are not authorized to view this page make sure
-            to add your
-            documents first</h1>
+            to add your documents first. Click button below to add documents.</h1>
+
+        <div class="text-center" style="margin-top: -20px;">
+            <x-filament::button class="align-right" wire:click="redirectTo">
+                Documents
+            </x-filament::button>
+        </div>
     @endif
+    <x-filament-actions::modals />
 </x-filament-panels::page>
