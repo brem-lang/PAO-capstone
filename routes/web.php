@@ -3,6 +3,7 @@
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SocialiteController;
+use App\Livewire\Policy;
 use App\Livewire\TwoFactor;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,5 @@ Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect']
     ->name('socialite.redirect');
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])
     ->name('socialite.callback');
+
+Route::get('policy', Policy::class)->name('policy.index')->middleware('auth');
