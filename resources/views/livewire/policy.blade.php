@@ -1,86 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Public Attorney's Office</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: #0D9488;
-            color: white;
-            padding: 1rem 0;
-            text-align: center;
-        }
-
-        main {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 1rem;
-            background: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        .privacy-notice {
-            padding: 1rem;
-            background-color: #e9f7ff;
-            border-left: 4px solid #0D9488;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .button-container {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .button {
-            display: inline-block;
-            background-color: #0056b3;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: #003d80;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem 0;
-            background-color: #f4f4f9;
-            font-size: 0.9rem;
-            color: #777;
-        }
-    </style>
-</head>
-
-<body>
+<div>
     <header>
         <h1 style="margin-top: 10px;">Welcome to the Public Attorney's Office (PAO)</h1>
     </header>
@@ -108,9 +26,77 @@
             </x-filament::button>
         </div>
     </main>
-    <footer>
-        <p>&copy; 2025 Public Attorney's Office. All Rights Reserved.</p>
-    </footer>
-</body>
+</div>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+    }
 
-</html>
+    header {
+        background-color: #0D9488;
+        color: white;
+        padding: 1rem 0;
+        text-align: center;
+    }
+
+    main {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1rem;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: white;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    .privacy-notice {
+        padding: 1rem;
+        background-color: #e9f7ff;
+        border-left: 4px solid #0D9488;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+    }
+
+    .button-container {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .button {
+        display: inline-block;
+        background-color: #0056b3;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+        background-color: #003d80;
+    }
+
+    footer {
+        text-align: center;
+        padding: 1rem 0;
+        background-color: #f4f4f9;
+        font-size: 0.9rem;
+        color: #777;
+    }
+</style>
