@@ -5,11 +5,13 @@ namespace App\Livewire;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Events\Auth\Registered;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
 use Filament\Pages\Auth\Register as RegisterPage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\HtmlString;
 use Illuminate\Validation\Rules\Password;
 
 class Register extends RegisterPage
@@ -25,10 +27,21 @@ class Register extends RegisterPage
                         $this->getEmailFormComponent(),
                         $this->getPasswordFormComponent(),
                         $this->getPasswordConfirmationFormComponent(),
+                        $this->getRememberFormComponent(),
                     ])
                     ->statePath('data'),
             ),
         ];
+    }
+
+    protected function getRememberFormComponent(): Component
+    {
+        return Checkbox::make('remember')
+            ->required()
+            ->label(fn () => new HtmlString(
+                'I agree to PAO\'s <a href="'.route('policy.index').'" target="_blank" style="text-decoration: underline;">Terms and Conditions</a>. 
+                Read our <a href="'.route('policy.index').'" target="_blank" style="text-decoration: underline;">Privacy Policy</a>.'
+            ));
     }
 
     protected function getEmailFormComponent(): Component
