@@ -99,6 +99,18 @@ class Documents extends Page implements HasForms, HasTable
                             ),
                     ])->action(function ($data, $record) {
 
+                        if ($data['status'] == 'rejected') {
+                            // front
+                            if (file_exists(public_path('id-photo/'.$record->front_id))) {
+                                File::delete(public_path('id-photo/'.$record->front_id));
+                            }
+
+                            // back
+                            if (file_exists(public_path('id-photo/'.$record->back_id))) {
+                                File::delete(public_path('id-photo/'.$record->back_id));
+                            }
+                        }
+
                         $data['reason'] = $data['reason'] ?? null;
                         $record->update($data);
 

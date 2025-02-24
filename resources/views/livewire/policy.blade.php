@@ -20,11 +20,11 @@
                 personal data.</p>
         </div>
 
-        <div class="button-container">
+        {{-- <div class="button-container">
             <x-filament::button wire:click="confirm">
                 I Agree
             </x-filament::button>
-        </div>
+        </div> --}}
     </div>
 
     <style>

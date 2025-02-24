@@ -58,8 +58,8 @@ class TwoFactor extends Component implements HasForms
             if (! is_null($find)) {
                 Session::put('user_2fa', auth()->user()->id);
 
-                // redirect()->intended(Filament::getUrl());
-                return redirect()->route('policy.index');
+                redirect()->intended(Filament::getUrl());
+                // return redirect()->route('policy.index');
             } else {
                 Notification::make()
                     ->title('Expired or Invalid Code')

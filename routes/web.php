@@ -34,4 +34,4 @@ Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect']
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])
     ->name('socialite.callback');
 
-Route::get('policy', Policy::class)->name('policy.index')->middleware('auth');
+Route::get('policy', Policy::class)->name('policy.index');
