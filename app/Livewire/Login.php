@@ -32,6 +32,7 @@ class Login extends LoginPage
     {
         return Checkbox::make('remember')
             ->required()
+            ->dehydrated(false)
             ->label(fn () => new HtmlString(
                 'I agree to PAO\'s <a href="'.route('policy.index').'" target="_blank" style="text-decoration: underline;">Terms and Conditions</a>. 
                 Read our <a href="'.route('policy.index').'" target="_blank" style="text-decoration: underline;">Privacy Policy</a>.'
