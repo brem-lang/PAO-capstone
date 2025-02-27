@@ -58,6 +58,8 @@ class InterviewSheet extends Page implements HasForms
 
     public $Advicepdf1;
 
+    public $regionValue;
+
     public static function canAccess(): bool
     {
         return auth()->user()->isClient();
@@ -606,23 +608,25 @@ class InterviewSheet extends Page implements HasForms
                                     Select::make('regions')->required()
                                         ->required()
                                         ->live()
-                                        ->options(function () {
+                                        ->options(function (Get $get) {
+
+                                            $this->regionValue = $get('regions');
+
                                             return DB::table('regions')->pluck('name', 'region_id');
                                         }),
                                     Select::make('province')->required()
                                         ->required()
-                                        ->options(function () {
-                                            return DB::table('provinces')->pluck('name', 'code');
-                                        }),
+                                        ->live()
+                                        ->options(fn (Get $get) => DB::table('provinces')->where('region_id', $get('regions'))->pluck('name', 'province_id')),
                                     Select::make('city')->required()
                                         ->preload()
+                                        ->live()
                                         ->required()
-                                        ->options(fn (Get $get) => DB::table('cities')->where('region_id', $get('regions'))->pluck('name', 'name')),
-
+                                        ->options(fn (Get $get) => DB::table('cities')->where('province_id', $get('province'))->pluck('name', 'city_id')),
                                     Select::make('barangay')
                                         ->preload()
                                         ->required()
-                                        ->options(fn (Get $get) => DB::table('barangays')->where('region_id', $get('regions'))->pluck('name', 'name')),
+                                        ->options(fn (Get $get) => DB::table('barangays')->where('city_id', $get('city'))->pluck('name', 'id')),
                                     // ->options(function () {
                                     //     return DB::table('barangays')->pluck('name', 'code');
                                     // }),
@@ -1352,28 +1356,47 @@ class InterviewSheet extends Page implements HasForms
                         FieldSet::make('')
                             ->schema([
                                 Select::make('regions')->required()
+                                    ->required()
+                                    ->live()
+                                    ->options(function () {
+                                        return DB::table('regions')->pluck('name', 'region_id');
+                                    }),
+                                Select::make('province')->required()
+                                    ->required()
+                                    ->live()
+                                    ->options(fn (Get $get) => DB::table('provinces')->where('region_id', $this->regionValue)->pluck('name', 'province_id')),
+                                Select::make('city')->required()
                                     ->preload()
                                     ->live()
                                     ->required()
-                                    ->options(function () {
-                                        return DB::table('regions')->pluck('name', 'region_id');
-                                    })
-                                    ->live(),
-                                Select::make('province')->required()
-                                    ->preload()
-                                    ->required()
-                                    ->options(function () {
-                                        return DB::table('provinces')->pluck('name', 'code');
-                                    }),
-                                Select::make('city')->required()
-                                    ->preload()
-                                    ->required()
-                                    ->options(fn (Get $get) => DB::table('cities')->where('region_id', $get('regions'))->pluck('name', 'name')),
-
+                                    ->options(fn (Get $get) => DB::table('cities')->where('region_id', $this->regionValue)->pluck('name', 'city_id')),
                                 Select::make('barangay')
                                     ->preload()
                                     ->required()
-                                    ->options(fn (Get $get) => DB::table('barangays')->where('region_id', $get('regions'))->pluck('name', 'name')),
+                                    ->options(fn (Get $get) => DB::table('barangays')->where('region_id', $this->regionValue)->pluck('name', 'id')),
+                                // Select::make('regions')->required()
+                                //     ->preload()
+                                //     ->live()
+                                //     ->required()
+                                //     ->options(function () {
+                                //         return DB::table('regions')->pluck('name', 'region_id');
+                                //     })
+                                //     ->live(),
+                                // Select::make('province')->required()
+                                //     ->preload()
+                                //     ->required()
+                                //     ->options(function () {
+                                //         return DB::table('provinces')->pluck('name', 'code');
+                                //     }),
+                                // Select::make('city')->required()
+                                //     ->preload()
+                                //     ->required()
+                                //     ->options(fn (Get $get) => DB::table('cities')->where('region_id', $get('regions'))->pluck('name', 'name')),
+
+                                // Select::make('barangay')
+                                //     ->preload()
+                                //     ->required()
+                                //     ->options(fn (Get $get) => DB::table('barangays')->where('region_id', $get('regions'))->pluck('name', 'name')),
                                 // TextInput::make('city')->required(),
                                 // TextInput::make('barangay')->required(),
                                 // Select::make('city')->required()
@@ -1626,7 +1649,6 @@ class InterviewSheet extends Page implements HasForms
 
     public function previewAdviceData()
     {
-
         $this->previewAdviceForm->fill(
             $this->adviceData,
         );
@@ -2108,27 +2130,27 @@ class InterviewSheet extends Page implements HasForms
                             FieldSet::make('')
                                 ->schema([
                                     Select::make('regions')->required()
-                                        ->preload()
                                         ->required()
                                         ->live()
-                                        ->options(function () {
+                                        ->options(function (Get $get) {
+
+                                            $this->regionValue = $get('regions');
+
                                             return DB::table('regions')->pluck('name', 'region_id');
                                         }),
                                     Select::make('province')->required()
-                                        ->preload()
                                         ->required()
-                                        ->options(function () {
-                                            return DB::table('provinces')->pluck('name', 'code');
-                                        }),
+                                        ->live()
+                                        ->options(fn (Get $get) => DB::table('provinces')->where('region_id', $get('regions'))->pluck('name', 'province_id')),
                                     Select::make('city')->required()
                                         ->preload()
+                                        ->live()
                                         ->required()
-                                        ->options(fn (Get $get) => DB::table('cities')->where('region_id', $get('regions'))->pluck('name', 'name')),
-
+                                        ->options(fn (Get $get) => DB::table('cities')->where('province_id', $get('province'))->pluck('name', 'city_id')),
                                     Select::make('barangay')
                                         ->preload()
                                         ->required()
-                                        ->options(fn (Get $get) => DB::table('barangays')->where('region_id', $get('regions'))->pluck('name', 'name')),
+                                        ->options(fn (Get $get) => DB::table('barangays')->where('city_id', $get('city'))->pluck('name', 'id')),
                                     // TextInput::make('city')->required(),
                                     // TextInput::make('barangay')->required(),
                                     // Select::make('city')->required()
@@ -2868,28 +2890,24 @@ class InterviewSheet extends Page implements HasForms
                         FieldSet::make('')
                             ->schema([
                                 Select::make('regions')->required()
+                                    ->required()
+                                    ->live()
+                                    ->options(function () {
+                                        return DB::table('regions')->pluck('name', 'region_id');
+                                    }),
+                                Select::make('province')->required()
+                                    ->required()
+                                    ->live()
+                                    ->options(fn (Get $get) => DB::table('provinces')->where('region_id', $this->regionValue)->pluck('name', 'province_id')),
+                                Select::make('city')->required()
                                     ->preload()
                                     ->live()
                                     ->required()
-                                    ->options(function () {
-                                        return DB::table('regions')->pluck('name', 'region_id');
-                                    })
-                                    ->live(),
-                                Select::make('province')->required()
-                                    ->preload()
-                                    ->required()
-                                    ->options(function () {
-                                        return DB::table('provinces')->pluck('name', 'code');
-                                    }),
-                                Select::make('city')->required()
-                                    ->preload()
-                                    ->required()
-                                    ->options(fn (Get $get) => DB::table('cities')->where('region_id', $get('regions'))->pluck('name', 'name')),
-
+                                    ->options(fn (Get $get) => DB::table('cities')->where('region_id', $this->regionValue)->pluck('name', 'city_id')),
                                 Select::make('barangay')
                                     ->preload()
                                     ->required()
-                                    ->options(fn (Get $get) => DB::table('barangays')->where('region_id', $get('regions'))->pluck('name', 'name')),
+                                    ->options(fn (Get $get) => DB::table('barangays')->where('region_id', $this->regionValue)->pluck('name', 'id')),
                                 // TextInput::make('city')->required(),
                                 // TextInput::make('barangay')->required(),
                                 // Select::make('city')->required()
@@ -3064,6 +3082,14 @@ class InterviewSheet extends Page implements HasForms
 
     public function previewNotarizeData()
     {
+        if ($this->notarizeData['aol_type'] == null || $this->notarizeData['id_type'] == null || $this->notarizeData['id_number'] == null) {
+            Notification::make()
+                ->title('Please Select fill up AOL')
+                ->danger()
+                ->send();
+
+            return;
+        }
 
         $this->previewNotarizeForm->fill(
             $this->notarizeData,

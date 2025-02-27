@@ -38,7 +38,7 @@ class Attorneys extends Page implements HasForms, HasTable
 
     public static function canAccess(): bool
     {
-        return auth()->user()->id == 1;
+        return auth()->user()->role == 'super-attorney';
     }
 
     public function form(Form $form): Form

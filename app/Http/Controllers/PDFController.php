@@ -71,11 +71,11 @@ class PDFController extends Controller
             'newAOL_type' => $interViewSheet->newAOL_type ?? null,
             'statements' => $interViewSheet->statements ?? null,
             //
-            'name' => $interViewSheet->name,
+            'name' => $interViewSheet?->name,
             'idType' => $this->handleIDType($interViewSheet->id_type) ?? $interViewSheet->id_type,
             'id_number' => $interViewSheet->id_number,
             'formattedDate' => $formattedDate,
-            'address' => $interViewSheet->barangay.', '.$interViewSheet->city.', '.$this->handleTypeProvince($interViewSheet->province),
+            'address' => $this->handleTypeBarangay($interViewSheet->barangay).', '.$this->handleTypeCity($interViewSheet->city).', '.$this->handleTypeProvince($interViewSheet->province),
         ])->setPaper('legal');
 
         return $pdf->stream(ucfirst($interViewSheet->aol_type).'-'.now()->format('Y-m-d h:i:s').'.pdf');
@@ -113,9 +113,19 @@ class PDFController extends Controller
         return null;
     }
 
+    public function handleTypeBarangay($code)
+    {
+        return DB::table('barangays')->where('id', $code)->first()->name;
+    }
+
+    public function handleTypeCity($code)
+    {
+        return DB::table('cities')->where('city_id', $code)->first()->name;
+    }
+
     public function handleTypeProvince($code)
     {
-        return DB::table('provinces')->where('code', $code)->first()->name;
+        return DB::table('provinces')->where('province_id', $code)->first()->name;
     }
 
     public function generateID(User $user)

@@ -17,14 +17,14 @@
                         </x-filament::button>
                     </div>
 
-                    <div>
+                    {{-- <div>
                         <label>
                             <x-filament::input.checkbox @click="$wire.autoFill();" />
                             <span>
                                 Use Previous Data
                             </span>
                         </label>
-                    </div>
+                    </div> --}}
                 </div>
             </template>
 
