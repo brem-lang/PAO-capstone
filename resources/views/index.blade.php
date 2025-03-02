@@ -61,7 +61,7 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="{{ asset('images/pao2.jpg') }}" class="d-block w-100" alt="First slide">
+                <img src="{{ asset('images/pao3.png') }}" class="d-block w-100" alt="First slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Welcome to Our Site</h5>
                     <p>Experience the best services with us.</p>
