@@ -160,8 +160,7 @@ class InterviewSheet extends Page implements HasForms
                                 ->placeholder('Pumili ng Rehiyon')
                                 ->required(),
                             TextInput::make('referredBy')
-                                ->label('Ini-refer ni/Inindorso ng')
-                                ->required(),
+                                ->label('Ini-refer ni/Inindorso ng'),
                             TextInput::make('district_office')
                                 ->label('District Office')
                                 ->required(),
@@ -179,8 +178,7 @@ class InterviewSheet extends Page implements HasForms
                                 ->label('Petsa')
                                 ->required(),
                             TextInput::make('assignTo')
-                                ->label('Ini-atas kay')
-                                ->required(),
+                                ->label('Ini-atas kay'),
                             TextInput::make('control_no')
                                 ->label('Control No.')
                                 ->disabled()

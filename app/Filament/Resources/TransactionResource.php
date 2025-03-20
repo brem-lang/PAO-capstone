@@ -132,21 +132,18 @@ class TransactionResource extends Resource
                                 'Compromise agreement' => 'Compromise agreement',
                                 'Assisted in inquest proc.' => 'Assisted in inquest proc.',
                                 'Motion for reconsideration' => 'Motion for reconsideration',
-                            ])
-                            ->required(),
+                            ]),
                         Select::make('status')
                             ->options([
                                 'pending' => 'Pending',
                                 'resolved' => 'Resolved',
                                 'terminated' => 'Terminated',
                             ])
-                            ->required()
                             ->label('Status'),
                         DatePicker::make('case_received'),
                         DatePicker::make('date_of_termination'),
                         Select::make('cause_of_action')
                             ->label('Cause of Action')
-                            ->required()
                             ->options([
                                 'Violation of Sec. 5 of RA 9165' => 'Violation of Sec. 5 of RA 9165',
                                 'Violation of Sec. 11 of RA 9165' => 'Violation of Sec. 11 of RA 9165',
@@ -218,7 +215,6 @@ class TransactionResource extends Resource
                             ->required(),
                         Select::make('cause_of_termination')
                             ->label('Cause of Termination')
-                            ->required()
                             ->options([
                                 'Acquitted' => 'Acquitted',
                                 'Dismissed with prejudice' => 'Dismissed with prejudice',
