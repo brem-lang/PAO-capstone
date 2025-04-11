@@ -56,6 +56,7 @@ class Appointments extends Page implements HasForms, HasTable
     {
         return $table
             ->query(InterViewSheet::latest())
+            ->paginated([10, 25, 50])
             ->columns([
                 TextColumn::make('user.name')
                     ->label('Client')

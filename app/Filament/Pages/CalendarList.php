@@ -90,6 +90,7 @@ class CalendarList extends Page implements HasForms, HasTable
     {
         return $table
             ->query(CalendarEvents::query()->latest())
+            ->paginated([10, 25, 50])
             ->columns([
                 TextColumn::make('user.name')
                     ->label('Client')

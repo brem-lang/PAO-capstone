@@ -299,6 +299,7 @@ class Attorneys extends Page implements HasForms, HasTable
     {
         return $table
             ->query(User::where('role', 'attorney')->where('id', '!=', auth()->user()->id)->latest())
+            ->paginated([10, 25, 50])
             ->columns([
                 TextColumn::make('name')
                     ->toggleable()

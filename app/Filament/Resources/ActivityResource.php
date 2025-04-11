@@ -14,6 +14,7 @@ class ActivityResource extends ActivitylogResource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated([10, 25, 50])
             ->columns([
                 static::getLogNameColumnCompoment(),
                 static::getEventColumnCompoment(),

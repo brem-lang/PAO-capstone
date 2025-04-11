@@ -298,6 +298,7 @@ class Client extends Page implements HasForms, HasTable
     {
         return $table
             ->query(User::where('role', 'client')->latest())
+            ->paginated([10, 25, 50])
             ->columns([
                 TextColumn::make('name')
                     ->toggleable()

@@ -64,6 +64,7 @@ class Documents extends Page implements HasForms, HasTable
     {
         return $table
             ->query(ModelsDocuments::latest())
+            ->paginated([10, 25, 50])
             ->columns([
                 TextColumn::make('user.name')
                     ->label('Name')

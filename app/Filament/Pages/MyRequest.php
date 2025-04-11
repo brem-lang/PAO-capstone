@@ -47,6 +47,7 @@ class MyRequest extends Page implements HasForms, HasTable
     {
         return $table
             ->query(InterViewSheet::query()->where('user_id', auth()->user()->id)->latest())
+            ->paginated([10, 25, 50])
             ->columns([
                 TextColumn::make('doc_type')
                     ->searchable()

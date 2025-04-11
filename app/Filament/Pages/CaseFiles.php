@@ -216,6 +216,7 @@ class CaseFiles extends Page implements HasForms, HasTable
     {
         return $table
             ->query(Transaction::orderBy('title_of_case', 'asc'))
+            ->paginated([10, 25, 50])
             ->columns([
                 TextColumn::make('title_of_case')
                     ->label('Title of Case')

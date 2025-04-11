@@ -284,6 +284,7 @@ class TransactionResource extends Resource
                     ->date('F d, Y h:i A')->timezone('Asia/Manila')
                     ->sortable(),
             ])
+            ->paginated([10, 25, 50])
             ->filters([
                 TrashedFilter::make(),
             ])
